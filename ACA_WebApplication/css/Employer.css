@@ -1,0 +1,230 @@
+﻿body {
+    font-size:12px;
+}
+
+.heading{
+    margin:5px;
+    width:99%;
+    font-size:15px;
+    padding:5px;
+    color:white;
+    text-align:center;
+    background-color:#2381e9;
+}
+.grid_container{
+    margin:5px;
+    float:left;
+    padding:5px;
+    display:inline-block;
+    width:20%;
+    min-width:300px;
+    background-color:white;
+    height:610px;
+    /*overflow:scroll;
+    scrollbar-base-color:white;
+    scrollbar-face-color:white;*/
+}
+.employer_list{
+    border-bottom:1px solid #2381e9;
+    padding:5px;
+    margin:5px;
+    height:35px;
+    color:black; 
+    overflow:hidden;
+    cursor:pointer;
+}
+.serial{
+    background-color:#2381e9;
+    border-radius:5px;
+    display:inline-block;
+    float:left;
+    text-align:center;
+    min-width:20px;
+    padding:7px 5px 7px 5px ;
+    color:white;
+    margin:2px 10px 0px 0px ;
+}
+.detail{
+    padding:2px;
+    display:inline-block;
+    float:left;
+    width:80%;
+}
+b{
+    color:#2381e9;
+    
+}
+.srch{
+    width:94%;
+    background-color:none;
+    color:black;
+    padding:5px;
+    margin:5px;
+    border:1px solid #89b3c1;
+}
+.srch:focus{
+    outline:0;
+}
+
+.employer_form{
+    margin:5px;
+    padding:5px;
+    float:left;
+    display:inline-block;
+    width: 69%;
+    background-color:white;
+    height:610px;
+}
+
+.tab{
+    width:100%;
+    padding:5px;
+    font-size:20px;
+    display:block;
+    height:50px;
+}
+
+.ginfo{
+    float:left;
+    display:inline-block;
+    padding:13px;
+    width:200px;
+    color:white;
+    margin-left:2px;
+    border-right:groove;
+    background-color:slategray; 
+    cursor:pointer;
+}
+.cdetail{
+    float:left;
+    display:inline-block;
+    padding:13px;
+     width:150px;
+    color:white;
+    margin-right:2px;
+    background-color:slategray;
+    cursor:pointer;
+}
+
+.tab1{
+    width:90%;
+    height:480px;
+    margin:5px 3px 0px 7px;
+    float:left;
+    display:inline-block;
+    background-color:#F8F8FF;
+     width:95%;
+    height:90%;
+    margin:20px;
+    text-align:left;
+    overflow:hidden;
+}
+.tab2{
+    width:0%;
+    height:480px;
+    float:left;
+    margin:5px 3px 0px 7px;
+    display:inline-block;
+    background-color:#F8F8FF; 
+       text-align:left;
+    overflow:hidden;
+}
+.tab3{
+    width:100%;
+    padding:5px;
+    font-size:20px;
+    height:50px;
+    float:left;
+    display:inline-block;
+    clear:both;
+}
+
+.btn{
+    width: 15%;
+    padding:5px;
+    margin-right:10px;
+    border:none;
+    font-size:13px;
+    background-color:#2381e9;
+    color:white;
+}
+
+.tab1_data{
+    width:95%;
+    height:90%;
+    margin:20px;
+    text-align:left;
+}
+
+.tab2_data{
+     width:95%;
+    height:90%;
+    margin:20px;
+    text-align:left;
+}
+
+
+.tbl_emp{
+    margin-left:30px;
+    float:inherit;
+}
+.hdr{
+    width:100%;
+    text-align:center;
+    background-color:#2381e9;
+    color:white;
+    padding:5px 0px 5px 0px;
+    cursor:pointer;
+    border:none;
+    }
+
+.gen_info {
+    position:center;
+    padding:5px;
+    float:left;
+    background:white;
+    color:black;
+    height:100%;
+}
+.c_details{
+    float:right;
+    background:white;
+    padding:5px;
+    height:100%;
+    color:black;
+}
+.mon_table td{
+    color:black;
+    text-align:center;
+    border:1px solid gray;
+}
+.mon_table thead td{
+    background-color:black;
+}
+.chk_move{
+    margin-left:30px;
+    margin-right:10px;
+}
+.gen_info td{
+   height:27px;
+   min-width:140px;
+}
+.txt{
+    width:160px;
+    padding:3px;
+    border:none;
+    border-bottom:1px solid gray;
+}
+.txt:focus{
+    outline: 0;
+}
+.cmb{
+    width:170px;
+    padding:4px;
+    border:none;
+    border-bottom:1px solid gray;
+}
+.cmb:focus{
+    outline: 0;
+}
+
