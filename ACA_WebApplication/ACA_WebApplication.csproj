@@ -133,6 +133,7 @@
     <Content Include="bin\Microsoft.ApplicationInsights.dll" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
     <Content Include="Companies.aspx" />
+    <Content Include="css\Employee.css" />
     <Content Include="css\Employer.css" />
     <Content Include="css\footer.css" />
     <Content Include="css\FormStyle.css" />
@@ -143,6 +144,7 @@
     <Content Include="css\login.css" />
     <Content Include="css\StyleSheet1.css" />
     <Content Include="css\StyleSheet2.css" />
+    <Content Include="Employee.aspx" />
     <Content Include="Employer.aspx" />
     <Content Include="Home.aspx" />
     <Content Include="icons\company.png" />
@@ -190,6 +192,13 @@
     </Compile>
     <Compile Include="Companies.aspx.designer.cs">
       <DependentUpon>Companies.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Employee.aspx.cs">
+      <DependentUpon>Employee.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Employee.aspx.designer.cs">
+      <DependentUpon>Employee.aspx</DependentUpon>
     </Compile>
     <Compile Include="Employer.aspx.cs">
       <DependentUpon>Employer.aspx</DependentUpon>
