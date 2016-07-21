@@ -3,6 +3,14 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="../css/Employer.css" rel="stylesheet" />
     <link href="../css/FormStyle.css" rel="stylesheet" />
+    <script type="text/javascript">
+        function page_load() {
+            $('.employer_list').on('click', function () {
+                $('.over').css( 'background-color', 'white');
+                $(this).css({ 'background-color': '#add5f3', 'border-radius': '4px' });
+            });
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
@@ -16,7 +24,6 @@
 
             <asp:UpdatePanel ID="UpdatePanel2" UpdateMode="Conditional" ChildrenAsTriggers="false" runat="server">
                 <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="rptEmployer" />
                     <asp:AsyncPostBackTrigger ControlID="btn_first" />
                     <asp:AsyncPostBackTrigger ControlID="btn_previous" />
                     <asp:AsyncPostBackTrigger ControlID="btn_next" />
@@ -30,8 +37,8 @@
                         <asp:TextBox ID="txtsearch" CssClass="srch" AutoPostBack="true" runat="server" placeholder="Search Employer" OnTextChanged="txtsearch_TextChanged"></asp:TextBox>
                         <asp:Repeater ID="rptEmployer" OnItemCommand="rptEmployer_ItemCommand" runat="server">
                             <ItemTemplate>
-                                <asp:LinkButton ID="lb_emp_list" Style="text-decoration: none;" CommandName="Edit" runat="server">
-                                    <div class="employer_list">
+                                <asp:LinkButton ID="lb_emp_list" ClientIDMode="AutoID" Style="text-decoration: none;" CommandName="Edit" runat="server">
+                                    <div class="employer_list over">
                                         <div class="serial">
                                             <%# Eval("RowNumber") %>
                                         </div>
@@ -209,19 +216,19 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <asp:CheckBox CssClass="chk_move" ID="OfferMethod" Text="A.Qualifiying Offer Method" runat="server" /></td>
+                                                    <asp:CheckBox CssClass="chk_move" ID="OfferMethod" Text="  A.Qualifiying Offer Method" runat="server" /></td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <asp:CheckBox CssClass="chk_move"  ID="OfferMethodRelief" Text=" B.Qualifiying Offer Method Transition Relif" runat="server" /></td>
+                                                    <asp:CheckBox CssClass="chk_move"  ID="OfferMethodRelief" Text="  B.Qualifiying Offer Method Transition Relif" runat="server" /></td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <asp:CheckBox CssClass="chk_move" ID="Section4980H" Text="C.Section 4980H Transition Relif" runat="server" /></td>
+                                                    <asp:CheckBox CssClass="chk_move" ID="Section4980H" Text="  C.Section 4980H Transition Relif" runat="server" /></td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <asp:CheckBox CssClass="chk_move" ID="OfferMethod98" Text="D.98% Offer Method" runat="server" /></td>
+                                                    <asp:CheckBox CssClass="chk_move" ID="OfferMethod98" Text="  D.98% Offer Method" runat="server" /></td>
                                             </tr>
                                             <tr>
                                                 <td colspan="1">
@@ -260,14 +267,14 @@
                                                                         <asp:CheckBox ID="chk_minimum" runat="server" />
                                                                         <asp:HiddenField ID="hdn_chk_minimum" Value='<%# Eval("minimum") %>' runat="server" />
                                                                     </td>
-                                                                    <td><asp:TextBox ID="txt_full" style="border:none;border-bottom:1px solid gray;"  width= "40px" Text='<%# Eval("full") %>' runat="server"></asp:TextBox></td>
-                                                                    <td><asp:TextBox ID="txt_total" style="border:none;border-bottom:1px solid gray;"  width= "40px" Text='<%# Eval("total") %>' runat="server"></asp:TextBox></td>
+                                                                    <td><asp:TextBox ID="txt_full" style="border:none;text-align:center;"  width= "40px" Text='<%# Eval("full") %>' runat="server"></asp:TextBox></td>
+                                                                    <td><asp:TextBox ID="txt_total" style="border:none;text-align:center;"  width= "40px" Text='<%# Eval("total") %>' runat="server"></asp:TextBox></td>
                                                                     <td>
                                                                         <asp:CheckBox ID="chk_aggregate" runat="server" />
                                                                         <asp:HiddenField ID="hdn_chk_aggregate" Value='<%# Eval("aggregate") %>' runat="server" />
                                                                     </td>
                                                                     <td>
-                                                                        <asp:TextBox ID="txt_section" style="border:none;border-bottom:1px solid gray;"  width= "40px" Text='<%# Eval("section") %>' runat="server"></asp:TextBox>
+                                                                        <asp:TextBox ID="txt_section" style="border:none;text-align:center;"  width= "40px" Text='<%# Eval("section") %>' runat="server"></asp:TextBox>
                                                                     </td>
                                                                     <%--<td>
                                                                         <asp:ImageButton ID="ImageButton1" CommandName="UP" CommandArgument='<%#Container.ItemIndex+1 %>' ImageUrl="~/img/up_arrow.png" runat="server" />

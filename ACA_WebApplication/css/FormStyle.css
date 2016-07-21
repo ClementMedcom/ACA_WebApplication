@@ -64,7 +64,8 @@
 }
 
 .Repeater tr:hover {
-    background-color: #89b3c1;
+    background-color:#add5f3;
+    cursor:pointer;
 }
 
 .employer_list:hover {
@@ -73,11 +74,11 @@
 }
 
 .page_heading {
-    background-color: #89b3c1;
-    padding: 3px;
-    margin: 0px 1px;
-    color: #ffffff;
-    font-size: 14pt;
-    text-align: center;
-    font-weight: bold;
+    margin:5px;
+    width:97%;
+    font-size:15px;
+    padding:5px;
+    color:white;
+    text-align:center;
+    background-color:#2381e9;
 }

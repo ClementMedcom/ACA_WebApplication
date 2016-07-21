@@ -26,7 +26,7 @@
             <div class="list" style="width:98%;margin:0 auto;">
                 <div style="overflow-y:auto;min-height:390px;max-height:390px;">
                     <table class="Repeater" cellspacing="0" rules="all" style="width: 99%;" border="1">
-                        <tr style="background-color: #abaf74; color: white;">
+                        <tr style="background-color:#2381e9; color: white;">
                             <th scope="col" style="width: 80px">Sl No
                             </th>
                             <th scope="col" style="width: 100px">Tax Id
