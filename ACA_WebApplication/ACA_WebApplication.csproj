@@ -168,9 +168,6 @@
     <Content Include="assets\fonts\font_awesome\fontawesome-webfont_aea8981c.eot" />
     <Content Include="assets\fonts\font_awesome\fontawesome-webfont_aea8981c.ttf" />
     <Content Include="assets\fonts\font_awesome\fontawesome-webfont_aea8981c.woff" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="bin\ACA_WebApplication.dll.config" />
     <None Include="Properties\PublishProfiles\Test3.pubxml" />
     <Content Include="Test2.aspx" />
