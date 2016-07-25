@@ -16,8 +16,9 @@ namespace ACA_WebApplication.Master
         {
             if (!IsPostBack)
             {
-                Company_list(null, 1, "", 10);
+                Company_list(null, 1, "", 20);
             }
+            txtsearch.Focus();
         }
         public void Company_list(string companyTaxId,int pageIndex, string search, int PageSize)
         {
@@ -87,6 +88,5 @@ namespace ACA_WebApplication.Master
             Company_list(null, pageCount, txtsearch.Text, Convert.ToInt32(drp_count.Text));
         }
         #endregion
-
     }
 }

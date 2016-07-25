@@ -1,5 +1,4 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Layout.master.cs" Inherits="ACA_WebApplication.Layout1" %>
-
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -62,11 +61,11 @@
                 <div id="header-logo">
                     <%--<a href="javascript:;" class="tooltip-button" data-placement="bottom" title="Close sidebar" id="close-sidebar" style="background-image:url('../assets/images/icons/Left_Arrow.png');background-size:15px;width:40px;height:40px;background-repeat:no-repeat;margin-top:22px;">--%>
                         <a href="javascript:;" class="tooltip-button" data-placement="bottom" title="Close sidebar" id="close-sidebar" >
-                        <i class="glyph-icon icon-caret-left"></i>
+                        <i class="glyph-icon icon-chevron-left"></i>
                     </a>
                     <%--<a href="javascript:;" class="tooltip-button hidden" data-placement="bottom" title="Open sidebar" id="rm-close-sidebar" style="background-image:url('../assets/images/icons/Right_Arrow.png');background-size:15px;width:40px;height:40px;background-repeat:no-repeat;margin-top:22px;">--%>
                     <a href="javascript:;" class="tooltip-button hidden" data-placement="bottom" title="Open sidebar" id="rm-close-sidebar">
-                        <i class="glyph-icon icon-caret-right"></i>
+                        <i class="glyph-icon icon-chevron-right"></i>
                     </a>
                     <a href="javascript:;" class="tooltip-button hidden" title="Navigation Menu" id="responsive-open-menu">
                         <i class="glyph-icon icon-align-justify"></i>
@@ -94,13 +93,16 @@
                             </a>
                         </li>
                         <li class="divider"></li>
-                        <li>
-                            <a href="../Login.aspx" title="Logout">
+                        <%--<li>
+                            <a href="../Logout.aspx" title="Logout">
                                 <i class="glyph-icon icon-signout font-size-13 mrg5R"></i>
                                 <span class="font-bold">Logout</span>
                             </a>
+                        </li>--%>
+                        <li>
+                            <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click"><i class="glyph-icon icon-signout font-size-13 mrg5R"></i>
+                                <span class="font-bold">Logout</span></asp:LinkButton>
                         </li>
-                        
                     </ul>
                 </div>
             </div><!-- #page-header -->
@@ -129,11 +131,11 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" title="Plan">
+                            <a href="/Plan.aspx" title="Plans">
                                 <i class="glyph-icon icon-list-alt"></i>
                                 Plan
                             </a>
-                            <ul>
+                           <%-- <ul>
                                 <li>
                                     <a href="#" title="View Plans">
                                         <i class="glyph-icon icon-chevron-right"></i>
@@ -152,7 +154,7 @@
                                         Delete Plans
                                     </a>
                                 </li>
-                            </ul>
+                            </ul>--%>
                         </li>
                         <li>
                             <a href="../Master/Company_List.aspx" title="Companies">
@@ -161,11 +163,11 @@
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:;" title="Employer">
+                            <a href="../Master/Employer_Details.aspx" title="Employer">
                                 <i class="glyph-icon icon-lock"></i>
                                 Employer
                             </a>
-                            <ul>
+                            <%--<ul>
                                 <li>
                                     <a href="../Master/Employer_Details.aspx" title="View Employer">
                                         <i class="glyph-icon icon-chevron-right"></i>
@@ -184,14 +186,14 @@
                                         Delete Employer
                                     </a>
                                 </li>
-                            </ul>
+                            </ul>--%>
                         </li>
                         <li>
-                            <a href="javascript:;" title="Employee">
+                            <a href="../Master/Employee_Details.aspx" title="Employee">
                                 <i class="glyph-icon icon-user"></i>
                                 Employee
                             </a>
-                            <ul>
+                            <%--<ul>
                                 <li>
                                     <a href="#" title="View Employe">
                                         <i class="glyph-icon icon-chevron-right"></i>
@@ -210,7 +212,7 @@
                                         Delete Employe
                                     </a>
                                 </li>
-                            </ul>
+                            </ul>--%>
                         </li>
                         <li>
                             <a href="javascript:;" title="Reports">

@@ -18,11 +18,9 @@
     display:inline-block;
     width:20%;
     min-width:300px;
-    background-color:white;
-    height:530px;
-    /*overflow:scroll;
-    scrollbar-base-color:white;
-    scrollbar-face-color:white;*/
+    background-color:#eaeffa;
+    height:540px;
+
 }
 .employer_list{
     border-bottom:1px solid #2381e9;
@@ -56,7 +54,7 @@ b{
 }
 .srch{
     width:90%;
-    background-color:none;
+    background-color:#eaeffa;
     color:black;
     padding:5px;
     margin:5px;
@@ -72,7 +70,6 @@ b{
     float:left;
     display:inline-block;
     width: 69%;
-    background-color:white;
     height:530px;
 }
 
@@ -142,7 +139,7 @@ b{
 .btn{
     width: 15%;
     padding:5px;
-    margin-right:10px;
+    margin-left:20px;
     border:none;
     font-size:13px;
     background-color:#2381e9;
@@ -196,14 +193,14 @@ div::-webkit-scrollbar-thumb {
     padding:5px;
     float:left;
     display:inline-block;
-    background:white;
+    background-color:#eaeffa;
     color:black;
     margin-left:20px;
 }
 .c_details{
     float:left;
     display:inline-block;
-    background:white;
+    background-color:#eaeffa;
     padding:5px;
     color:black;
     margin-left:20px;
@@ -230,18 +227,171 @@ div::-webkit-scrollbar-thumb {
     width:160px;
     padding:3px;
     border:none;
+    background-color:#eaeffa;
+    border-bottom:1px solid gray;
+}
+.txt_short{
+     width:80px;
+    padding:3px;
+    border:none;
+    background-color:#eaeffa;
     border-bottom:1px solid gray;
 }
 .txt:focus{
+    outline: 0;
+}
+.txt_short:focus {
     outline: 0;
 }
 .cmb{
     width:170px;
     padding:4px;
     border:none;
+    background-color:#eaeffa;
     border-bottom:1px solid gray;
 }
 .cmb:focus{
     outline: 0;
 }
 
+/*plan form styles*/
+.planinfo{
+    width:69%;
+    margin:5px;
+    float:left;
+    padding:5px;
+    display:inline-block;
+    background-color:#eaeffa;
+    height:540px;
+    margin: 0 auto;
+}
+.plan_header{
+    padding:5px; 
+}
+.plan_detail{
+    width:94%;
+    height:50px;
+    margin:10px;
+    padding:5px;
+    border:1px solid gray;
+}
+.plan_table{
+     width:94%;
+     height:170px;
+     margin:10px;
+     padding:5px;
+     border:1px solid gray;
+     overflow-y:scroll;
+}
+.imgbtnplus{
+    width:25px;
+    height:25px;
+    background-color:#eaeffa;
+    border:none;
+    background-image:url('../icons/plus.png');
+    background-repeat:no-repeat;
+    background-size:25px;
+}
+.imgbtnminus{
+    width:25px;
+    height:25px;
+    background-color:#eaeffa;
+    border:none;
+    background-image:url('../icons/minus.png');
+    background-repeat:no-repeat;
+    background-size:25px;
+}
+
+
+/*Employee form begining*/
+#content1 {
+	float: left;
+    display:inline-block;
+	width:28%;
+	background-color: transparent;
+    height:540px;   
+}
+#content2 {
+	float:left;
+	width:71%;
+	background-color:transparent ;
+    height:540px;
+}
+#content3{
+    position:absolute;
+    width:100%;
+}
+
+#tab-container{
+    margin: 5px 0px 0px 10px;
+    width: 100%;
+    height:230px;
+    overflow: hidden;
+}
+#tab-container ul{
+    list-style: none;
+    list-style-position: outside;
+    width: 100%;
+}
+#tab-container ul.tab-menu li{
+    display: block;
+    float: left;
+    position: relative;
+    font-weight: 700;
+    padding: 5px 10px 5px 10px;
+    background: #2381e9;
+    border: 1px solid #ddc;
+    border-bottom: none;
+    border-width: 1px;
+    color: white;
+    cursor: default;
+    height: 14px;
+    margin-bottom: -1px;
+    margin-right: 5px;
+    text-align:center;
+    width:120px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+#tab-container ul.tab-menu li.active{
+    background: #fff;
+    color: #2381e9;
+    height: 15px;
+    border-bottom: 0;
+}
+.tab-top-border {
+    border-bottom: 1px solid #d0ccc9;
+}
+.tab-content{
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid #ddc;
+    border-top-style: none;
+    text-align: left;
+    padding: 10px;
+    display: none;
+    height: 183px;
+    overflow-y:scroll;
+}
+#tab-container div.active{
+    display: block;
+}
+.tab-content h1{
+    line-height: 1em;
+    height: 28px;
+    font-size: 12px;
+}
+
+
+
+#table {
+    margin-left:10px;
+    width:95%;
+    text-align:center;
+}
+.table1 {
+	position: absolute;
+    width:68%;
+    text-align:center;
+}
+/*Employer form end*/

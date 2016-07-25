@@ -10,7 +10,7 @@
 namespace ACA_WebApplication.Master {
     
     
-    public partial class Employer_Details {
+    public partial class Employee_Details {
         
         /// <summary>
         /// UpdatePanel1 control.
@@ -40,13 +40,13 @@ namespace ACA_WebApplication.Master {
         protected global::System.Web.UI.WebControls.TextBox txtsearch;
         
         /// <summary>
-        /// rptEmployer control.
+        /// rptEmployee control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptEmployer;
+        protected global::System.Web.UI.WebControls.Repeater rptEmployee;
         
         /// <summary>
         /// btn_first control.
@@ -139,58 +139,85 @@ namespace ACA_WebApplication.Master {
         protected global::System.Web.UI.UpdatePanel UpdatePanel3;
         
         /// <summary>
-        /// txt_employerName control.
+        /// txt_employer_name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_employerName;
+        protected global::System.Web.UI.WebControls.TextBox txt_employer_name;
         
         /// <summary>
-        /// RequiredFieldValidator1 control.
+        /// txt_firstname control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        protected global::System.Web.UI.WebControls.TextBox txt_firstname;
         
         /// <summary>
-        /// txt_ein control.
+        /// txt_middlename control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_ein;
+        protected global::System.Web.UI.WebControls.TextBox txt_middlename;
         
         /// <summary>
-        /// REV control.
+        /// txt_lastname control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator REV;
+        protected global::System.Web.UI.WebControls.TextBox txt_lastname;
         
         /// <summary>
-        /// RequiredFieldValidator2 control.
+        /// txt_SSN control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
+        protected global::System.Web.UI.WebControls.TextBox txt_SSN;
         
         /// <summary>
-        /// drp_fillingyear control.
+        /// txt_dob control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList drp_fillingyear;
+        protected global::System.Web.UI.WebControls.TextBox txt_dob;
+        
+        /// <summary>
+        /// txt_salary control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_salary;
+        
+        /// <summary>
+        /// txt_hourly control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_hourly;
+        
+        /// <summary>
+        /// txt_email control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_email;
         
         /// <summary>
         /// txt_address1 control.
@@ -247,121 +274,40 @@ namespace ACA_WebApplication.Master {
         protected global::System.Web.UI.WebControls.DropDownList drp_country;
         
         /// <summary>
-        /// txt_contactname control.
+        /// UpdatePanel4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_contactname;
+        protected global::System.Web.UI.UpdatePanel UpdatePanel4;
         
         /// <summary>
-        /// txt_contactphone control.
+        /// rptHiredata control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_contactphone;
+        protected global::System.Web.UI.WebControls.Repeater rptHiredata;
         
         /// <summary>
-        /// txt_title control.
+        /// rpt_Status control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_title;
+        protected global::System.Web.UI.WebControls.Repeater rpt_Status;
         
         /// <summary>
-        /// drp_formtype control.
+        /// rpt_coverage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList drp_formtype;
-        
-        /// <summary>
-        /// drp_origincode control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList drp_origincode;
-        
-        /// <summary>
-        /// txt_shop control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_shop;
-        
-        /// <summary>
-        /// OfferMethod control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox OfferMethod;
-        
-        /// <summary>
-        /// OfferMethodRelief control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox OfferMethodRelief;
-        
-        /// <summary>
-        /// Section4980H control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox Section4980H;
-        
-        /// <summary>
-        /// OfferMethod98 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox OfferMethod98;
-        
-        /// <summary>
-        /// chk_disable control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chk_disable;
-        
-        /// <summary>
-        /// rpt_montable control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rpt_montable;
-        
-        /// <summary>
-        /// hdn_isCompany control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdn_isCompany;
+        protected global::System.Web.UI.WebControls.Repeater rpt_coverage;
         
         /// <summary>
         /// hdn_id control.
@@ -373,13 +319,13 @@ namespace ACA_WebApplication.Master {
         protected global::System.Web.UI.WebControls.HiddenField hdn_id;
         
         /// <summary>
-        /// btn_Save control.
+        /// btn_save control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_Save;
+        protected global::System.Web.UI.WebControls.Button btn_save;
         
         /// <summary>
         /// btn_reset control.

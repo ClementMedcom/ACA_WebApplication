@@ -166,7 +166,7 @@ namespace ACA_WebApplication.Master
         protected void btn_delete_Click(object sender, EventArgs e)
         {
             int result = objMaster.Delete_Employer(txt_ein.Text);
-            if (result == 1)
+            if (result > 0)
             {
                 lbl_msg.Text = "Employer Delete Successfully";
                 lightDiv.Visible = true;
@@ -186,6 +186,7 @@ namespace ACA_WebApplication.Master
             //this method sets the value of every textbox, combobox, and checkbox to null
             //in the employer tab
             hdn_id.Value = "0";
+            hdn_isCompany.Value = "0";
             txt_employerName.Text = null;
             txt_ein.Text = null;
             drp_fillingyear.Text = null;

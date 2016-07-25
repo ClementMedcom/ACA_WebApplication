@@ -22,6 +22,24 @@ namespace ACA_WebApplication.Master {
         protected global::System.Web.UI.UpdatePanel UpdatePanel3;
         
         /// <summary>
+        /// txtsearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtsearch;
+        
+        /// <summary>
+        /// drp_count control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList drp_count;
+        
+        /// <summary>
         /// rptCompany control.
         /// </summary>
         /// <remarks>
@@ -31,13 +49,13 @@ namespace ACA_WebApplication.Master {
         protected global::System.Web.UI.WebControls.Repeater rptCompany;
         
         /// <summary>
-        /// txtsearch control.
+        /// lbl_result control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtsearch;
+        protected global::System.Web.UI.WebControls.Label lbl_result;
         
         /// <summary>
         /// btn_first control.
@@ -83,24 +101,6 @@ namespace ACA_WebApplication.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn_last;
-        
-        /// <summary>
-        /// drp_count control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList drp_count;
-        
-        /// <summary>
-        /// lbl_result control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_result;
         
         /// <summary>
         /// hid_rowcount control.

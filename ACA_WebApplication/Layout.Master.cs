@@ -11,7 +11,47 @@ namespace ACA_WebApplication
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+                    if (!CheckUserSession())
+                    {
+                        Session.Clear();
+                        Session.Abandon();
+                        Response.Redirect("~/Login.aspx");
+                    }
+        }
+        private Boolean CheckUserSession()
+        {
+            try
+            {
+                if (Session["UserSession"].ToString() == null || Session["UserSession"].ToString() == "")
+                {
+                    return false;
+                }
+                else
+                {
+                    return true ;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
 
+        }
+
+        protected void LinkButton1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Session.Clear();
+                Session.Abandon();
+                Response.Redirect("~/Login.aspx");
+            }
+            catch (Exception)
+            {
+                Session.Clear();
+                Session.Abandon();
+                Response.Redirect("~/Login.aspx");
+            }
         }
     }
 }
