@@ -81,13 +81,13 @@
                     </a>
                     <ul class="dropdown-menu float-right">
                         <li>
-                            <a href="javascript:;" title="Account Details">
+                            <a href="../Profile.aspx" title="Account Details">
                                 <i class="glyph-icon icon-user mrg5R"></i>
                                 Account Details
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:;" title="Edit Profile">
+                            <a href="../Profile.aspx" title="Edit Profile">
                                 <i class="glyph-icon icon-cog mrg5R"></i>
                                 Edit Profile
                             </a>
@@ -125,13 +125,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" title="Select">
-                                <i class="glyph-icon icon-ok"></i>
-                                Select
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/Plan.aspx" title="Plans">
+                            <a href="../Plan.aspx" title="Plans">
                                 <i class="glyph-icon icon-list-alt"></i>
                                 Plan
                             </a>
@@ -158,7 +152,7 @@
                         </li>
                         <li>
                             <a href="../Master/Company_List.aspx" title="Companies">
-                                <i class="glyph-icon icon-ok"></i>
+                                <i class="glyph-icon icon-globe"></i>
                                 Companies
                             </a>
                         </li>
