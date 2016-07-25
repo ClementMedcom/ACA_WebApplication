@@ -134,6 +134,7 @@
     <Content Include="bin\Microsoft.ApplicationInsights.dll" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
     <Content Include="Companies.aspx" />
+    <Content Include="css\Employee.css" />
     <Content Include="css\Employer.css" />
     <Content Include="css\footer.css" />
     <Content Include="css\FormStyle.css" />
