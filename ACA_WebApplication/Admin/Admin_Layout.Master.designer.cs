@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ACA_WebApplication {
+namespace ACA_WebApplication.Admin {
     
     
-    public partial class Layout1 {
+    public partial class Admin_Layout {
         
         /// <summary>
         /// head control.

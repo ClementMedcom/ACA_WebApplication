@@ -1,4 +1,5 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Layout.master.cs" Inherits="ACA_WebApplication.Layout1" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin_Layout.master.cs" Inherits="ACA_WebApplication.Admin.Admin_Layout" %>
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">

@@ -27,7 +27,8 @@ namespace ACA_WebApplication
             Session["UserSession"] = userSession;
             try
             {
-                dtUser = objMaster.checkUserLogin(txt_uname.Text.Trim(),txt_pwd.Text.Trim(), userSession, "LOGIN");
+                dtUser = objMaster.checkUserLogin(txt_uname.Text.Trim(), txt_pwd.Text.Trim(), userSession, "LOGIN");
+                //dtUser = objMaster.checkUserLogin(objMaster.Encrypt(txt_uname.Text.Trim()), objMaster.Encrypt(txt_pwd.Text.Trim()), userSession, "LOGIN");
                 if (dtUser != null)
                 {
                     if (dtUser.Columns.Contains("RES"))
@@ -40,7 +41,15 @@ namespace ACA_WebApplication
                         Session["UserID"] = dtUser.Rows[0]["UserID"];
                         Session["UserName"] = dtUser.Rows[0]["UserName"];
                         Session["LastLogin"] = dtUser.Rows[0]["LastLogin"];
-                        Response.Redirect("~/Home.aspx");
+                        Session["UserRole"]= dtUser.Rows[0]["UserRole"]; 
+                        if(Session["UserRole"].ToString().Trim()=="2")
+                        {
+                            Response.Redirect("~/Admin/AdminHome.aspx");
+                        }
+                        else if (Session["UserRole"].ToString().Trim() == "1")
+                        {
+                            Response.Redirect("~/Home.aspx");
+                        }
                     }
                 }
                 else
