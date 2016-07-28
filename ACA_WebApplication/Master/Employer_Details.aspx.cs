@@ -66,7 +66,10 @@ namespace ACA_WebApplication.Master
                 txt_city.Text = dr["city"].ToString();
                 drp_state.Text = dr["state"].ToString();
                 txt_zipcode.Text = dr["zip"].ToString();
-                drp_country.Text = dr["country"].ToString();
+                string dbCountry = dr["country"].ToString();
+                if (dbCountry == "US")
+                    dbCountry = "United States of America";
+                drp_country.Text = dbCountry;
                 txt_contactname.Text = dr["contactName"].ToString();
                 txt_contactphone.Text = dr["phoneNumber"].ToString();
                 txt_title.Text = dr["signTitle"].ToString();

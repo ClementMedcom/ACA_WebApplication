@@ -251,6 +251,7 @@ div::-webkit-scrollbar-thumb {
      width:74px;
     padding:3px;
     border:none;
+    background-color:#eaeffa;
     border-bottom:1px solid gray;
 }
 .cmb_short:focus {

@@ -43,7 +43,7 @@ namespace BLL
             "Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","Sudan","Suriname",
             "Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor-Leste",
             "Togo","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine",
-            "United Arab Emirates","United Kingdom (UK)","US","Uruguay","Uzbekistan",
+            "United Arab Emirates","United Kingdom (UK)","United States of America","Uruguay","Uzbekistan",
             "Vanuatu","Vatican City (Holy See)","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"
         };
         public static List<string> formtype = new List<string>

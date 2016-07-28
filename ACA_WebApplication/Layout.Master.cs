@@ -25,7 +25,6 @@ namespace ACA_WebApplication
                 }
                 else
                 {
-                    lbl_companyname.Text = "Welcome " + Session["Company_Name"].ToString();
                     lb_employee.Enabled = true;
                     lb_employer.Enabled = true;
                     lb_plan.Enabled = true;

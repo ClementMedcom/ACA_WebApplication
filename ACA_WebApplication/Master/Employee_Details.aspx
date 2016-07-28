@@ -43,9 +43,9 @@
                                                 <%# Eval("RowNumber") %>
                                             </div>
                                             <div class="detail">
-                                                <b>Name  : </b><%# Eval("FirstName") %>&nbsp;<%# Eval("lastName") %>
+                                                <b>Name  :</b> <%# Eval("FirstName") %>&nbsp;<%# Eval("LastName") %>
                                                 <br />
-                                                <b>SSN   : </b><asp:Label ID="lbl_ssn" runat="server" Text='<%# Eval("ssn") %>'></asp:Label>
+                                                <b>SSN   :</b> <asp:Label ID="lbl_ssn" runat="server" Text='<%# Eval("ssn") %>'></asp:Label>
                                                 <asp:HiddenField ID="hdn_employerTaxId" Value='<%# Eval("taxid") %>' runat="server" />
                                                 <asp:HiddenField ID="hdn_Id" Value='<%# Eval("Id") %>' runat="server" />
                                             </div>
@@ -98,9 +98,7 @@
                                              <td>Employer Name</td>
                                              <td>
                                                  <asp:DropDownList ID="drp_employer" CssClass="cmb" runat="server">
-                                                   
                                                  </asp:DropDownList>
-                                                    <%-- <asp:TextBox ID="txt_employer_name" Style="width: 98%;" class="txt" runat="server"></asp:TextBox>--%>
                                              </td>
                                              <td>Social Security Number</td><td>
                                                 <asp:TextBox ID="txt_SSN" class="txt" runat="server"></asp:TextBox>
@@ -287,7 +285,10 @@
                                                          <asp:TextBox ID="txt_coverageOfferDate" placeholder="MM/dd/yyyy" Text='<%# Eval("coverageOfferDate") %>' CssClass="txt_short" runat="server"></asp:TextBox>
                                                      </td>
                                                      <td>
-                                                         <asp:TextBox ID="txt_name" placeholder="MM/dd/yyyy" Text='<%# Eval("name") %>' CssClass="txt_short" runat="server"></asp:TextBox>
+                                                         <asp:DropDownList ID="drp_plan" CssClass="cmb_short" runat="server">
+                                                        </asp:DropDownList>
+                                                         <asp:HiddenField ID="hdn_planId" Value='<%# Eval("PlanId") %>' runat="server" />
+                                                         <%--<asp:TextBox ID="txt_name" Text='<%# Eval("name") %>' CssClass="txt_short" runat="server"></asp:TextBox>--%>
                                                      </td>
                                                      <td>
                                                          <asp:CheckBox ID="chk_enrolled" runat="server" />

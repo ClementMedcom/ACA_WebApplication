@@ -164,6 +164,15 @@ namespace BLL
             return objDB.GetDataTable(cmd); ;
         }
 
+        public DataTable drp_Plan(string companyTaxId)
+        {
+            SqlCommand cmd = new SqlCommand("usp_EmployerPlanSelect");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@CompanyTaxID", companyTaxId);
+            cmd.Parameters.AddWithValue("@name", null);
+            return objDB.GetDataTable(cmd); ;
+        }
+
         public DataSet Edit_Employee(string EmployerTaxId,string ssn,string Id)
         {
             SqlCommand cmd = new SqlCommand("usp_EmployeeDetails");

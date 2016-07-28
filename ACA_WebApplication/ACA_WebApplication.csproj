@@ -182,6 +182,7 @@
     <Content Include="plan.aspx" />
     <Content Include="Profile.aspx" />
     <Content Include="Test2.aspx" />
+    <Content Include="Upload.aspx" />
     <Content Include="web.config" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
@@ -286,6 +287,12 @@
     </Compile>
     <Compile Include="Test2.aspx.designer.cs">
       <DependentUpon>Test2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Upload.aspx.cs">
+      <DependentUpon>Upload.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Upload.aspx.designer.cs">
+      <DependentUpon>Upload.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

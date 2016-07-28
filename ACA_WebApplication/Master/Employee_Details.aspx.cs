@@ -90,8 +90,10 @@ namespace ACA_WebApplication.Master
                     txt_salary.Text = dt6.Rows[0]["salaryAmount"].ToString();
                     txt_hourly.Text = dt6.Rows[0]["hourlyAmount"].ToString();
                     drp_state.Text = dt6.Rows[0]["state"].ToString();
-                    drp_country.Text = dt6.Rows[0]["country"].ToString();
-                    txt_email.Text= dt6.Rows[0]["email"].ToString();
+                    string dbCountry = dt6.Rows[0]["country"].ToString();
+                    if (dbCountry == "US")
+                        dbCountry = "United States of America";
+                    txt_email.Text = dt6.Rows[0]["email"].ToString();
                 }
                 dt1.Rows.Add(0, null, null);
                 rptHiredata.DataSource = dt1;
@@ -158,9 +160,9 @@ namespace ACA_WebApplication.Master
             if (Result == 1)
             {
                 if (hdn_id.Value == "0")
-                    lbl_msg.Text = "Employer Added Successfully";
+                    lbl_msg.Text = "Employee Added Successfully";
                 else
-                    lbl_msg.Text = "Employer Updated Successfully";
+                    lbl_msg.Text = "Employee Updated Successfully";
                 lightDiv.Visible = true;
                 fadeDiv.Visible = true;
                 list_Employee(hdn_companytax_id.Value, 1, "", 10);
@@ -272,9 +274,10 @@ namespace ACA_WebApplication.Master
                 HiddenField hdn_cobraEnrolled = (HiddenField)item.FindControl("hdn_cobraEnrolled");
                 TextBox txt_cobraStartDate = (TextBox)item.FindControl("txt_cobraStartDate");
                 TextBox txt_cobraEndDate = (TextBox)item.FindControl("txt_cobraEndDate");
-                if (txt_contributionStartDate.Text != "")
+                DropDownList drp_plan = (DropDownList)item.FindControl("drp_plan");
+                if (drp_plan.Text != "")
                     dt_Coverage.Rows.Add(hdn_coverageId.Value, "Coverage" + item.ItemIndex, hdn_unionMember.Value, TextManipulation.toDBNULLfromEmpty(txt_contributionStartDate.Text), TextManipulation.toDBNULLfromEmpty(txt_contributionEndDate.Text),
-                        TextManipulation.toDBNULLfromEmpty(txt_coverageOfferDate.Text), txt_name.Text, hdn_enrolled.Value, TextManipulation.toDBNULLfromEmpty(txt_coverageStartDate.Text), TextManipulation.toDBNULLfromEmpty(txt_coverageEndDate.Text),
+                        TextManipulation.toDBNULLfromEmpty(txt_coverageOfferDate.Text), drp_plan.Text, hdn_enrolled.Value, TextManipulation.toDBNULLfromEmpty(txt_coverageStartDate.Text), TextManipulation.toDBNULLfromEmpty(txt_coverageEndDate.Text),
                         hdn_cobraEnrolled.Value, TextManipulation.toDBNULLfromEmpty(txt_cobraStartDate.Text), TextManipulation.toDBNULLfromEmpty(txt_cobraEndDate.Text));
             }
             return dt_Coverage;
@@ -389,6 +392,7 @@ namespace ACA_WebApplication.Master
         {
             list_Employee(hdn_companytax_id.Value, Convert.ToInt32(lbl_pagenum.Text), txtsearch.Text, Convert.ToInt32(drp_count.Text));
         }
+
         #region Navigation
         protected void drp_count_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -422,6 +426,7 @@ namespace ACA_WebApplication.Master
             list_Employee(hdn_companytax_id.Value, pageCount, txtsearch.Text, Convert.ToInt32(drp_count.Text));
         }
         #endregion
+
         protected void lbl_close_Click(object sender, EventArgs e)
         {
             lightDiv.Visible = false;
@@ -580,7 +585,7 @@ namespace ACA_WebApplication.Master
 
         #endregion
 
-        #region Add Coverage
+        #region Add Employee Enrollment
 
         public DataTable dtCoverage()
         {
@@ -591,7 +596,7 @@ namespace ACA_WebApplication.Master
                             new DataColumn("contributionStartDate", typeof(string)),
                             new DataColumn("contributionEndDate",typeof(string)),
                             new DataColumn("coverageOfferDate", typeof(string)),
-                            new DataColumn("name", typeof(string)),
+                            new DataColumn("PlanId", typeof(string)),
                             new DataColumn("isEnrolled",typeof(int)),
                             new DataColumn("coverageStartDate", typeof(string)),
                             new DataColumn("coverageEndDate", typeof(string)),
@@ -602,6 +607,16 @@ namespace ACA_WebApplication.Master
         }
         protected void rpt_coverage_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
+            DropDownList drp_plan = (DropDownList)e.Item.FindControl("drp_plan");
+            HiddenField hdn_planId = (HiddenField)e.Item.FindControl("hdn_planId");
+
+            DataTable dt = objMaster.drp_Plan(hdn_companytax_id.Value);
+            drp_plan.DataSource = dt; ;
+            drp_plan.DataValueField = "Id";
+            drp_plan.DataTextField = "Name";
+            drp_plan.DataBind();
+            drp_plan.Items.Insert(0, new ListItem("--Select--", ""));
+
             CheckBox chk_unionMember = (CheckBox)e.Item.FindControl("chk_unionMember");
             CheckBox chk_enrolled = (CheckBox)e.Item.FindControl("chk_enrolled");
             CheckBox chk_cobraEnrolled = (CheckBox)e.Item.FindControl("chk_cobraEnrolled");
@@ -615,7 +630,9 @@ namespace ACA_WebApplication.Master
             TextBox txt_contributionStartDate = (TextBox)e.Item.FindControl("txt_contributionStartDate");
             Button btn_coverageplus = (Button)e.Item.FindControl("btn_coverageplus");
             Button btn_coverageminus = (Button)e.Item.FindControl("btn_coverageminus");
-            if (txt_contributionStartDate.Text != "")
+
+            drp_plan.Items.FindByValue(hdn_planId.Value).Selected = true;
+            if (drp_plan.Text != "")
             {
                 btn_coverageminus.Visible = true;
                 btn_coverageplus.Visible = false;
@@ -638,7 +655,8 @@ namespace ACA_WebApplication.Master
                 TextBox txt_contributionStartDate = (TextBox)item.FindControl("txt_contributionStartDate");
                 TextBox txt_contributionEndDate = (TextBox)item.FindControl("txt_contributionEndDate");
                 TextBox txt_coverageOfferDate = (TextBox)item.FindControl("txt_coverageOfferDate");
-                TextBox txt_name = (TextBox)item.FindControl("txt_name");
+                DropDownList drp_plan = (DropDownList)item.FindControl("drp_plan");
+                HiddenField hdn_planId = (HiddenField)item.FindControl("hdn_planId");
                 HiddenField hdn_enrolled = (HiddenField)item.FindControl("hdn_enrolled");
                 TextBox txt_coverageStartDate = (TextBox)item.FindControl("txt_coverageStartDate");
                 TextBox txt_coverageEndDate = (TextBox)item.FindControl("txt_coverageEndDate");
@@ -646,7 +664,7 @@ namespace ACA_WebApplication.Master
                 TextBox txt_cobraStartDate = (TextBox)item.FindControl("txt_cobraStartDate");
                 TextBox txt_cobraEndDate = (TextBox)item.FindControl("txt_cobraEndDate");
                 dt_Coverage.Rows.Add(hdn_coverageId.Value, hdn_unionMember.Value, txt_contributionStartDate.Text, txt_contributionEndDate.Text,
-                    txt_coverageOfferDate.Text, txt_name.Text, hdn_enrolled.Value, txt_coverageStartDate.Text, txt_coverageEndDate.Text,
+                    txt_coverageOfferDate.Text, drp_plan.Text, hdn_enrolled.Value, txt_coverageStartDate.Text, txt_coverageEndDate.Text,
                     hdn_cobraEnrolled.Value, txt_cobraStartDate.Text, txt_cobraEndDate.Text);
             }
             dt_Coverage.Rows.Add(0, 0, null, null, null, null, 0, null, null, 0, null, null);
@@ -668,7 +686,8 @@ namespace ACA_WebApplication.Master
                 TextBox txt_contributionStartDate = (TextBox)item.FindControl("txt_contributionStartDate");
                 TextBox txt_contributionEndDate = (TextBox)item.FindControl("txt_contributionEndDate");
                 TextBox txt_coverageOfferDate = (TextBox)item.FindControl("txt_coverageOfferDate");
-                TextBox txt_name = (TextBox)item.FindControl("txt_name");
+                DropDownList drp_plan = (DropDownList)item.FindControl("drp_plan");
+                HiddenField hdn_planId = (HiddenField)item.FindControl("hdn_planId");
                 HiddenField hdn_enrolled = (HiddenField)item.FindControl("hdn_enrolled");
                 TextBox txt_coverageStartDate = (TextBox)item.FindControl("txt_coverageStartDate");
                 TextBox txt_coverageEndDate = (TextBox)item.FindControl("txt_coverageEndDate");
@@ -676,7 +695,7 @@ namespace ACA_WebApplication.Master
                 TextBox txt_cobraStartDate = (TextBox)item.FindControl("txt_cobraStartDate");
                 TextBox txt_cobraEndDate = (TextBox)item.FindControl("txt_cobraEndDate");
                 dt_Coverage.Rows.Add(hdn_coverageId.Value, hdn_unionMember.Value, txt_contributionStartDate.Text, txt_contributionEndDate.Text,
-                    txt_coverageOfferDate.Text, txt_name.Text, hdn_enrolled.Value, txt_coverageStartDate.Text, txt_coverageEndDate.Text,
+                    txt_coverageOfferDate.Text, drp_plan.Text, hdn_enrolled.Value, txt_coverageStartDate.Text, txt_coverageEndDate.Text,
                     hdn_cobraEnrolled.Value, txt_cobraStartDate.Text, txt_cobraEndDate.Text);
             }
             //dt_Coverage.Rows.Add(0, 0, null, null, null, null, 0, null, null, 0, null, null);

@@ -58,15 +58,6 @@ namespace ACA_WebApplication {
         protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
         
         /// <summary>
-        /// lbl_companyname control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_companyname;
-        
-        /// <summary>
         /// lb_home control.
         /// </summary>
         /// <remarks>

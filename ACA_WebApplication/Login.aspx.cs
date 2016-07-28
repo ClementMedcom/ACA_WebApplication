@@ -48,7 +48,7 @@ namespace ACA_WebApplication
                         }
                         else if (Session["UserRole"].ToString().Trim() == "1")
                         {
-                            Response.Redirect("~/Master/Company_List.aspx");
+                            Response.Redirect("~/Home.aspx");
                         }
                     }
                 }

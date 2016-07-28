@@ -47,10 +47,8 @@ namespace ACA_WebApplication.Master
         {
             if (e.CommandName == "View")
             {
-                Label lbl_name = (Label)e.Item.FindControl("lbl_name");
                 string tax_id = e.CommandArgument.ToString();
                 Session["Tax_Id"] = tax_id;
-                Session["Company_Name"] = lbl_name.Text;
                 Response.Redirect("~/Master/Employer_Details.aspx");
             }
         }
