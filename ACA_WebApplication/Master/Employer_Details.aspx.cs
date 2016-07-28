@@ -96,11 +96,12 @@ namespace ACA_WebApplication.Master
                     {
                         row["month"] = "All 12 Months";
                     }
-
-                    row["minimum"] = string.IsNullOrEmpty(dr[string.Join("_", "minimum", i.ToString())].ToString());
+                    string min = dr["minimum_"+ i.ToString()].ToString();
+                    row["minimum"] = min;
                     row["full"] = dr[string.Join("_", "fullTime", i.ToString())];
                     row["total"] = dr[string.Join("_", "total", i.ToString())];
-                    row["aggregate"] = string.IsNullOrEmpty(dr[string.Join("_", "group", i.ToString())].ToString());
+                    string grp = dr["group_" + i.ToString()].ToString();
+                    row["aggregate"] = grp;
                     row["section"] = dr[string.Join("_", "S4980H", i.ToString())];
                     part3Table.Rows.Add(row);
                 }
@@ -111,12 +112,15 @@ namespace ACA_WebApplication.Master
         }
         protected void rpt_montable_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            CheckBox chk_minimum = (CheckBox)e.Item.FindControl("chk_minimum");
-            CheckBox chk_aggregate = (CheckBox)e.Item.FindControl("chk_minimum");
-            HiddenField hdn_chk_minimum = (HiddenField)e.Item.FindControl("hdn_chk_minimum");
-            HiddenField hdn_chk_aggregate = (HiddenField)e.Item.FindControl("hdn_chk_aggregate");
-            chk_minimum.Checked = hdn_chk_minimum.Value == "0" ? false : true;
-            chk_aggregate.Checked = hdn_chk_aggregate.Value == "0" ? false : true;
+            //for (int i = 0; i < 13; i++)
+            //{
+            //    CheckBox chk_minimum = (CheckBox)e.Item.FindControl("minimum_" + i.ToString());
+            //    CheckBox chk_aggregate = (CheckBox)e.Item.FindControl("group_" + i.ToString());
+            //    HiddenField hdn_chk_minimum = (HiddenField)e.Item.FindControl("hdn_chk_minimum");
+            //    HiddenField hdn_chk_aggregate = (HiddenField)e.Item.FindControl("hdn_chk_aggregate");
+            //    chk_minimum.Checked = hdn_chk_minimum.Value == "0" ? false : true;
+            //    chk_aggregate.Checked = hdn_chk_aggregate.Value == "0" ? false : true;
+            //}
         }
 
         protected void btn_Save_Click(object sender, EventArgs e)

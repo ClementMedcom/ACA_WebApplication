@@ -266,13 +266,13 @@
                                                                         <asp:Label ID="lbl_month" runat="server" Text='<%# Eval("month") %>'></asp:Label>
                                                                     </td>
                                                                     <td>
-                                                                        <asp:CheckBox ID="chk_minimum" runat="server" />
+                                                                        <asp:CheckBox ID="chk_minimum" Checked='<%# Eval("minimum").ToString()=="0"?false:true %>' runat="server" />
                                                                         <asp:HiddenField ID="hdn_chk_minimum" Value='<%# Eval("minimum") %>' runat="server" />
                                                                     </td>
                                                                     <td><asp:TextBox ID="txt_full" style="border:none;text-align:center;"  width= "40px" Text='<%# Eval("full") %>' runat="server"></asp:TextBox></td>
                                                                     <td><asp:TextBox ID="txt_total" style="border:none;text-align:center;"  width= "40px" Text='<%# Eval("total") %>' runat="server"></asp:TextBox></td>
                                                                     <td>
-                                                                        <asp:CheckBox ID="chk_aggregate" runat="server" />
+                                                                        <asp:CheckBox ID="chk_aggregate" Checked='<%# Eval("aggregate").ToString()=="0"?false:true %>' runat="server" />
                                                                         <asp:HiddenField ID="hdn_chk_aggregate" Value='<%# Eval("aggregate") %>' runat="server" />
                                                                     </td>
                                                                     <td>

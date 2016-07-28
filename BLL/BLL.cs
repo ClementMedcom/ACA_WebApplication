@@ -6,8 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL;
-using System.Security.Cryptography;
-using System.IO;
 namespace BLL
 {
     public class Master_BLL
@@ -157,50 +155,58 @@ namespace BLL
             return objDB.GetDataSet(cmd); ;
         }
 
+        public DataTable drp_Employer(string companyTaxId)
+        {
+            SqlCommand cmd = new SqlCommand("usp_EmployerMSelect");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@CompanyTaxID", companyTaxId);
+            cmd.Parameters.AddWithValue("@EmployerTaxID", null);
+            return objDB.GetDataTable(cmd); ;
+        }
+
+        public DataSet Edit_Employee(string EmployerTaxId,string ssn,string Id)
+        {
+            SqlCommand cmd = new SqlCommand("usp_EmployeeDetails");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@EmployerTaxId", EmployerTaxId);
+            cmd.Parameters.AddWithValue("@ssn", ssn);
+            cmd.Parameters.AddWithValue("@Id", Id);
+            return objDB.GetDataSet(cmd); ;
+        }
+
+        public int Insert_Update_Employee(string Id, params SqlParameter[] parameters)
+        {
+            SqlCommand cmd = new SqlCommand("Usp_EmployeeAction");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Id", Id);
+            cmd.Parameters.AddRange(parameters);
+            cmd.Parameters.Add("@Result", SqlDbType.Int, 4);
+            cmd.Parameters["@Result"].Direction = ParameterDirection.Output;
+            objDB.ExecuteQuery(cmd);
+            return Convert.ToInt32(cmd.Parameters["@Result"].Value);
+        }
+
         #endregion
 
-        #region Cryptocraphy
-       public  string Encrypt(string clearText)
+        #region Plan
+        public DataSet list_Plan(string companyTaxId, int pageIndex, string search, int PageSize)
         {
-            string EncryptionKey = "OTNA8SPENG92016";
-            byte[] clearBytes = Encoding.Unicode.GetBytes(clearText);
-            using (Aes encryptor = Aes.Create())
-            {
-                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
-                encryptor.Key = pdb.GetBytes(32);
-                encryptor.IV = pdb.GetBytes(16);
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
-                    {
-                        cs.Write(clearBytes, 0, clearBytes.Length);
-                        cs.Close();
-                    }
-                    clearText = Convert.ToBase64String(ms.ToArray());
-                }
-            }
-            return clearText;
+            //DataSet ds = new DataSet();
+            SqlCommand cmd = new SqlCommand("usp_EmployerPlan_list");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@CompanyTaxID", companyTaxId);
+            //cmd.Parameters.AddWithValue("@EmployerTaxID", null);
+            cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
+            cmd.Parameters.AddWithValue("@PageSize", PageSize);
+            cmd.Parameters.AddWithValue("@search", search);
+            return objDB.GetDataSet(cmd); ;
         }
-    public  string Decrypt(string cipherText)
+        public DataSet getPlanDetails(string companyTaxId)
         {
-            string EncryptionKey = "OTNA8SPENG92016";
-            byte[] cipherBytes = Convert.FromBase64String(cipherText);
-            using (Aes encryptor = Aes.Create())
-            {
-                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
-                encryptor.Key = pdb.GetBytes(32);
-                encryptor.IV = pdb.GetBytes(16);
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateDecryptor(), CryptoStreamMode.Write))
-                    {
-                        cs.Write(cipherBytes, 0, cipherBytes.Length);
-                        cs.Close();
-                    }
-                    cipherText = Encoding.Unicode.GetString(ms.ToArray());
-                }
-            }
-            return cipherText;
+            SqlCommand cmd = new SqlCommand("usp_PlanDetails");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@CompanyTaxID", companyTaxId);
+            return objDB.GetDataSet(cmd); ;
         }
         #endregion
 

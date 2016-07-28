@@ -1,66 +1,67 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Layout.master.cs" Inherits="ACA_WebApplication.Layout1" %>
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
+<head>
 
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-        <title>MEDCOM ADMIN</title>
-        <meta name="description" content="" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <!-- Favicons -->
-        <link rel="shortcut icon" href="../assets/images/icons/favicon.png" />
-        <!--[if lt IE 9]>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>MEDCOM ADMIN</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="../assets/images/icons/favicon.png" />
+    <!--[if lt IE 9]>
           <script src="assets/js/master/core/html5shiv.min.js"></script>
           <script src="assets/js/master/core/respond.min.js"></script>
         <![endif]-->
-        <!-- Medcom Admin CSS Core -->
-        <link rel="stylesheet" type="text/css" href="../assets/css/master/Main.min.css" />
-        <!-- Theme UI -->
+    <!-- Medcom Admin CSS Core -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/master/Main.min.css" />
+    <!-- Theme UI -->
 
-        <link id="layout-theme" rel="stylesheet" type="text/css" href="../assets/themes/master/color-schemes/dark-blue.min.css" />
+    <link id="layout-theme" rel="stylesheet" type="text/css" href="../assets/themes/master/color-schemes/dark-blue.min.css" />
 
-        <!-- MEDCOM Admin Responsive -->
+    <!-- MEDCOM Admin Responsive -->
 
-        <link rel="stylesheet" type="text/css" href="../assets/themes/master/common.min.css" />
-        <link rel="stylesheet" type="text/css" href="../assets/themes/master/responsive.min.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/themes/master/common.min.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/themes/master/responsive.min.css" />
 
-        <!-- MEDCOM Admin JS -->
+    <!-- MEDCOM Admin JS -->
 
-        <script type="text/javascript" src="../assets/js/master/core.min.js"></script>
-        <script>
-            jQuery(window).load(
-                function(){
+    <script type="text/javascript" src="../assets/js/master/core.min.js"></script>
+    <script>
+        jQuery(window).load(
+            function () {
 
-                    var wait_loading = window.setTimeout( function(){
-                      $('#loading').slideUp('fast');
-                      jQuery('body').css('overflow','auto');
-                    },1000
-                    );
+                var wait_loading = window.setTimeout(function () {
+                    $('#loading').slideUp('fast');
+                    jQuery('body').css('overflow', 'auto');
+                }, 1000
+                );
 
-                });
-        </script>
+            });
+    </script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <asp:ContentPlaceHolder ID="head" runat="server">
+    <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
-    </head>
+</head>
 <body>
     <form id="form1" runat="server">
         <div id="page-wrapper" class="demo-example">
             <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
-            <ProgressTemplate>
-                <div class="black_overlay">
-                    <div class="center">
-                        <img src="../img/loader4.gif" />
+                <ProgressTemplate>
+                    <div class="black_overlay">
+                        <div class="center">
+                            <img src="../img/loader4.gif" />
+                        </div>
                     </div>
-                </div>
-            </ProgressTemplate>
-        </asp:UpdateProgress>
+                </ProgressTemplate>
+            </asp:UpdateProgress>
             <div id="page-header" class="clearfix">
                 <div id="header-logo">
                     <%--<a href="javascript:;" class="tooltip-button" data-placement="bottom" title="Close sidebar" id="close-sidebar" style="background-image:url('../assets/images/icons/Left_Arrow.png');background-size:15px;width:40px;height:40px;background-repeat:no-repeat;margin-top:22px;">--%>
-                        <a href="javascript:;" class="tooltip-button" data-placement="bottom" title="Close sidebar" id="close-sidebar" >
+                    <a href="javascript:;" class="tooltip-button" data-placement="bottom" title="Close sidebar" id="close-sidebar">
                         <i class="glyph-icon icon-chevron-left"></i>
                     </a>
                     <%--<a href="javascript:;" class="tooltip-button hidden" data-placement="bottom" title="Open sidebar" id="rm-close-sidebar" style="background-image:url('../assets/images/icons/Right_Arrow.png');background-size:15px;width:40px;height:40px;background-repeat:no-repeat;margin-top:22px;">--%>
@@ -70,7 +71,6 @@
                     <a href="javascript:;" class="tooltip-button hidden" title="Navigation Menu" id="responsive-open-menu">
                         <i class="glyph-icon icon-align-justify"></i>
                     </a>
-                    Medcom 
                 </div>
                 
                 <div class="user-profile dropdown">
@@ -78,9 +78,10 @@
                         <img width="36" src="../assets/images/user.png" alt="" />
                         <span>
                             <asp:Label ID="lbl_name" runat="server" Text="Welcome"></asp:Label></span>
-                       <%-- <img src="../assets/images/icons/Down_Arrow.png" alt="" style="height:10px;width:10px;margin-top:23px;" />--%>
+                        <%-- <img src="../assets/images/icons/Down_Arrow.png" alt="" style="height:10px;width:10px;margin-top:23px;" />--%>
                         <i class="glyph-icon icon-chevron-down"></i>
                     </a>
+                    
                     <ul class="dropdown-menu float-right">
                         <li>
                             <a href="../Profile.aspx" title="Account Details">
@@ -107,108 +108,41 @@
                         </li>
                     </ul>
                 </div>
-            </div><!-- #page-header -->
+                <div style="margin-top:17px;"><asp:Label ID="lbl_companyname" runat="server" Text="" ForeColor="#FFFF66" Font-Size="10" Font-Italic="True"></asp:Label></div>
+            </div>
+            <!-- #page-header -->
 
             <div id="page-sidebar" class="scrollable-content">
                 <div id="sidebar-menu">
-                    <img style="width:98%;height:70px; border:1px solid #2c2c9c;" src="../assets/images/logo.jpg" />
+                    <img style="width: 98%; height: 70px;" src="../assets/images/logo.png" />
                     <div class="divider mrg5T mobile-hidden"></div>
                     <ul>
                         <li>
-                            <a href="../Home.aspx" title="Home">
-                                <i class="glyph-icon icon-home "></i>
-                                Home
-                            </a>
+                            <%--<a href="../Home.aspx" title="Home">
+                                <i class="glyph-icon icon-home "></i>--%>
+                            <asp:LinkButton ID="lb_home" runat="server" title="Home" PostBackUrl="~/Home.aspx"><i class="glyph-icon icon-home "></i>Home</asp:LinkButton>
+                            <%--Home
+                            </a>--%>
                         </li>
                         <li>
-                            <a href="#" title="Upload">
-                                <i class="glyph-icon icon-upload"></i>
-                                Upload
-                            </a>
+                            <asp:LinkButton ID="lb_companies" runat="server" title="Companies" PostBackUrl="~/Master/Company_List.aspx"><i class="glyph-icon icon-globe"></i>
+                                Companies</asp:LinkButton>
                         </li>
                         <li>
-                            <a href="../Plan.aspx" title="Plans">
-                                <i class="glyph-icon icon-list-alt"></i>
-                                Plan
-                            </a>
-                           <%-- <ul>
-                                <li>
-                                    <a href="#" title="View Plans">
-                                        <i class="glyph-icon icon-chevron-right"></i>
-                                        View Plans
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" title="Edit Plans">
-                                        <i class="glyph-icon icon-chevron-right"></i>
-                                        Edit Plans
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" title="Delete Plans">
-                                        <i class="glyph-icon icon-chevron-right"></i>
-                                        Delete Plans
-                                    </a>
-                                </li>
-                            </ul>--%>
+                            <asp:LinkButton ID="lb_employer" runat="server" title="Employer" PostBackUrl="~/Master/Employer_Details.aspx" Enabled="false"><i class="glyph-icon icon-lock"></i>
+                                Employer</asp:LinkButton>
                         </li>
                         <li>
-                            <a href="../Master/Company_List.aspx" title="Companies">
-                                <i class="glyph-icon icon-globe"></i>
-                                Companies
-                            </a>
+                            <asp:LinkButton ID="lb_employee" runat="server" title="Employee" PostBackUrl="~/Master/Employee_Details.aspx" Enabled="false"><i class="glyph-icon icon-user"></i>
+                                Employee</asp:LinkButton>
                         </li>
                         <li>
-                            <a href="../Master/Employer_Details.aspx" title="Employer">
-                                <i class="glyph-icon icon-lock"></i>
-                                Employer
-                            </a>
-                            <%--<ul>
-                                <li>
-                                    <a href="../Master/Employer_Details.aspx" title="View Employer">
-                                        <i class="glyph-icon icon-chevron-right"></i>
-                                        View Employer
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" title="Edit Employer">
-                                        <i class="glyph-icon icon-chevron-right"></i>
-                                        Edit Employer
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" title="Delete Employer">
-                                        <i class="glyph-icon icon-chevron-right"></i>
-                                        Delete Employer
-                                    </a>
-                                </li>
-                            </ul>--%>
+                            <asp:LinkButton ID="lb_plan" runat="server" title="Plans" PostBackUrl="~/Master/Plan.aspx" Enabled="false"><i class="glyph-icon icon-list-alt"></i>
+                                Plan</asp:LinkButton>
                         </li>
                         <li>
-                            <a href="../Master/Employee_Details.aspx" title="Employee">
-                                <i class="glyph-icon icon-user"></i>
-                                Employee
-                            </a>
-                            <%--<ul>
-                                <li>
-                                    <a href="#" title="View Employe">
-                                        <i class="glyph-icon icon-chevron-right"></i>
-                                        View Employe
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" title="Edit Employe">
-                                        <i class="glyph-icon icon-chevron-right"></i>
-                                        Edit Employe
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" title="Delete Employe">
-                                        <i class="glyph-icon icon-chevron-right"></i>
-                                        Delete Employe
-                                    </a>
-                                </li>
-                            </ul>--%>
+                            <asp:LinkButton ID="lb_upload" runat="server" title="Upload" PostBackUrl="~/Upload.aspx" Enabled="false"><i class="glyph-icon icon-upload"></i>
+                                Upload</asp:LinkButton>
                         </li>
                         <li>
                             <a href="javascript:;" title="Reports">
@@ -301,10 +235,11 @@
                         </li>
                     </ul>
                     <div class="divider mrg5T mobile-hidden"></div>
-                            
+
                 </div>
 
-            </div><!-- #page-sidebar -->
+            </div>
+            <!-- #page-sidebar -->
             <div id="page-content-wrapper">
                 <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
@@ -315,8 +250,10 @@
                         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
                     </ContentTemplate>
                 </asp:UpdatePanel>
-            </div><!-- #page-main -->
-        </div><!-- #page-wrapper -->
+            </div>
+            <!-- #page-main -->
+        </div>
+        <!-- #page-wrapper -->
     </form>
 </body>
 </html>

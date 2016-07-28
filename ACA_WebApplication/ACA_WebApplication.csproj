@@ -91,7 +91,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Web.DataVisualization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -110,12 +109,12 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Admin\AdminHome.aspx" />
     <Content Include="ApplicationInsights.config" />
     <Content Include="assets\css\master\Main.min.css" />
     <Content Include="assets\fonts\font_awesome\fontawesome-webfont.svg" />
     <Content Include="assets\images\icons\Favicon.png" />
     <Content Include="assets\images\logo.jpg" />
+    <Content Include="assets\images\logo.png" />
     <Content Include="assets\images\User.png" />
     <Content Include="assets\js\master\core.min.js" />
     <Content Include="assets\themes\master\color-schemes\dark-blue.min.css" />
@@ -136,7 +135,6 @@
     <Content Include="bin\Microsoft.ApplicationInsights.dll" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
     <Content Include="Companies.aspx" />
-    <Content Include="css\Employee.css" />
     <Content Include="css\Employer.css" />
     <Content Include="css\footer.css" />
     <Content Include="css\FormStyle.css" />
@@ -151,6 +149,7 @@
     <Content Include="Employer.aspx" />
     <Content Include="Home.aspx" />
     <Content Include="icons\company.png" />
+    <Content Include="icons\excel.png" />
     <Content Include="icons\Help.png" />
     <Content Include="icons\minus.png" />
     <Content Include="icons\plus.png" />
@@ -166,11 +165,11 @@
     <Content Include="img\pwd.png" />
     <Content Include="img\uname.png" />
     <Content Include="js\jquery.min.js.js" />
-    <Content Include="js\profile.js" />
     <Content Include="Login.aspx" />
     <Content Include="Master\Company_List.aspx" />
     <Content Include="Master\Employee_Details.aspx" />
     <Content Include="Master\Employer_Details.aspx" />
+    <Content Include="Master\Plan.aspx" />
     <Content Include="packages.config" />
     <Content Include="Layout.Master" />
     <Content Include="assets\fonts\font_awesome\fontawesome-webfont.woff" />
@@ -179,7 +178,6 @@
     <Content Include="assets\fonts\font_awesome\fontawesome-webfont_aea8981c.ttf" />
     <Content Include="assets\fonts\font_awesome\fontawesome-webfont_aea8981c.woff" />
     <Content Include="bin\ACA_WebApplication.dll.config" />
-    <Content Include="Admin\Admin_Layout.Master" />
     <None Include="Properties\PublishProfiles\Test3.pubxml" />
     <Content Include="plan.aspx" />
     <Content Include="Profile.aspx" />
@@ -197,20 +195,6 @@
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Admin\AdminHome.aspx.cs">
-      <DependentUpon>AdminHome.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Admin\AdminHome.aspx.designer.cs">
-      <DependentUpon>AdminHome.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Admin\Admin_Layout.Master.cs">
-      <DependentUpon>Admin_Layout.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Admin\Admin_Layout.Master.designer.cs">
-      <DependentUpon>Admin_Layout.Master</DependentUpon>
-    </Compile>
     <Compile Include="Companies.aspx.cs">
       <DependentUpon>Companies.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -273,6 +257,13 @@
     </Compile>
     <Compile Include="Master\Employer_Details.aspx.designer.cs">
       <DependentUpon>Employer_Details.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Master\Plan.aspx.cs">
+      <DependentUpon>Plan.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Master\Plan.aspx.designer.cs">
+      <DependentUpon>Plan.aspx</DependentUpon>
     </Compile>
     <Compile Include="plan.aspx.cs">
       <DependentUpon>plan.aspx</DependentUpon>

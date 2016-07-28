@@ -10,25 +10,25 @@
 namespace ACA_WebApplication.Master {
     
     
-    public partial class Employee_Details {
+    public partial class Plan {
         
         /// <summary>
-        /// UpdatePanel1 control.
+        /// up1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        protected global::System.Web.UI.UpdatePanel up1;
         
         /// <summary>
-        /// UpdatePanel2 control.
+        /// up2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
+        protected global::System.Web.UI.UpdatePanel up2;
         
         /// <summary>
         /// txtsearch control.
@@ -40,13 +40,13 @@ namespace ACA_WebApplication.Master {
         protected global::System.Web.UI.WebControls.TextBox txtsearch;
         
         /// <summary>
-        /// rptEmployee control.
+        /// rptPlan control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptEmployee;
+        protected global::System.Web.UI.WebControls.Repeater rptPlan;
         
         /// <summary>
         /// btn_first control.
@@ -130,220 +130,130 @@ namespace ACA_WebApplication.Master {
         protected global::System.Web.UI.WebControls.HiddenField hdn_companytax_id;
         
         /// <summary>
-        /// UpdatePanel3 control.
+        /// UpdatePanel1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel3;
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
-        /// drp_employer control.
+        /// txt_planName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList drp_employer;
+        protected global::System.Web.UI.WebControls.TextBox txt_planName;
         
         /// <summary>
-        /// txt_SSN control.
+        /// drp_fundingtype control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_SSN;
+        protected global::System.Web.UI.WebControls.DropDownList drp_fundingtype;
         
         /// <summary>
-        /// txt_firstname control.
+        /// drp_plantype control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_firstname;
+        protected global::System.Web.UI.WebControls.DropDownList drp_plantype;
         
         /// <summary>
-        /// txt_middlename control.
+        /// drp_waitingperiod control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_middlename;
+        protected global::System.Web.UI.WebControls.DropDownList drp_waitingperiod;
         
         /// <summary>
-        /// txt_lastname control.
+        /// txt_days control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_lastname;
+        protected global::System.Web.UI.WebControls.TextBox txt_days;
         
         /// <summary>
-        /// txt_dob control.
+        /// drp_spouse control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_dob;
+        protected global::System.Web.UI.WebControls.DropDownList drp_spouse;
         
         /// <summary>
-        /// txt_email control.
+        /// drp_dependence control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_email;
+        protected global::System.Web.UI.WebControls.DropDownList drp_dependence;
         
         /// <summary>
-        /// txt_address1 control.
+        /// drp_termination control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_address1;
+        protected global::System.Web.UI.WebControls.DropDownList drp_termination;
         
         /// <summary>
-        /// txt_address2 control.
+        /// drp_renewalmonth control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_address2;
+        protected global::System.Web.UI.WebControls.DropDownList drp_renewalmonth;
         
         /// <summary>
-        /// txt_city control.
+        /// drp_minvalue control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_city;
+        protected global::System.Web.UI.WebControls.DropDownList drp_minvalue;
         
         /// <summary>
-        /// drp_state control.
+        /// rpt_codetbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList drp_state;
+        protected global::System.Web.UI.WebControls.Repeater rpt_codetbl;
         
         /// <summary>
-        /// txt_zipcode control.
+        /// drp_bandingtype control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_zipcode;
+        protected global::System.Web.UI.WebControls.DropDownList drp_bandingtype;
         
         /// <summary>
-        /// drp_country control.
+        /// rpttable control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList drp_country;
-        
-        /// <summary>
-        /// txt_salary control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_salary;
-        
-        /// <summary>
-        /// txt_hourly control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_hourly;
-        
-        /// <summary>
-        /// UpdatePanel4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel4;
-        
-        /// <summary>
-        /// rptHiredata control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptHiredata;
-        
-        /// <summary>
-        /// UpdatePanel5 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel5;
-        
-        /// <summary>
-        /// rpt_Status control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rpt_Status;
-        
-        /// <summary>
-        /// rpt_coverage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rpt_coverage;
-        
-        /// <summary>
-        /// rpt_code control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rpt_code;
-        
-        /// <summary>
-        /// rpt_IndividualData control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rpt_IndividualData;
-        
-        /// <summary>
-        /// hdn_id control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdn_id;
+        protected global::System.Web.UI.WebControls.Repeater rpttable;
         
         /// <summary>
         /// btn_save control.
@@ -355,57 +265,12 @@ namespace ACA_WebApplication.Master {
         protected global::System.Web.UI.WebControls.Button btn_save;
         
         /// <summary>
-        /// btn_reset control.
+        /// btn_clear control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_reset;
-        
-        /// <summary>
-        /// btn_delete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_delete;
-        
-        /// <summary>
-        /// lightDiv control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lightDiv;
-        
-        /// <summary>
-        /// lbl_msg control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_msg;
-        
-        /// <summary>
-        /// lbl_close control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbl_close;
-        
-        /// <summary>
-        /// fadeDiv control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl fadeDiv;
+        protected global::System.Web.UI.WebControls.Button btn_clear;
     }
 }

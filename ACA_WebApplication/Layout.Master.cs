@@ -11,12 +11,31 @@ namespace ACA_WebApplication
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-                    if (!CheckUserSession())
-                    {
-                        Session.Clear();
-                        Session.Abandon();
-                        Response.Redirect("~/Login.aspx");
-                    }
+            try
+            {
+                if (!CheckUserSession())
+                {
+                    Session.Clear();
+                    Session.Abandon();
+                    Response.Redirect("~/Login.aspx");
+                }
+                if (Session["Tax_Id"].ToString() == null || Session["Tax_Id"].ToString() == "")
+                {
+                    return;
+                }
+                else
+                {
+                    lbl_companyname.Text = "Welcome " + Session["Company_Name"].ToString();
+                    lb_employee.Enabled = true;
+                    lb_employer.Enabled = true;
+                    lb_plan.Enabled = true;
+                    lb_upload.Enabled = true;
+                }
+            }
+            catch (Exception)
+            {
+
+            }
         }
         private Boolean CheckUserSession()
         {
