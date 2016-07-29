@@ -43,7 +43,7 @@ namespace BLL
             "Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","Sudan","Suriname",
             "Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor-Leste",
             "Togo","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine",
-            "United Arab Emirates","United Kingdom (UK)","US","Uruguay","Uzbekistan",
+            "United Arab Emirates","United Kingdom (UK)","United States of America","Uruguay","Uzbekistan",
             "Vanuatu","Vatican City (Holy See)","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"
         };
         public static List<string> formtype = new List<string>
@@ -89,6 +89,15 @@ namespace BLL
             "ALLM_COC","JAN_COC","FEB_COC","MAR_COC","APR_COC","MAY_COC","JUN_COC","JUL_COC","AUG_COC","SEP_COC","OCT_COC","NOV_COC","DEC_COC","ALLM_LCMP","JAN_LCMP","FEB_LCMP","MAR_LCMP","APR_LCMP","MAY_LCMP","JUN_LCMP","JUL_LCMP","AUG_LCMP","SEP_LCMP","OCT_LCMP","NOV_LCMP","DEC_LCMP","ALLM_SHC","JAN_SHC","FEB_SHC","MAR_SHC","APR_SHC","MAY_SHC","JUN_SHC","JUL_SHC","AUG_SHC","SEP_SHC","OCT_SHC","NOV_SHC","DEC_SHC"
         };
 
+        public static List<string> EmployeeStatus = new List<string>
+        {
+            "Full-Time", "Part-Time"
+        };
+
+        public static List<string> EmployeeFilterFields = new List<string>
+        {
+            "Employer name", "Employer EIN", "First name", "Last name", "SSN", "City", "State", "Zip code", "Country", "Hire date", "Termination date", "Status", "Coverage offer date"
+        };
         #region getdrpFunction
 
         public List<string> Getfilingyear()
@@ -143,6 +152,14 @@ namespace BLL
         public List<string> GetEmployeeCodeColumns()
         {
             return EmployeeCodeColumns;
+        }
+        public List<string> GetEmployeeStatus()
+        {
+            return EmployeeStatus;
+        }
+        public List<string> GetEmployeeFilterFields()
+        {
+            return EmployeeFilterFields;
         }
         #endregion
     }

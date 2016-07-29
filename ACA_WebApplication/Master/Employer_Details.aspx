@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Layout.Master" AutoEventWireup="true" CodeBehind="Employer_Details.aspx.cs" Inherits="ACA_WebApplication.Master.Employer_Details" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <link href="../css/Employer.css" rel="stylesheet" />
+     <link href="../css/Employer.css" rel="stylesheet" />
     <link href="../css/FormStyle.css" rel="stylesheet" />
     <script type="text/javascript">
         function page_load() {
@@ -17,6 +17,7 @@
         <Triggers>
             <asp:AsyncPostBackTrigger ControlID="btn_save" />
             <asp:AsyncPostBackTrigger ControlID="lbl_close" />
+              <%--<asp:AsyncPostBackTrigger ControlID="rptEmployer"/>--%>
             <asp:AsyncPostBackTrigger ControlID="btn_delete" />
         </Triggers>
         <ContentTemplate>
@@ -102,16 +103,17 @@
                                                 <td>Employer Name</td>
                                                 <td>
                                                     <asp:TextBox ID="txt_employerName" class="txt" runat="server"></asp:TextBox>
+                                                    <br />
+                                                    <asp:RequiredFieldValidator ControlToValidate="txt_employerName" ID="RequiredFieldValidator1" ForeColor="Red" ValidationGroup="save" runat="server" ErrorMessage="Required"></asp:RequiredFieldValidator>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>EIN</td>
+                                                <td>EIN (eg:99-9999999)</td>
                                                 <td>
-                                                    <asp:TextBox ID="txt_ein" class="txt" runat="server"></asp:TextBox>
-                                                    <ajaxToolkit:MaskedEditExtender TargetControlID="txt_ein" Mask="99-9999999"
-                                                        MessageValidatorTip="true" OnFocusCssClass="MaskedEditFocus" OnInvalidCssClass="MaskedEditError"
-                                                        MaskType="Number" InputDirection="RightToLeft" AcceptNegative="None" DisplayMoney="None" Enabled="true"
-                                                        ErrorTooltipEnabled="True" runat="server" ID="mskD" />
+                                                    <asp:TextBox ID="txt_ein" MaxLength="10" class="txt" runat="server"></asp:TextBox>
+                                                    <br />
+                                                    <asp:RegularExpressionValidator ForeColor="Red" ValidationGroup="save" Display="Dynamic" ValidationExpression="^\d{2}-\d{7}$" ID="REV" ControlToValidate="txt_ein" runat="server" ErrorMessage="Invalid EIN"></asp:RegularExpressionValidator>
+                                                    <asp:RequiredFieldValidator ControlToValidate="txt_ein" ID="RequiredFieldValidator2" Display="Dynamic" ForeColor="Red" ValidationGroup="save" runat="server" ErrorMessage="Required"></asp:RequiredFieldValidator>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -129,7 +131,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Address</td>
+                                                <td>Address 1</td>
                                                 <td>
                                                     <asp:TextBox ID="txt_address2" class="txt" runat="server"></asp:TextBox>
                                                 </td>
@@ -264,13 +266,13 @@
                                                                         <asp:Label ID="lbl_month" runat="server" Text='<%# Eval("month") %>'></asp:Label>
                                                                     </td>
                                                                     <td>
-                                                                        <asp:CheckBox ID="chk_minimum" runat="server" />
+                                                                        <asp:CheckBox ID="chk_minimum" Checked='<%# Eval("minimum").ToString()=="0"?false:true %>' runat="server" />
                                                                         <asp:HiddenField ID="hdn_chk_minimum" Value='<%# Eval("minimum") %>' runat="server" />
                                                                     </td>
                                                                     <td><asp:TextBox ID="txt_full" style="border:none;text-align:center;"  width= "40px" Text='<%# Eval("full") %>' runat="server"></asp:TextBox></td>
                                                                     <td><asp:TextBox ID="txt_total" style="border:none;text-align:center;"  width= "40px" Text='<%# Eval("total") %>' runat="server"></asp:TextBox></td>
                                                                     <td>
-                                                                        <asp:CheckBox ID="chk_aggregate" runat="server" />
+                                                                        <asp:CheckBox ID="chk_aggregate" Checked='<%# Eval("aggregate").ToString()=="0"?false:true %>' runat="server" />
                                                                         <asp:HiddenField ID="hdn_chk_aggregate" Value='<%# Eval("aggregate") %>' runat="server" />
                                                                     </td>
                                                                     <td>
@@ -295,9 +297,9 @@
                                 <td colspan="2">
                                     <asp:HiddenField ID="hdn_isCompany" Value="0" runat="server" />
                                     <asp:HiddenField ID="hdn_id" Value="0" runat="server" />
-                                    <asp:Button ID="btn_Save" CssClass="btn" OnClick="btn_Save_Click" runat="server" Text="Save" />
+                                    <asp:Button ID="btn_Save" ValidationGroup="save"  CssClass="btn" OnClick="btn_Save_Click" runat="server" Text="Save" />
                                     <asp:Button ID="btn_reset" CssClass="btn" OnClick="btn_reset_Click" runat="server" Text="Clear" />
-                                    <asp:Button ID="btn_delete" CssClass="btn" Visible="false" OnClick="btn_delete_Click" runat="server" Text="Delete" />
+                                    <asp:Button ID="btn_delete" OnClientClick="return confirm('Are you sure you want to delete this Employer?');" CssClass="btn" Visible="false" OnClick="btn_delete_Click" runat="server" Text="Delete" />
                                 </td>
                             </tr>
                         </table>

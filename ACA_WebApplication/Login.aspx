@@ -44,7 +44,7 @@
 </html>
  <script>
         $("#fget").click(function () {
-            $("#forget_form").css("top", "56%");
+            $("#forget_form").css("top", "54%");
             $("#forget_form").css("transition", "top .8s");
         });
         $("#btn_close").click(function () {

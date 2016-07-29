@@ -66,7 +66,10 @@ namespace ACA_WebApplication.Master
                 txt_city.Text = dr["city"].ToString();
                 drp_state.Text = dr["state"].ToString();
                 txt_zipcode.Text = dr["zip"].ToString();
-                drp_country.Text = dr["country"].ToString();
+                string dbCountry = dr["country"].ToString();
+                if (dbCountry == "US")
+                    dbCountry = "United States of America";
+                drp_country.Text = dbCountry;
                 txt_contactname.Text = dr["contactName"].ToString();
                 txt_contactphone.Text = dr["phoneNumber"].ToString();
                 txt_title.Text = dr["signTitle"].ToString();
@@ -96,27 +99,32 @@ namespace ACA_WebApplication.Master
                     {
                         row["month"] = "All 12 Months";
                     }
-
-                    row["minimum"] = string.IsNullOrEmpty(dr[string.Join("_", "minimum", i.ToString())].ToString());
+                    string min = dr["minimum_"+ i.ToString()].ToString();
+                    row["minimum"] = min;
                     row["full"] = dr[string.Join("_", "fullTime", i.ToString())];
                     row["total"] = dr[string.Join("_", "total", i.ToString())];
-                    row["aggregate"] = string.IsNullOrEmpty(dr[string.Join("_", "group", i.ToString())].ToString());
+                    string grp = dr["group_" + i.ToString()].ToString();
+                    row["aggregate"] = grp;
                     row["section"] = dr[string.Join("_", "S4980H", i.ToString())];
                     part3Table.Rows.Add(row);
                 }
                 rpt_montable.DataSource = part3Table;
                 rpt_montable.DataBind();
                 btn_delete.Visible = true;
+                btn_Save.Text = "Update";
             }
         }
         protected void rpt_montable_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            CheckBox chk_minimum = (CheckBox)e.Item.FindControl("chk_minimum");
-            CheckBox chk_aggregate = (CheckBox)e.Item.FindControl("chk_minimum");
-            HiddenField hdn_chk_minimum = (HiddenField)e.Item.FindControl("hdn_chk_minimum");
-            HiddenField hdn_chk_aggregate = (HiddenField)e.Item.FindControl("hdn_chk_aggregate");
-            chk_minimum.Checked = hdn_chk_minimum.Value == "0" ? false : true;
-            chk_aggregate.Checked = hdn_chk_aggregate.Value == "0" ? false : true;
+            //for (int i = 0; i < 13; i++)
+            //{
+            //    CheckBox chk_minimum = (CheckBox)e.Item.FindControl("minimum_" + i.ToString());
+            //    CheckBox chk_aggregate = (CheckBox)e.Item.FindControl("group_" + i.ToString());
+            //    HiddenField hdn_chk_minimum = (HiddenField)e.Item.FindControl("hdn_chk_minimum");
+            //    HiddenField hdn_chk_aggregate = (HiddenField)e.Item.FindControl("hdn_chk_aggregate");
+            //    chk_minimum.Checked = hdn_chk_minimum.Value == "0" ? false : true;
+            //    chk_aggregate.Checked = hdn_chk_aggregate.Value == "0" ? false : true;
+            //}
         }
 
         protected void btn_Save_Click(object sender, EventArgs e)
@@ -166,7 +174,7 @@ namespace ACA_WebApplication.Master
         protected void btn_delete_Click(object sender, EventArgs e)
         {
             int result = objMaster.Delete_Employer(txt_ein.Text);
-            if (result == 1)
+            if (result > 0)
             {
                 lbl_msg.Text = "Employer Delete Successfully";
                 lightDiv.Visible = true;
@@ -186,6 +194,7 @@ namespace ACA_WebApplication.Master
             //this method sets the value of every textbox, combobox, and checkbox to null
             //in the employer tab
             hdn_id.Value = "0";
+            hdn_isCompany.Value = "0";
             txt_employerName.Text = null;
             txt_ein.Text = null;
             drp_fillingyear.Text = null;
@@ -231,6 +240,7 @@ namespace ACA_WebApplication.Master
             rpt_montable.DataSource = part3Table.DefaultView;
             rpt_montable.DataBind();
             btn_delete.Visible = false;
+            btn_Save.Text = "Save";
         }
 
         protected void txtsearch_TextChanged(object sender, EventArgs e)

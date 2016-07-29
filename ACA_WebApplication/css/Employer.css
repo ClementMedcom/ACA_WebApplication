@@ -9,7 +9,7 @@
     padding:5px;
     color:white;
     text-align:center;
-    background-color:#2381e9;
+    background-color:#0294a5;
 }
 .grid_container{
     margin:5px;
@@ -18,11 +18,8 @@
     display:inline-block;
     width:20%;
     min-width:300px;
-    background-color:white;
-    height:530px;
-    /*overflow:scroll;
-    scrollbar-base-color:white;
-    scrollbar-face-color:white;*/
+    height:540px;
+
 }
 .employer_list{
     border-bottom:1px solid #2381e9;
@@ -34,7 +31,7 @@
     cursor:pointer;
 }
 .serial{
-    background-color:#2381e9;
+    background-color:#0294a5;
     border-radius:5px;
     display:inline-block;
     float:left;
@@ -51,12 +48,11 @@
     width:80%;
 }
 b{
-    color:#2381e9;
+    color:#0294a5;
     
 }
 .srch{
     width:90%;
-    background-color:none;
     color:black;
     padding:5px;
     margin:5px;
@@ -72,7 +68,6 @@ b{
     float:left;
     display:inline-block;
     width: 69%;
-    background-color:white;
     height:530px;
 }
 
@@ -142,10 +137,10 @@ b{
 .btn{
     width: 15%;
     padding:5px;
-    margin-right:10px;
+    margin-left:20px;
     border:none;
     font-size:13px;
-    background-color:#2381e9;
+    background-color:#0294a5;
     color:white;
 }
 
@@ -171,7 +166,7 @@ b{
 .hdr{
     width:100%;
     text-align:center;
-    background-color:#2381e9;
+    background-color:#0294a5;
     color:white;
     padding:5px 0px 5px 0px;
     cursor:pointer;
@@ -196,14 +191,12 @@ div::-webkit-scrollbar-thumb {
     padding:5px;
     float:left;
     display:inline-block;
-    background:white;
     color:black;
     margin-left:20px;
 }
 .c_details{
     float:left;
     display:inline-block;
-    background:white;
     padding:5px;
     color:black;
     margin-left:20px;
@@ -216,7 +209,7 @@ div::-webkit-scrollbar-thumb {
     border:1px solid gray;
 }
 .mon_table thead td{
-    background-color:#2381e9;
+    background-color:#0294a5;
     color:white;
 }
 .chk_move{
@@ -232,7 +225,16 @@ div::-webkit-scrollbar-thumb {
     border:none;
     border-bottom:1px solid gray;
 }
+.txt_short{
+    width: 64px;
+    padding:3px;
+    border:none;
+    border-bottom:1px solid gray;
+}
 .txt:focus{
+    outline: 0;
+}
+.txt_short:focus {
     outline: 0;
 }
 .cmb{
@@ -244,4 +246,108 @@ div::-webkit-scrollbar-thumb {
 .cmb:focus{
     outline: 0;
 }
+
+.cmb_short{
+     width:74px;
+    padding:3px;
+    border:none;
+    background-color:#eaeffa;
+    border-bottom:1px solid gray;
+}
+.cmb_short:focus {
+    outline: 0;
+}
+/*plan form styles*/
+.planinfo{
+    width:69%;
+    margin:5px;
+    float:left;
+    padding:5px;
+    display:inline-block;
+    height:540px;
+    margin: 0 auto;
+}
+.plan_header{
+    padding:5px; 
+}
+.plan_detail{
+    width:94%;
+    height:50px;
+    margin:10px;
+    padding:5px;
+    border:1px solid gray;
+}
+.plan_table{
+     width:94%;
+     height:170px;
+     margin:10px;
+     padding:5px;
+     border:1px solid gray;
+     overflow-y:scroll;
+}
+.imgbtnplus{
+    width:15px;
+    height:15px;
+    border:none;
+    background-image:url('../icons/plus.png');
+    background-repeat:no-repeat;
+    background-size:15px;
+    background-color:white;
+}
+.imgbtnminus{
+    width:15px;
+    height:15px;
+    border:none;
+    background-image:url('../icons/minus.png');
+    background-repeat:no-repeat;
+    background-size:15px;
+    background-color:white;
+}
+
+
+/*Employee form begining*/
+.employee_form{
+    margin-left:5px;
+    padding:3px;
+    float:left;
+    display:inline-block;
+    width: 70%;
+}
+.employee_info1
+{
+    width:93%;
+    float:left;
+    margin:2px 0px 0px 15px;
+    display:inline-block;
+    height:190px;
+    padding:5px;
+}
+
+.employee_info2
+{
+    width: 70%;
+    margin: 5px 0px 0px 2px;
+    display: inline-block;
+    /*height: 214px;*/
+    overflow-y: scroll;
+    text-align: center;
+}
+.employee_info3
+{
+    width:100%;
+    float:left;
+    margin:15px 0px 0px 2px;
+    display:inline-block;
+    height:100px;
+    overflow-y:auto;
+    text-align:center;
+}
+.employee_info4 {
+    width: 98%;
+    float: left;
+    padding-top:3px;
+    margin:10px 0px 0px 2px;
+    display: inline-block;
+}
+/*Employee form end*/
 
