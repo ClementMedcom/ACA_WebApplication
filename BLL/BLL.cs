@@ -198,6 +198,7 @@ namespace BLL
         #endregion
 
         #region Plan
+
         public DataSet list_Plan(string companyTaxId, int pageIndex, string search, int PageSize)
         {
             //DataSet ds = new DataSet();
@@ -217,6 +218,18 @@ namespace BLL
             cmd.Parameters.AddWithValue("@CompanyTaxID", companyTaxId);
             return objDB.GetDataSet(cmd); ;
         }
+
+        public int Insert_Update_EmployerPlan(params SqlParameter[] parameters)
+        {
+            SqlCommand cmd = new SqlCommand("Usp_PlanAction");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddRange(parameters);
+            cmd.Parameters.Add("@Result", SqlDbType.Int, 4);
+            cmd.Parameters["@Result"].Direction = ParameterDirection.Output;
+            objDB.ExecuteQuery(cmd);
+            return Convert.ToInt32(cmd.Parameters["@Result"].Value);
+        }
+
         #endregion
 
     }

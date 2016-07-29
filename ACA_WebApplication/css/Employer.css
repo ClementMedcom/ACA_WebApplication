@@ -328,7 +328,7 @@ div::-webkit-scrollbar-thumb {
     margin: 5px 0px 0px 2px;
     display: inline-block;
     /*height: 214px;*/
-    overflow-y: scroll;
+    /*overflow-y: scroll;*/
     text-align: center;
 }
 .employee_info3

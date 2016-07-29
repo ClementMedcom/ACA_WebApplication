@@ -28,6 +28,7 @@ namespace ACA_WebApplication.Master
                     load_dropdown();
                 }
             }
+            txtsearch.Focus();
         }
         public void load_Employer()
         {
@@ -386,6 +387,7 @@ namespace ACA_WebApplication.Master
 
             rpt_code.DataSource = null;
             rpt_code.DataBind();
+            txtsearch.Focus();
         }
         protected void btn_delete_Click(object sender, EventArgs e)
         {
@@ -863,5 +865,12 @@ namespace ACA_WebApplication.Master
         }
 
         #endregion
+
+        protected void Refresh(object sender, EventArgs e)
+        {
+            list_Employee(hdn_companytax_id.Value, 1, "", 10);
+            txtsearch.Text = "";
+            txtsearch.Focus();
+        }
     }
 }

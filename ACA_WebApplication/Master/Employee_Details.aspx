@@ -19,6 +19,7 @@
             <asp:AsyncPostBackTrigger ControlID="lbl_close" />
             <%--<asp:AsyncPostBackTrigger ControlID="rptEmployer"/>--%>
             <asp:AsyncPostBackTrigger ControlID="btn_delete" />
+            <asp:AsyncPostBackTrigger ControlID="btn_refresh" />
         </Triggers>
         <ContentTemplate>
             <div class="hdr">Employee Information</div>
@@ -35,6 +36,14 @@
                     <div class="grid_container">
                         <div style="overflow-y: auto; min-height: 500px; max-height: 500px; width: 100%; overflow-x: hidden;">
                             <asp:TextBox ID="txtsearch" CssClass="srch" AutoPostBack="true" runat="server" placeholder="Search Employee" OnTextChanged="txtsearch_TextChanged"></asp:TextBox>
+                            <a href="#" class="btn medium" title="Search" style="background-color:#0294A5; border-radius:5px;padding:0px;margin-bottom:1px;" >
+             <span class="button-content">
+                <i class="glyph-icon icon-search font-white"></i>
+            </span>
+        </a>
+                            <asp:LinkButton class="btn medium" ID="btn_refresh" style="background-color:#0294A5; border-radius:5px;padding:0px;margin-bottom:1px;" runat="server" OnClick="Refresh"><span class="button-content">
+                <i class="glyph-icon icon-refresh font-white"></i>
+            </span></asp:LinkButton>
                             <asp:Repeater ID="rptEmployee" OnItemCommand="rptEmployee_ItemCommand" runat="server">
                                 <ItemTemplate>
                                     <asp:LinkButton ID="lb_emp_list" ClientIDMode="AutoID" Style="text-decoration: none;" CommandName="Edit" runat="server">
@@ -174,7 +183,7 @@
                                      </table>
                                </div>
                                  <div style="width: 100%">
-                                     <ajaxToolkit:TabContainer CssClass="MyTabStyle" ID="TabContainer1" runat="server">
+                                     <ajaxToolkit:TabContainer CssClass="fancy fancy-green" ID="TabContainer1" runat="server">
                                          <ajaxToolkit:TabPanel ID="tabHire" TabIndex="0" Style="min-height:120px;max-height:120px;overflow-y:scroll;" runat="server">
                                              <HeaderTemplate>
                                                  Hire Data
@@ -243,7 +252,7 @@
                                                                                  <td>
                                                                                      <asp:DropDownList ID="drp_status" CssClass="cmb" runat="server">
                                                                                      </asp:DropDownList>
-                                                                                     <asp:HiddenField ID="hdn_status" runat="server" Value='<%# FixDateFormat(Eval("Status").ToString()) %>' />
+                                                                                     <asp:HiddenField ID="hdn_status" runat="server" Value='<%# Eval("Status") %>' />
                                                                                      <asp:RequiredFieldValidator ControlToValidate="drp_status" ID="RequiredFieldVsdalidator1" InitialValue="" ForeColor="Red" ValidationGroup="sub_status" runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>
                                                                                  </td>
                                                                                  <td>
@@ -542,9 +551,9 @@
                                 <%-- Button save and cancel--%>
                               <div class="employee_info4">
                                     <asp:HiddenField ID="hdn_id" Value="0" runat="server" />
-                                    <asp:Button ID="btn_save" ValidationGroup="save"  CssClass="btn" OnClick="btn_Save_Click" runat="server" Text="Save" />
-                                    <asp:Button ID="btn_reset" CssClass="btn" OnClick="btn_reset_Click" runat="server" Text="Clear" />
-                                    <asp:Button ID="btn_delete" OnClientClick="return confirm('Are you sure you want to delete this Employer?');" CssClass="btn" Visible="false" OnClick="btn_delete_Click" runat="server" Text="Delete" />
+                                    <asp:Button ID="btn_save" ValidationGroup="save"  CssClass="btn1" OnClick="btn_Save_Click" runat="server" Text="Save" />
+                                    <asp:Button ID="btn_reset" CssClass="btn1" OnClick="btn_reset_Click" runat="server" Text="Clear" />
+                                    <asp:Button ID="btn_delete" OnClientClick="return confirm('Are you sure you want to delete this Employer?');" CssClass="btn1" Visible="false" OnClick="btn_delete_Click" runat="server" Text="Delete" />
                                 </div>
                             </div>
                         </ContentTemplate>

@@ -175,6 +175,15 @@ namespace ACA_WebApplication.Master {
         protected global::System.Web.UI.WebControls.DropDownList drp_waitingperiod;
         
         /// <summary>
+        /// FilteredTextBoxExtender1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.FilteredTextBoxExtender FilteredTextBoxExtender1;
+        
+        /// <summary>
         /// txt_days control.
         /// </summary>
         /// <remarks>
@@ -256,6 +265,15 @@ namespace ACA_WebApplication.Master {
         protected global::System.Web.UI.WebControls.Repeater rpttable;
         
         /// <summary>
+        /// hdn_id control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdn_id;
+        
+        /// <summary>
         /// btn_save control.
         /// </summary>
         /// <remarks>
@@ -272,5 +290,41 @@ namespace ACA_WebApplication.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn_clear;
+        
+        /// <summary>
+        /// lightDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lightDiv;
+        
+        /// <summary>
+        /// lbl_msg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_msg;
+        
+        /// <summary>
+        /// lbl_close control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lbl_close;
+        
+        /// <summary>
+        /// fadeDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl fadeDiv;
     }
 }

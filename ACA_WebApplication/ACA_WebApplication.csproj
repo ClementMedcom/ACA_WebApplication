@@ -163,6 +163,9 @@
     <Content Include="icons\Employer.png" />
     <Content Include="icons\Plan.png" />
     <Content Include="img\email.png" />
+    <Content Include="img\green_bg_Tab.gif" />
+    <Content Include="img\green_left_Tab.gif" />
+    <Content Include="img\green_right_Tab.gif" />
     <Content Include="img\loader4.gif" />
     <Content Include="img\logo.jpg" />
     <Content Include="img\page_under_construction.jpg" />

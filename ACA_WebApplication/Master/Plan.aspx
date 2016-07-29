@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Layout.Master" AutoEventWireup="true" CodeBehind="Plan.aspx.cs" Inherits="ACA_WebApplication.Master.Plan" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
          function page_load() {
@@ -6,6 +7,12 @@
                  $('.over').css('background-color', 'white');
                  $(this).css({ 'background-color': '#add5f3', 'border-radius': '4px' });
              });
+
+             var repeater1Control = document.getElementById('<%= rpt_codetbl.ClientID %>');
+             function unchk() {
+                 alert("");
+                 $('input:checkbox[id$=CheckSelect]', repeater1Control).attr('checked', false);
+             }
          }
     </script>
       <link href="../css/Employer.css" rel="stylesheet" />
@@ -17,8 +24,8 @@
         <Triggers>
             <asp:AsyncPostBackTrigger ControlID="btn_save" />
              <asp:AsyncPostBackTrigger ControlID="btn_clear" />
-            <%--<asp:AsyncPostBackTrigger ControlID="lbl_close" />
-           --%>
+            <asp:AsyncPostBackTrigger ControlID="lbl_close" />
+           
         </Triggers> 
   <ContentTemplate>
     <div class="heading">PLan Details</div>
@@ -113,6 +120,7 @@
                     </asp:DropDownList>
                 </td>
                 <td colspan="2"> 
+                    <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender1" runat="server" FilterType="Custom,Numbers" ValidChars="." TargetControlID="txt_days" />
                     <asp:TextBox ID="txt_days" cssclass="txt" style="width:15%;" runat="server">
                     </asp:TextBox> Days
                 </td>
@@ -149,8 +157,8 @@
             </tr>
             <tr>
                 <td colspan="4">
-                    <div class="plan_detail"> 
-                        <table class="codetbl" style="width:100%;text-align:center; height:100%;" border="1">
+                    <div class="plan_detail">
+                        <table class="codetbl" style="width: 100%; text-align: center; height: 100%;" border="1">
                             <asp:Repeater ID="rpt_codetbl" runat="server">
                                 <ItemTemplate>
                                     <tr>
@@ -160,7 +168,7 @@
                                         <td>
                                             <asp:CheckBox ID="chk_code1B" Text=" Code 1B" Checked='<%# Eval("code1B").ToString()=="0"?false:true %>' runat="server" />
                                         </td>
-                                         <td>
+                                        <td>
                                             <asp:CheckBox ID="chk_code1C" Text=" Code 1C" Checked='<%# Eval("code1C").ToString()=="0"?false:true %>' runat="server" />
                                         </td>
                                         <td>
@@ -176,12 +184,12 @@
                                             <asp:CheckBox ID="chk_code1G" Text=" Code 1G" Checked='<%# Eval("code1G").ToString()=="0"?false:true %>' runat="server" />
                                         </td>
                                         <td>
-                                            <asp:CheckBox ID="CheckBox1" Text=" Code 1H" Checked='<%# Eval("code1H").ToString()=="0"?false:true %>' runat="server" />
+                                            <asp:CheckBox ID="chk_code1H" Text=" Code 1H" Checked='<%# Eval("code1H").ToString()=="0"?false:true %>' runat="server" />
                                         </td>
-                                         <td>
+                                        <td>
                                             <asp:CheckBox ID="chk_code1I" Text=" Code 1I" Checked='<%# Eval("code1I").ToString()=="0"?false:true %>' runat="server" />
                                         </td>
-                                </tr>
+                                    </tr>
                                     <tr>
                                         <td>
                                             <asp:CheckBox ID="chk_code2A" Text=" Code 2A" Checked='<%# Eval("code2A").ToString()=="0"?false:true %>' runat="server" />
@@ -205,7 +213,7 @@
                                             <asp:CheckBox ID="chk_code2G" Text=" Code 2G" Checked='<%# Eval("code2G").ToString()=="0"?false:true %>' runat="server" />
                                         </td>
                                         <td>
-                                            <asp:CheckBox ID="CheckBox2" Text=" Code 2H" Checked='<%# Eval("code2H").ToString()=="0"?false:true %>' runat="server" />
+                                            <asp:CheckBox ID="chk_code2H" Text=" Code 2H" Checked='<%# Eval("code2H").ToString()=="0"?false:true %>' runat="server" />
                                         </td>
                                         <td>
                                             <asp:CheckBox ID="chk_code2I" Text=" Code 2I" Checked='<%# Eval("code2I").ToString()=="0"?false:true %>' runat="server" />
@@ -215,7 +223,6 @@
                             </asp:Repeater>
                         </table>
                     </div>
-
                 </td>
             </tr>
             <tr>
@@ -228,28 +235,45 @@
             <tr>
                 <td colspan="4">
                     <div class="plan_table">
-                        <table style="width:100%;">
+                        <table style="width: 100%;">
                             <tr>
-                                <td>Start Value</td><td>End Value</td><td>Amount</td><td></td>
-
+                                <td>Start Value</td>
+                                <td>End Value</td>
+                                <td>Start Date</td>
+                                <td>End Date</td>
+                                <td>Amount</td>
                             </tr>
                             <%--Repeter--%>
-           
                             <asp:Repeater ID="rpttable" OnItemDataBound="rpttable_ItemDataBound" runat="server">
-                        <ItemTemplate>
-                          <tr>
-                              <td><asp:TextBox ID="tb1" CssClass="txt_short" Text='<%# Eval("bandingValueStart") %>' runat="server"></asp:TextBox></td>
-                              <td><asp:TextBox ID="tb2" CssClass="txt_short" Text='<%# Eval("bandingValueEnd") %>' runat="server"></asp:TextBox></td>
-                              <td><asp:TextBox ID="tb3" CssClass="txt_short" Text='<%# Eval("bandingStartDate") %>' runat="server"></asp:TextBox></td>
-                              <td><asp:TextBox ID="tb4" CssClass="txt_short" Text='<%# Eval("bandingEndDate") %>' runat="server"></asp:TextBox></td>
-                              <td><asp:TextBox ID="tb5" CssClass="txt_short" Text='<%# Eval("amount") %>' runat="server"></asp:TextBox></td>
-                              <td><asp:Button ID="btnAdd" cssclass="imgbtnplus"  runat="server"  onclick="btnAdd_Click" />
-                                   <asp:Button ID="btnMinus" Visible="false"  onclick="btnMinus_Click" cssclass="imgbtnminus"  runat="server"/>
-                              </td>
-                        </tr>
-                     </ItemTemplate>
-                   </asp:Repeater>
-                
+                                <ItemTemplate>
+                                    <tr>
+                                        <td>
+                                            <asp:TextBox ID="tb1" CssClass="txt_short" Text='<%# Eval("bandingValueStart") %>' runat="server"></asp:TextBox></td>
+                                            <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender1" runat="server" FilterType="Custom,Numbers" ValidChars="."
+                                                TargetControlID="tb1" />
+                                        <td>
+                                            <asp:TextBox ID="tb2" CssClass="txt_short" Text='<%# Eval("bandingValueEnd") %>' runat="server"></asp:TextBox></td>
+                                            <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender2" runat="server" FilterType="Custom,Numbers" ValidChars="."
+                                                TargetControlID="tb2" />
+                                        <td>
+                                            <asp:TextBox ID="tb3" CssClass="txt_short" MaxLength="10" Text='<%# FixDateFormat(Eval("bandingStartDate").ToString()) %>' runat="server"></asp:TextBox>
+                                            <ajaxToolkit:CalendarExtender ID="CalendarExtender1"  CssClass="black" Enabled="true" Format="MM/dd/yyyy" TargetControlID="tb3" runat="server"></ajaxToolkit:CalendarExtender>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="tb4" CssClass="txt_short" MaxLength="10" Text='<%# FixDateFormat(Eval("bandingEndDate").ToString()) %>' runat="server"></asp:TextBox>
+                                            <ajaxToolkit:CalendarExtender ID="CalendarExtender2"  CssClass="black" Enabled="true" Format="MM/dd/yyyy" TargetControlID="tb4" runat="server"></ajaxToolkit:CalendarExtender>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="tb5" CssClass="txt_short" Text='<%# Eval("amount") %>' runat="server"></asp:TextBox></td>
+                                            <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender3" runat="server" FilterType="Custom,Numbers" ValidChars="."
+                                                TargetControlID="tb5" />
+                                        <td>
+                                            <asp:Button ID="btnAdd" CssClass="imgbtnplus" runat="server" OnClick="btnAdd_Click" />
+                                            <asp:Button ID="btnMinus" Visible="false" OnClick="btnMinus_Click" CssClass="imgbtnminus" runat="server" />
+                                        </td>
+                                    </tr>
+                                </ItemTemplate>
+                            </asp:Repeater>
                             <%--Rpeater End--%>
                         </table>
                     </div>
@@ -257,14 +281,23 @@
             </tr>
             <tr>
                 <td colspan="4">
-                    <asp:Button ID="btn_save" runat="server" Text="Button" class="btn" />
-                    <asp:Button ID="btn_clear" runat="server" Text="Button" class="btn" />
-            
+                    <asp:HiddenField ID="hdn_id" Value="0" runat="server" />
+                    <asp:Button ID="btn_save" OnClick="btn_Save_Click" runat="server" Text="Save" class="btn1" />
+                    <asp:Button ID="btn_clear" OnClick="btn_Clear_Click" runat="server" Text="Clear" class="btn1" />
+                </td>
+            </tr>
         </table>
         </div>
     </div>
       </ContentTemplate>
           </asp:UpdatePanel>
+      <div id="lightDiv" runat="server" visible="false" class="white_content">
+                <asp:Label runat="server" ForeColor="White" Text="" ID="lbl_msg"></asp:Label>
+                <asp:LinkButton ID="lbl_close" Style="float: right; margin: 45px 13px; background-color: #130E0E; padding: 1% 3%; text-decoration: none; border-radius: 3px; color: #CEA937;"
+                    Text="Close" runat="server" OnClick="lbl_close_Click"></asp:LinkButton>
+            </div>
+            <div id="fadeDiv" runat="server" visible="false" class="black_overlay"></div>
+            </div>
       </ContentTemplate>
  </asp:UpdatePanel>
 </asp:Content>
