@@ -155,6 +155,7 @@
     <Content Include="icons\excel.png" />
     <Content Include="icons\Help.png" />
     <Content Include="icons\minus.png" />
+    <Content Include="icons\PDF.png" />
     <Content Include="icons\plus.png" />
     <Content Include="icons\Reports.png" />
     <Content Include="icons\Settings.png" />

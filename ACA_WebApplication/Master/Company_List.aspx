@@ -22,7 +22,8 @@
             <asp:AsyncPostBackTrigger ControlID="btn_last" />
             <asp:AsyncPostBackTrigger ControlID="drp_count" />
             <asp:AsyncPostBackTrigger ControlID="txtsearch" />
-            <asp:PostBackTrigger ControlID="img_but_export" />
+            <asp:PostBackTrigger ControlID="img_but_excell" />
+            <asp:PostBackTrigger ControlID="img_btn_pdf" />
             <asp:AsyncPostBackTrigger ControlID="btn_refresh" />
         </Triggers>
         <ContentTemplate>
@@ -55,7 +56,8 @@
                                 <asp:ListItem Value="100">100</asp:ListItem>
                             </asp:DropDownList> Entries</td>--%>
                         <td style="float:right;">
-                            <asp:ImageButton ID="img_but_export" runat="server" ImageUrl="~/icons/excel.png" ImageAlign="Middle" style="margin-bottom: 7px;" OnClick="ExportToExcel" />
+                            <asp:ImageButton ID="img_btn_pdf" runat="server" ImageUrl="~/icons/PDF.png" ImageAlign="Middle" style="margin-bottom: 7px;" OnClick="ExportToPDF" />
+                            <asp:ImageButton ID="img_but_excell" runat="server" ImageUrl="~/icons/excel.png" ImageAlign="Middle" style="margin-bottom: 7px;" OnClick="ExportToExcel" />
                            | Show <asp:DropDownList ID="drp_count" runat="server" AutoPostBack="True" CssClass="drp_txt" OnSelectedIndexChanged="drp_count_SelectedIndexChanged">
                                 <asp:ListItem Value="20">20</asp:ListItem>
                                 <asp:ListItem Value="50">50</asp:ListItem>

@@ -31,11 +31,20 @@
                     <asp:AsyncPostBackTrigger ControlID="btn_last" />
                     <asp:AsyncPostBackTrigger ControlID="drp_count" />
                     <asp:AsyncPostBackTrigger ControlID="txtsearch" />
+                    <asp:AsyncPostBackTrigger ControlID="btn_refresh" />
                 </Triggers>
                 <ContentTemplate>
                     <div class="grid_container">
                         <div style="overflow-y:auto;min-height:500px;max-height:500px;width:100%;overflow-x: hidden;">
                         <asp:TextBox ID="txtsearch" CssClass="srch" AutoPostBack="true" runat="server" placeholder="Search Employer" OnTextChanged="txtsearch_TextChanged"></asp:TextBox>
+                            <a href="#" class="btn medium" title="Search" style="background-color:#0294A5; border-radius:5px;padding:0px;margin-bottom:1px;" >
+             <span class="button-content">
+                <i class="glyph-icon icon-search font-white"></i>
+            </span>
+        </a>
+                            <asp:LinkButton class="btn medium" ID="btn_refresh" style="background-color:#0294A5; border-radius:5px;padding:0px;margin-bottom:1px;" runat="server" OnClick="Refresh"><span class="button-content">
+                <i class="glyph-icon icon-refresh font-white"></i>
+            </span></asp:LinkButton>
                         <asp:Repeater ID="rptEmployer" OnItemCommand="rptEmployer_ItemCommand" runat="server">
                             <ItemTemplate>
                                 <asp:LinkButton ID="lb_emp_list" ClientIDMode="AutoID" Style="text-decoration: none;" CommandName="Edit" runat="server">
@@ -297,9 +306,9 @@
                                 <td colspan="2">
                                     <asp:HiddenField ID="hdn_isCompany" Value="0" runat="server" />
                                     <asp:HiddenField ID="hdn_id" Value="0" runat="server" />
-                                    <asp:Button ID="btn_Save" ValidationGroup="save"  CssClass="btn" OnClick="btn_Save_Click" runat="server" Text="Save" />
-                                    <asp:Button ID="btn_reset" CssClass="btn" OnClick="btn_reset_Click" runat="server" Text="Clear" />
-                                    <asp:Button ID="btn_delete" OnClientClick="return confirm('Are you sure you want to delete this Employer?');" CssClass="btn" Visible="false" OnClick="btn_delete_Click" runat="server" Text="Delete" />
+                                    <asp:Button ID="btn_Save" ValidationGroup="save"  CssClass="btn1" OnClick="btn_Save_Click" runat="server" Text="Save" />
+                                    <asp:Button ID="btn_reset" CssClass="btn1" OnClick="btn_reset_Click" runat="server" Text="Clear" />
+                                    <asp:Button ID="btn_delete" OnClientClick="return confirm('Are you sure you want to delete this Employer?');" CssClass="btn1" Visible="false" OnClick="btn_delete_Click" runat="server" Text="Delete" />
                                 </td>
                             </tr>
                         </table>

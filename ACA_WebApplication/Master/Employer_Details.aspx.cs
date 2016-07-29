@@ -26,6 +26,7 @@ namespace ACA_WebApplication.Master
                     load_dropdown();
                     clearEmployerForm();
                 }
+                txtsearch.Focus();
             }
         }
         public void list_Employer(string companyTaxId, int pageIndex, string search, int PageSize)
@@ -241,11 +242,13 @@ namespace ACA_WebApplication.Master
             rpt_montable.DataBind();
             btn_delete.Visible = false;
             btn_Save.Text = "Save";
+            txtsearch.Focus();
         }
 
         protected void txtsearch_TextChanged(object sender, EventArgs e)
         {
             list_Employer(hdn_companytax_id.Value, Convert.ToInt32(lbl_pagenum.Text), txtsearch.Text, Convert.ToInt32(drp_count.Text));
+            txtsearch.Focus();
         }
 
         #region Navigation
@@ -518,5 +521,12 @@ namespace ACA_WebApplication.Master
 
         //    }
         //}
+
+        protected void Refresh(object sender, EventArgs e)
+        {
+            list_Employer(hdn_companytax_id.Value, 1, "", 10);
+            txtsearch.Text = "";
+            txtsearch.Focus();
+        }
     }
 }

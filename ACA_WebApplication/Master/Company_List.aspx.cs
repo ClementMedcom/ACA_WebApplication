@@ -158,125 +158,123 @@ namespace ACA_WebApplication.Master
 
         }
 
-        //protected void ExportToExcel(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        //Get the data from database into datatable
-        //        DataSet ds = objMaster.list_Company(null, 1, txtsearch.Text, Convert.ToInt32(hid_rowcount.Value));
-        //        DataTable table = ds.Tables[0];
+        protected void ExportToPDF(object sender, EventArgs e)
+        {
+            try
+            {
+                //Get the data from database into datatable
+                DataSet ds = objMaster.list_Company(null, 1, txtsearch.Text, Convert.ToInt32(hid_rowcount.Value));
+                DataTable table = ds.Tables[0];
 
-        //        Document pdfDoc = new Document(PageSize.A4, 5, 5, 5, 5);
-        //        try
-        //        {
-        //            PdfWriter.GetInstance(pdfDoc, System.Web.HttpContext.Current.Response.OutputStream);
-        //            pdfDoc.Open();
-        //            //Chunk c = new Chunk("" + System.Web.HttpContext.Current.Session["CompanyName"] + "", FontFactory.GetFont("Verdana", 11));
-        //            //Paragraph p = new Paragraph();
-        //            //p.Alignment = Element.ALIGN_CENTER;
-        //            //p.Add(c);
-        //            //pdfDoc.Add(p);
-        //            //string clientLogo = System.Web.HttpContext.Current.Session["CompanyName"].ToString();
-        //            //clientLogo = clientLogo.Replace(" ", "");
-        //            //string clogo = clientLogo + ".jpg";
-        //            //string imageFilePath = System.Web.HttpContext.Current.Server.MapPath("../ClientLogo/" + clogo + "");
-        //            //iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(imageFilePath);
-        //            ////Resize image depend upon your need   
-        //            //jpg.ScaleToFit(80f, 60f);
-        //            ////Give space before image   
-        //            //jpg.SpacingBefore = 0f;
-        //            ////Give some space after the image   
-        //            //jpg.SpacingAfter = 1f;
-        //            //jpg.Alignment = Element.HEADER;
-        //            //pdfDoc.Add(jpg);
-        //            Font font8 = FontFactory.GetFont("ARIAL", 5);
-        //            DataTable dt = table;
-        //            if (dt != null)
-        //            {
-        //                //Craete instance of the pdf table and set the number of column in that table  
-        //                PdfPTable PdfTable = new PdfPTable(5);
-        //                //PdfPTable PdfTable = new PdfPTable(dt.Columns.Count);
-        //                PdfPCell PdfPCell = null;
+                Document pdfDoc = new Document(PageSize.A4, 5, 5, 5, 5);
+                try
+                {
+                    PdfWriter.GetInstance(pdfDoc, System.Web.HttpContext.Current.Response.OutputStream);
+                    pdfDoc.Open();
+                    //Chunk c = new Chunk("" + System.Web.HttpContext.Current.Session["CompanyName"] + "", FontFactory.GetFont("Verdana", 11));
+                    //Paragraph p = new Paragraph();
+                    //p.Alignment = Element.ALIGN_CENTER;
+                    //p.Add(c);
+                    //pdfDoc.Add(p);
+                    //string clientLogo = System.Web.HttpContext.Current.Session["CompanyName"].ToString();
+                    //clientLogo = clientLogo.Replace(" ", "");
+                    //string clogo = clientLogo + ".jpg";
+                    //string imageFilePath = System.Web.HttpContext.Current.Server.MapPath("../ClientLogo/" + clogo + "");
+                    //iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(imageFilePath);
+                    ////Resize image depend upon your need   
+                    //jpg.ScaleToFit(80f, 60f);
+                    ////Give space before image   
+                    //jpg.SpacingBefore = 0f;
+                    ////Give some space after the image   
+                    //jpg.SpacingAfter = 1f;
+                    //jpg.Alignment = Element.HEADER;
+                    //pdfDoc.Add(jpg);
+                    Font font8 = FontFactory.GetFont("ARIAL", 5);
+                    BaseColor bc1 = new BaseColor(2,148,165);
+                    BaseColor fc1= new BaseColor(255, 255, 255);
+                    DataTable dt = table;
+                    if (dt != null)
+                    {
+                        //Craete instance of the pdf table and set the number of column in that table  
+                        PdfPTable PdfTable = new PdfPTable(5);
+                        PdfPCell PdfPCell = null;
+                        PdfTable.DefaultCell.Padding = 4;
+                        PdfTable.SpacingBefore = 10;
+                        PdfTable.SpacingAfter = 10;
+                        float[] widthee = new float[] { 20f, 40f, 180f, 40f, 50f };
+                        PdfTable.SetWidths(widthee);
 
-        //                PdfTable.DefaultCell.Padding = 4;
-        //                PdfTable.SpacingBefore = 20;
+                        PdfPCell S_No= new PdfPCell(new Phrase("S.No", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD, fc1)));
+                        S_No.BackgroundColor = bc1;
+                        S_No.HorizontalAlignment = Element.ALIGN_CENTER;
+                        PdfTable.AddCell(S_No);
 
-        //                float[] widthee = new float[] { 20f, 50f, 150f, 20f ,50f };
-        //                PdfTable.SetWidths(widthee);
+                        PdfPCell Tax_Id = new PdfPCell(new Phrase("Tax ID", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD, fc1)));
+                        Tax_Id.HorizontalAlignment = Element.ALIGN_CENTER;
+                        Tax_Id.BackgroundColor = bc1;
+                        PdfTable.AddCell(Tax_Id);
 
+                        PdfPCell Company_Name = new PdfPCell(new Phrase("Company Name", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD, fc1)));
+                        Company_Name.HorizontalAlignment = Element.ALIGN_CENTER;
+                        Company_Name.BackgroundColor = bc1;
+                        PdfTable.AddCell(Company_Name);
 
-        //                PdfPCell Total_Amt = new PdfPCell(new Phrase("Head1", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD)));
-        //                Total_Amt.HorizontalAlignment = Element.ALIGN_CENTER;
-        //                PdfTable.AddCell(Total_Amt);
+                        PdfPCell Total_Employee= new PdfPCell(new Phrase("Total Employees", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD, fc1)));
+                        Total_Employee.HorizontalAlignment = Element.ALIGN_CENTER;
+                        Total_Employee.BackgroundColor = bc1;
+                        PdfTable.AddCell(Total_Employee);
 
+                        PdfPCell Last_Modified = new PdfPCell(new Phrase("Last Modified", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD, fc1)));
+                        Last_Modified.HorizontalAlignment = Element.ALIGN_CENTER;
+                        Last_Modified.BackgroundColor = bc1;
+                        PdfTable.AddCell(Last_Modified);
 
-        //                PdfPCell Item_Name1 = new PdfPCell(new Phrase("Head2", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD)));
-        //                Item_Name1.HorizontalAlignment = Element.ALIGN_CENTER;
-        //                PdfTable.AddCell(Item_Name1);
-
-
-        //                PdfPCell Unit_Price1 = new PdfPCell(new Phrase("Person", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD)));
-        //                Unit_Price1.HorizontalAlignment = Element.ALIGN_CENTER;
-        //                PdfTable.AddCell(Unit_Price1);
-
-        //                PdfPCell Item_Name2 = new PdfPCell(new Phrase("Sales_Type", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD)));
-        //                Item_Name2.HorizontalAlignment = Element.ALIGN_CENTER;
-        //                PdfTable.AddCell(Item_Name2);
-
-
-        //                PdfPCell Unit_Price2 = new PdfPCell(new Phrase("Sales Person", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD)));
-        //                Unit_Price2.HorizontalAlignment = Element.ALIGN_CENTER;
-        //                PdfTable.AddCell(Unit_Price2);
-
-        //                foreach (DataRow r in dt.Rows)
-        //                {
-        //                        PdfPCell = new PdfPCell(new Phrase(new Chunk(r[0].ToString(), font8)));
-        //                        PdfTable.AddCell(PdfPCell);
-        //                        PdfPCell = new PdfPCell(new Phrase(new Chunk(r[2].ToString(), font8)));
-        //                        PdfTable.AddCell(PdfPCell);
-        //                        PdfPCell = new PdfPCell(new Phrase(new Chunk(r[3].ToString(), font8)));
-        //                        PdfTable.AddCell(PdfPCell);
-        //                        PdfPCell = new PdfPCell(new Phrase(new Chunk(r[17].ToString(), font8)));
-        //                        PdfTable.AddCell(PdfPCell);
-        //                        PdfPCell = new PdfPCell(new Phrase(new Chunk(r[30].ToString(), font8)));
-        //                        PdfTable.AddCell(PdfPCell);
-        //                }
-        //                //PdfTable.SpacingBefore = 15f; // Give some space after the text or it may overlap the table     
-        //                pdfDoc.Open();
-        //                pdfDoc.Add(PdfTable); // add pdf table to the document   
-
-
-
-        //            }
-        //            pdfDoc.Close();
-        //            Response.ContentType = "application/pdf";
-        //            Response.AddHeader("content-disposition", "attachment; filename= SampleExport.pdf");
-        //            System.Web.HttpContext.Current.Response.Write(pdfDoc);
-        //            Response.Flush();
-        //            Response.End();
-        //            HttpContext.Current.ApplicationInstance.CompleteRequest();  
-        //        }
-        //        catch (DocumentException de)
-        //        {
-        //            System.Web.HttpContext.Current.Response.Write(de.Message);
-        //        }
-        //        catch (IOException ioEx)
-        //        {
-        //            System.Web.HttpContext.Current.Response.Write(ioEx.Message);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            System.Web.HttpContext.Current.Response.Write(ex.Message);
-        //        }
+                        foreach (DataRow r in dt.Rows)
+                        {
+                            PdfPCell = new PdfPCell(new Phrase(new Chunk(r[0].ToString(), font8)));
+                            PdfTable.AddCell(PdfPCell);
+                            PdfPCell = new PdfPCell(new Phrase(new Chunk(r[2].ToString(), font8)));
+                            PdfTable.AddCell(PdfPCell);
+                            PdfPCell = new PdfPCell(new Phrase(new Chunk(r[3].ToString(), font8)));
+                            PdfTable.AddCell(PdfPCell);
+                            PdfPCell = new PdfPCell(new Phrase(new Chunk(r[17].ToString(), font8)));
+                            PdfTable.AddCell(PdfPCell);
+                            PdfPCell = new PdfPCell(new Phrase(new Chunk(r[30].ToString(), font8)));
+                            PdfTable.AddCell(PdfPCell);
+                        }
+                        //PdfTable.SpacingBefore = 15f; // Give some space after the text or it may overlap the table     
+                        pdfDoc.Open();
+                        pdfDoc.Add(PdfTable); // add pdf table to the document   
+                    }
+                    pdfDoc.Close();
+                    Response.ContentType = "application/pdf";
+                    Response.AddHeader("content-disposition", "attachment; filename=Company_List.pdf");
+                    System.Web.HttpContext.Current.Response.Write(pdfDoc);
+                    Response.Flush();
+                    Response.End();
+                    HttpContext.Current.ApplicationInstance.CompleteRequest();
+                }
+                catch (DocumentException de)
+                {
+                    System.Web.HttpContext.Current.Response.Write(de.Message);
+                }
+                catch (IOException ioEx)
+                {
+                    System.Web.HttpContext.Current.Response.Write(ioEx.Message);
+                }
+                catch (Exception ex)
+                {
+                    System.Web.HttpContext.Current.Response.Write(ex.Message);
+                }
 
 
-        //    }
-        //    catch (Exception)
-        //    {
+            }
+            catch (Exception)
+            {
 
-        //    }
+            }
 
-        //}
+        }
 
         protected void Refresh(object sender, EventArgs e)
         {

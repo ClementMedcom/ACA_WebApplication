@@ -40,13 +40,22 @@ namespace ACA_WebApplication.Master {
         protected global::System.Web.UI.WebControls.LinkButton btn_refresh;
         
         /// <summary>
-        /// img_but_export control.
+        /// img_btn_pdf control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton img_but_export;
+        protected global::System.Web.UI.WebControls.ImageButton img_btn_pdf;
+        
+        /// <summary>
+        /// img_but_excell control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton img_but_excell;
         
         /// <summary>
         /// drp_count control.
