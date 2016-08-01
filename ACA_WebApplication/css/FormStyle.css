@@ -75,12 +75,12 @@
 
 .page_heading {
     margin:5px;
-    width:97%;
+    width:98.7%;
     font-size:15px;
     padding:5px;
     color:white;
     text-align:center;
-    background-color:#2381e9;
+    background-color:#0294A5;
 }
 
 /*Calender Style*/
@@ -264,7 +264,6 @@ background-color: #125269;
 .fancy-green .ajax__tab_header
 
 {
-
 background: url(../img/green_bg_Tab.gif) repeat-x;
 margin-top:202px;
 cursor:pointer;

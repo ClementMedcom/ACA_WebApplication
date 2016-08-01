@@ -8,10 +8,6 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="content-box" style="width:99%;margin:2px auto; border:none;">
-            <h3 class="content-box-header ui-state-default primary-bg" style="font-size:16px;text-align:center;">Company List
-            </h3>
-    </div>
     <div style="" class="content-box-wrapper">
                 <asp:UpdatePanel ID="UpdatePanel3" UpdateMode="Conditional" runat="server">
         <Triggers>
@@ -27,9 +23,9 @@
             <asp:AsyncPostBackTrigger ControlID="btn_refresh" />
         </Triggers>
         <ContentTemplate>
-            <%--<div class="page_heading">
+            <div class="page_heading">
                 Company List
-            </div>--%>
+            </div>
             <%--<br />--%>
             <div class="list" style="width:98%;margin:0 auto;">
                <table style="width:99%;">
@@ -138,12 +134,6 @@
                         </td>
                     </tr>
                 </table>--%>
-                <br>
-                <br></br>
-                <br>
-                <br></br>
-                </br>
-                </br>
             </div>
             <div style="clear: both;"></div>
             <%--<div id="lightDiv" runat="server" visible="false" class="white_content">

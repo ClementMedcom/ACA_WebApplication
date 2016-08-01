@@ -60,8 +60,10 @@
                     </div>
                 </ProgressTemplate>
             </asp:UpdateProgress>
+           
             <div id="page-header" class="clearfix">
                 <div id="header-logo">
+                    MEDCOM
                     <%--<a href="javascript:;" class="tooltip-button" data-placement="bottom" title="Close sidebar" id="close-sidebar" style="background-image:url('../assets/images/icons/Left_Arrow.png');background-size:15px;width:40px;height:40px;background-repeat:no-repeat;margin-top:22px;">--%>
                     <a href="javascript:;" class="tooltip-button" data-placement="bottom" title="Close sidebar" id="close-sidebar">
                         <i class="glyph-icon icon-chevron-left"></i>
@@ -114,7 +116,7 @@
             </div>
             <!-- #page-header -->
 
-            <div id="page-sidebar" class="scrollable-content">
+             <div id="page-sidebar" class="scrollable-content" style="height:100%;">
                 <div id="sidebar-menu">
                     <img style="width: 98%; height: 70px;" src="../assets/images/logo.png" />
                     <div class="divider mrg5T mobile-hidden"></div>
