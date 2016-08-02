@@ -254,11 +254,6 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td colspan="1">
-                                                <br />
-                                                    </td>
-                                            </tr>
-                                            <tr>
                                                 <td>
                                                     <table class="mon_table">
                                                        <thead>
