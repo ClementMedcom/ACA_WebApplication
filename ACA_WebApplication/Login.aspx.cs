@@ -16,7 +16,11 @@ namespace ACA_WebApplication
         Master_BLL objMaster = new Master_BLL();
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                Session.Clear();
+                Session.Abandon();
+            }
         }
 
         protected void btn_login_Click(object sender, EventArgs e)

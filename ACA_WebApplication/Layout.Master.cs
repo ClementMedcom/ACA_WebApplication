@@ -13,26 +13,51 @@ namespace ACA_WebApplication
         {
             try
             {
-                if (!CheckUserSession())
+                //if (!CheckUserSession())
+                //{
+                //    Session.Clear();
+                //    Session.Abandon();
+                //    Response.Redirect("~/Login.aspx");
+                //}
+                //string sessionTaxID = Session["Tax_Id"] as string;
+                //string sessionCompanyName = Session["Company_Name"] as string;
+                //if (!string.IsNullOrEmpty(sessionTaxID))
+                //{
+                //    lbl_companyname.Text = "Welcome " + sessionCompanyName;
+                //    lb_employee.Enabled = true;
+                //    lb_employer.Enabled = true;
+                //    lb_plan.Enabled = true;
+                //    lb_upload.Enabled = true;
+                //}
+                string sessionUserSession = Session["UserSession"].ToString();
+                string sessionUserName = Session["UserName"].ToString();
+                //string sessionLast = Session["LastLogin"] as string;
+                DateTime _loggedInTime = (DateTime)Session["LastLogin"];
+                if (!string.IsNullOrEmpty(sessionUserSession))
                 {
+                    lbl_companyname.Text = "Inside";
+                    lbl_name.Text = sessionUserName.ToString();
+                    lbl_lastlogin.Text = _loggedInTime.ToString();
+                    string sessionTaxID = Session["Tax_Id"].ToString();
+                    string sessionCompanyName = Session["Company_Name"].ToString();
+                    if (!string.IsNullOrEmpty(sessionTaxID))
+                    {
+                        lbl_companyname.Text = "Welcome " + sessionCompanyName;
+                        lb_employee.Enabled = true;
+                        lb_employer.Enabled = true;
+                        lb_plan.Enabled = true;
+                        lb_upload.Enabled = true;
+                    }
+                }
+                else
+                { 
                     Session.Clear();
                     Session.Abandon();
                     Response.Redirect("~/Login.aspx");
                 }
-                if (Session["Tax_Id"].ToString() == null || Session["Tax_Id"].ToString() == "")
-                {
-                    return;
-                }
-                else
-                {
-                    lbl_companyname.Text = "Welcome " + Session["Company_Name"].ToString();
-                    lb_employee.Enabled = true;
-                    lb_employer.Enabled = true;
-                    lb_plan.Enabled = true;
-                    lb_upload.Enabled = true;
-                }
+                
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
             }
@@ -41,15 +66,19 @@ namespace ACA_WebApplication
         {
             try
             {
-                if (Session["UserSession"].ToString() == null || Session["UserSession"].ToString() == "")
+                string sessionUserSession = Session["UserSession"] as string;
+                string sessionUserName = Session["UserName"] as string;
+                //string sessionLast = Session["LastLogin"] as string;
+                DateTime _loggedInTime = (DateTime)Session["LastLogin"];
+                if (!string.IsNullOrEmpty(sessionUserSession))
                 {
-                    return false;
+                    lbl_name.Text = sessionUserName;
+                    lbl_lastlogin.Text = _loggedInTime.ToString();
+                    return true;
                 }
                 else
                 {
-                    lbl_name.Text = Session["UserName"].ToString().Trim();
-                    lbl_lastlogin.Text = Session["LastLogin"].ToString().Trim();
-                    return true ;
+                    return false;
                 }
             }
             catch (Exception ex)

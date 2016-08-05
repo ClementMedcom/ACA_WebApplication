@@ -157,6 +157,24 @@ namespace ACA_WebApplication.Master {
         protected global::System.Web.UI.WebControls.DropDownList drp_employer;
         
         /// <summary>
+        /// RFV1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV1;
+        
+        /// <summary>
+        /// ValidatorCalloutExtender1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ValidatorCalloutExtender ValidatorCalloutExtender1;
+        
+        /// <summary>
         /// txt_SSN control.
         /// </summary>
         /// <remarks>
@@ -164,6 +182,42 @@ namespace ACA_WebApplication.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_SSN;
+        
+        /// <summary>
+        /// Regxval1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator Regxval1;
+        
+        /// <summary>
+        /// RFV2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFV2;
+        
+        /// <summary>
+        /// ValidatorCalloutExtender2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ValidatorCalloutExtender ValidatorCalloutExtender2;
+        
+        /// <summary>
+        /// ValidatorCalloutExtender3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ValidatorCalloutExtender ValidatorCalloutExtender3;
         
         /// <summary>
         /// txt_firstname control.
@@ -443,6 +497,15 @@ namespace ACA_WebApplication.Master {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdn_id;
+        
+        /// <summary>
+        /// hdn_EmployerTaxId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdn_EmployerTaxId;
         
         /// <summary>
         /// btn_save control.

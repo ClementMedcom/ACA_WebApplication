@@ -11,7 +11,8 @@ namespace DAL
 {
     public class Database_operation
     {
-        private string constring = "Data Source=JOSEPH\\SQLEXPRESS;Initial Catalog=ACA2016;User ID=sa;password=P@ssw0rd";
+        //private string constring = "Data Source=JOSEPH\\SQLEXPRESS;Initial Catalog=ACA2016;User ID=sa;password=P@ssw0rd";
+        private string constring = ConfigurationManager.ConnectionStrings["Liveconnection"].ToString();
         public int ExecuteQuery(SqlCommand cmd)
         {
             SqlConnection con = new SqlConnection(constring);

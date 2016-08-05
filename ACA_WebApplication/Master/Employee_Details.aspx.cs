@@ -46,15 +46,53 @@ namespace ACA_WebApplication.Master
             {
                 DataSet ds = objMaster.list_Employee(companyTaxId, pageIndex, search, PageSize);
                 DataTable dt = ds.Tables[0];
-                DataTable dt1 = ds.Tables[1];
-                rptEmployee.DataSource = dt;
-                rptEmployee.DataBind();
-                if (dt1.Rows.Count > 0)
+                
+                IEnumerable<DataRow> query1 = from all_data in dt.AsEnumerable()
+                                              where all_data.Field<string>("name").ToLower().StartsWith(search.ToLower()) 
+                                              orderby all_data.Field<string>("firstname")
+                                              select all_data;
+                if (query1.Any())
                 {
-                    hid_rowcount.Value = dt1.Rows[0]["RowCnt"].ToString();
-                    lbl_pagenum.Text = dt1.Rows[0]["page_num"].ToString();
-                    lbl_result.Text = "Showing Results " + dt1.Rows[0]["Start"] + "-" + dt1.Rows[0]["Endpage"] + " Out of " + dt1.Rows[0]["RowCnt"] + " Records";
+                    DataTable dt1 = query1.CopyToDataTable<DataRow>();
+                    dt1.Columns.Add("RowNumber", typeof(System.Int32));
+                    int ColumnValue = 0;
+                    foreach (DataRow dr in dt1.Rows)
+                    {
+                        ColumnValue = ColumnValue + 1;
+                        dr["RowNumber"] = ColumnValue.ToString();
+                    }
+
+                    DataTable dt_temp = (from all_data in dt1.AsEnumerable()
+                                         where all_data.Field<string>("name").ToLower().StartsWith(search.ToLower()) 
+                                         orderby all_data.Field<string>("firstname")
+                                         select all_data).Skip((pageIndex - 1) * Convert.ToInt32(drp_count.Text)).Take(PageSize).CopyToDataTable<DataRow>();
+                    int total_rows = dt1.Rows.Count;
+                    rptEmployee.DataSource = dt_temp;
+                    rptEmployee.DataBind();
+                    hid_rowcount.Value = total_rows.ToString();
+                    lbl_pagenum.Text = pageIndex.ToString();
+                    int start_record = ((pageIndex - 1) * Convert.ToInt32(drp_count.Text)) + 1;
+                    int End_record = ((pageIndex - 1) * Convert.ToInt32(drp_count.Text)) + Convert.ToInt32(drp_count.Text);
+                    if (End_record > total_rows)
+                    {
+                        End_record = total_rows;
+                    }
+                    lbl_result.Text = "Showing Results " + start_record + "-" + End_record + " Out of " + total_rows + " Records";
                 }
+                else
+                {
+                    rptEmployee.DataSource = null;
+                    rptEmployee.DataBind();
+                    hid_rowcount.Value = "0";
+                    lbl_pagenum.Text = "1";
+                    lbl_result.Text = "Showing Results " + 0 + "-" + 0 + " Out of " + 0 + " Records";
+                }
+                //if (dt1.Rows.Count > 0)
+                //{
+                //    hid_rowcount.Value = dt1.Rows[0]["RowCnt"].ToString();
+                //    lbl_pagenum.Text = dt1.Rows[0]["page_num"].ToString();
+                //    lbl_result.Text = "Showing Results " + dt1.Rows[0]["Start"] + "-" + dt1.Rows[0]["Endpage"] + " Out of " + dt1.Rows[0]["RowCnt"] + " Records";
+                //}
             }
             catch (Exception ex)
             {
@@ -69,13 +107,16 @@ namespace ACA_WebApplication.Master
                 HiddenField hdn_Id = (HiddenField)e.Item.FindControl("hdn_Id");
                 HiddenField hdn_employerTaxId = (HiddenField)e.Item.FindControl("hdn_employerTaxId");
                 Label lbl_ssn = (Label)e.Item.FindControl("lbl_ssn");
-                DataSet ds = objMaster.Edit_Employee(hdn_employerTaxId.Value, lbl_ssn.Text, hdn_Id.Value);
-                DataTable dt1 = ds.Tables[0];
-                DataTable dt2 = ds.Tables[1];
-                DataTable dt3 = ds.Tables[2];
-                DataTable dt4 = ds.Tables[3];
-                DataTable dt5 = ds.Tables[4];
-                DataTable dt6 = ds.Tables[5];
+                DataSet ds = objMaster.Edit_Employee(hdn_companytax_id.Value,hdn_employerTaxId.Value, lbl_ssn.Text);
+                DataTable dt6 = ds.Tables[0];
+
+                DataTable dt1 = objMaster.Edit_HireName(hdn_companytax_id.Value, hdn_employerTaxId.Value, lbl_ssn.Text);
+                DataTable dt2 = objMaster.Edit_Status(hdn_companytax_id.Value, hdn_employerTaxId.Value, lbl_ssn.Text);
+                DataTable dt3 = objMaster.Edit_EmployeeEnrollment(hdn_companytax_id.Value, hdn_employerTaxId.Value, lbl_ssn.Text);
+                DataTable dt4 = objMaster.Edit_EmployeeCode(hdn_companytax_id.Value, hdn_employerTaxId.Value, lbl_ssn.Text);
+                DataTable dt5 = objMaster.Edit_CoveredIndividual(hdn_companytax_id.Value, hdn_employerTaxId.Value, lbl_ssn.Text);
+
+                hdn_EmployerTaxId.Value = hdn_employerTaxId.Value;
                 if (dt6.Rows.Count > 0)
                 {
                     hdn_id.Value = dt6.Rows[0]["id"].ToString();
@@ -89,19 +130,22 @@ namespace ACA_WebApplication.Master
                     txt_address2.Text = dt6.Rows[0]["address2"].ToString();
                     txt_city.Text = dt6.Rows[0]["city"].ToString();
                     txt_zipcode.Text = dt6.Rows[0]["zip"].ToString();
-                    txt_salary.Text = dt6.Rows[0]["salaryAmount"].ToString();
-                    txt_hourly.Text = dt6.Rows[0]["hourlyAmount"].ToString();
                     drp_state.Text = dt6.Rows[0]["state"].ToString();
                     string dbCountry = dt6.Rows[0]["country"].ToString();
                     if (dbCountry == "US")
                         dbCountry = "United States of America";
                     txt_email.Text = dt6.Rows[0]["email"].ToString();
                 }
-                dt1.Rows.Add(0, null, null);
+                if (dt4.Rows.Count > 0)
+                {
+                    txt_salary.Text = dt4.Rows[0]["salaryAmount"].ToString();
+                    txt_hourly.Text = dt4.Rows[0]["hourlyAmount"].ToString();
+                }
+                dt1.Rows.Add(0, null, null,null);
                 rptHiredata.DataSource = dt1;
                 rptHiredata.DataBind();
 
-                dt2.Rows.Add(0, null, null, null);
+                dt2.Rows.Add(0, null, null, null, null);
                 rpt_Status.DataSource = dt2;
                 rpt_Status.DataBind();
                 DataRow row;
@@ -118,6 +162,7 @@ namespace ACA_WebApplication.Master
                 row["cobraEnrolled"] = 0;
                 row["cobraStartDate"] = DBNull.Value;
                 row["cobraEndDate"] = DBNull.Value;
+                row["enrollmentName"] = DBNull.Value;
 
                 dt3.Rows.Add(row);
                 rpt_coverage.DataSource = dt3;
@@ -154,12 +199,31 @@ namespace ACA_WebApplication.Master
 
         protected void btn_Save_Click(object sender, EventArgs e)
         {
-            DataTable dt_hire = Get_hireData();
-            DataTable dt_status = Get_Status();
-            DataTable dt_Coverage = GetCoverage();
-            DataTable dt_CoveredIndividual = Get_Covered_Individual();
-            int Result = objMaster.Insert_Update_Employee(hdn_id.Value, getEmployeeParams(dt_hire, dt_status, dt_Coverage, dt_CoveredIndividual));
-            if (Result == 1)
+            DataSet ds = objMaster.Insert_Update_Employee(hdn_id.Value, getEmployeeParams());
+            if (hdn_id.Value != "0")
+            {
+              
+                Delete_HireName(hdn_EmployerTaxId.Value, txt_SSN.Text.Trim());
+                Delete_Status(hdn_EmployerTaxId.Value, txt_SSN.Text.Trim());
+                Delete_Enrollment(hdn_EmployerTaxId.Value, txt_SSN.Text.Trim());
+                Delete_CoveredIndividual(hdn_EmployerTaxId.Value, txt_SSN.Text.Trim());
+            }
+
+            Insert_Update_EmployeeCode(hdn_EmployerTaxId.Value, txt_SSN.Text);
+            Insert_Update_hire(hdn_EmployerTaxId.Value,txt_SSN.Text);
+            Insert_Update_Status(hdn_EmployerTaxId.Value, txt_SSN.Text);
+            Insert_Update_Enrollment(hdn_EmployerTaxId.Value, txt_SSN.Text);
+            Insert_Update_Covered_Individual(hdn_EmployerTaxId.Value, txt_SSN.Text);
+
+
+
+            if (ds.Tables.Count > 0)
+            {
+                lbl_msg.Text = ds.Tables[0].Rows[0][0].ToString();
+                lightDiv.Visible = true;
+                fadeDiv.Visible = true;
+            }
+            else
             {
                 if (hdn_id.Value == "0")
                     lbl_msg.Text = "Employee Added Successfully";
@@ -170,68 +234,25 @@ namespace ACA_WebApplication.Master
                 list_Employee(hdn_companytax_id.Value, 1, "", 10);
                 ClearEmployeeForm();
             }
-            else
-            {
-                lbl_msg.Text = "Sorry! Faild to Process";
-                lightDiv.Visible = true;
-                fadeDiv.Visible = true;
-            }
         }
 
-        #region Get DataTable Data
+        #region Insert Update Subtable in employee
 
-        private SqlParameter[] getEmployeeParams(DataTable dt_hire, DataTable dt_status, DataTable dt_Coverage, DataTable dt_CoveredIndividual)
+        public void Insert_Update_hire(string EmployerTaxId, string ssn)
         {
-            SqlParameter[] param = null;
-            param = new SqlParameter[17];
-            param[0] = new SqlParameter("@firstName", txt_firstname.Text);
-            param[1] = new SqlParameter("@middleName", txt_middlename.Text);
-            param[2] = new SqlParameter("@lastName", txt_lastname.Text);
-            param[3] = new SqlParameter("@ssn", txt_SSN.Text);
-            param[4] = new SqlParameter("@birthday", TextManipulation.toDBNULLfromEmpty(txt_dob.Text));
-            param[5] = new SqlParameter("@address", txt_address1.Text);
-            param[6] = new SqlParameter("@address2", txt_address2.Text);
-            param[7] = new SqlParameter("@city", txt_city.Text);
-            param[8] = new SqlParameter("@state", drp_state.Text);
-            param[9] = new SqlParameter("@zip", txt_zipcode.Text);
-            param[10] = new SqlParameter("@country", drp_country.Text);
-            param[11] = new SqlParameter("@email", txt_email.Text);
-            param[12] = new SqlParameter("@dt_hire", dt_hire);
-            param[13] = new SqlParameter("@dt_status", dt_status);
-            param[14] = new SqlParameter("@dt_Coverage", dt_Coverage);
-            param[15] = new SqlParameter("@dt_CoveredIndividual", dt_CoveredIndividual);
-            param[16] = new SqlParameter("@EmployerTaxId", hdn_companytax_id.Value);
-            return param;
-        }
-
-        public DataTable Get_hireData()
-        {
-            DataTable dt_hiredata = new DataTable();
-            dt_hiredata.Columns.AddRange(new DataColumn[4] {
-                            new DataColumn("Id", typeof(string)),
-                            new DataColumn("hireName", typeof(string)),
-                            new DataColumn("startDate", typeof(string)),
-                            new DataColumn("endDate",typeof(string))});
             foreach (RepeaterItem item in rptHiredata.Items)
             {
                 HiddenField hdn_hireId = (HiddenField)item.FindControl("hdn_hireId");
                 TextBox txt_startdate = (TextBox)item.FindControl("txt_startdate");
                 TextBox txt_enddate = (TextBox)item.FindControl("txt_enddate");
                 if (txt_startdate.Text != "")
-                    dt_hiredata.Rows.Add(hdn_hireId.Value, "hire" + item.ItemIndex, TextManipulation.toDBNULLfromEmpty(txt_startdate.Text), TextManipulation.toDBNULLfromEmpty(txt_enddate.Text));
+                        objMaster.insert_Update_Hire(hdn_id.Value, getHireParams(hdn_EmployerTaxId.Value,ssn, "hire" + item.ItemIndex, txt_startdate.Text, txt_enddate.Text));
             }
-            return dt_hiredata;
+            
         }
 
-        public DataTable Get_Status()
+        public void Insert_Update_Status(string EmployerTaxId, string ssn)
         {
-            DataTable dt_Status = new DataTable();
-            dt_Status.Columns.AddRange(new DataColumn[5] {
-                            new DataColumn("Id", typeof(int)),
-                            new DataColumn("StatusName", typeof(string)),
-                            new DataColumn("Status", typeof(string)),
-                            new DataColumn("startDate", typeof(string)),
-                            new DataColumn("endDate",typeof(string))});
             foreach (RepeaterItem item in rpt_Status.Items)
             {
                 HiddenField hdn_statusId = (HiddenField)item.FindControl("hdn_statusId");
@@ -239,29 +260,12 @@ namespace ACA_WebApplication.Master
                 TextBox txt_startdate = (TextBox)item.FindControl("txt_startdate");
                 TextBox txt_enddate = (TextBox)item.FindControl("txt_enddate");
                 if (drp_status.Text != "" && txt_startdate.Text != "")
-                    dt_Status.Rows.Add(hdn_statusId.Value, "Status" + item.ItemIndex, drp_status.Text, TextManipulation.toDBNULLfromEmpty(txt_startdate.Text), TextManipulation.toDBNULLfromEmpty(txt_enddate.Text));
+                    objMaster.insert_Update_Status(hdn_id.Value, getStatusParams(hdn_EmployerTaxId.Value, ssn, "status" + item.ItemIndex, drp_status.Text, txt_startdate.Text, txt_enddate.Text));
             }
-            return dt_Status;
         }
 
-        public DataTable GetCoverage()
+        public void Insert_Update_Enrollment(string EmployerTaxId, string ssn)
         {
-            DataTable dt_Coverage = new DataTable();
-            dt_Coverage.Columns.AddRange(new DataColumn[13] {
-                            new DataColumn("Id", typeof(int)),
-                            new DataColumn("EnrollmentName", typeof(string)),
-                            new DataColumn("unionMember", typeof(int)),
-                            new DataColumn("contributionStartDate", typeof(string)),
-                            new DataColumn("contributionEndDate",typeof(string)),
-                            new DataColumn("coverageOfferDate", typeof(string)),
-                            new DataColumn("PlanName", typeof(string)),
-                            new DataColumn("isEnrolled",typeof(int)),
-                            new DataColumn("coverageStartDate", typeof(string)),
-                            new DataColumn("coverageEndDate", typeof(string)),
-                            new DataColumn("cobraEnrolled", typeof(int)),
-                            new DataColumn("cobraStartDate",typeof(string)),
-                            new DataColumn("cobraEndDate",typeof(string))});
-
             foreach (RepeaterItem item in rpt_coverage.Items)
             {
                 HiddenField hdn_coverageId = (HiddenField)item.FindControl("hdn_coverageId");
@@ -276,37 +280,14 @@ namespace ACA_WebApplication.Master
                 HiddenField hdn_cobraEnrolled = (HiddenField)item.FindControl("hdn_cobraEnrolled");
                 TextBox txt_cobraStartDate = (TextBox)item.FindControl("txt_cobraStartDate");
                 TextBox txt_cobraEndDate = (TextBox)item.FindControl("txt_cobraEndDate");
-                DropDownList drp_plan = (DropDownList)item.FindControl("drp_plan");
-                if (drp_plan.Text != "")
-                    dt_Coverage.Rows.Add(hdn_coverageId.Value, "Coverage" + item.ItemIndex, hdn_unionMember.Value, TextManipulation.toDBNULLfromEmpty(txt_contributionStartDate.Text), TextManipulation.toDBNULLfromEmpty(txt_contributionEndDate.Text),
-                        TextManipulation.toDBNULLfromEmpty(txt_coverageOfferDate.Text), drp_plan.Text, hdn_enrolled.Value, TextManipulation.toDBNULLfromEmpty(txt_coverageStartDate.Text), TextManipulation.toDBNULLfromEmpty(txt_coverageEndDate.Text),
-                        hdn_cobraEnrolled.Value, TextManipulation.toDBNULLfromEmpty(txt_cobraStartDate.Text), TextManipulation.toDBNULLfromEmpty(txt_cobraEndDate.Text));
+                if (txt_name.Text != "")
+                    objMaster.insert_Update_Enrollment(hdn_id.Value, getEnrollmentParams(hdn_EmployerTaxId.Value, ssn, txt_name.Text, "coverage" + item.ItemIndex, hdn_unionMember.Value, txt_contributionStartDate.Text, txt_contributionEndDate.Text, txt_coverageOfferDate.Text,
+                       hdn_enrolled.Value, txt_coverageStartDate.Text, txt_coverageEndDate.Text, hdn_cobraEnrolled.Value, txt_cobraStartDate.Text, txt_cobraEndDate.Text));
             }
-            return dt_Coverage;
         }
 
-        public DataTable Get_Covered_Individual()
+        public void Insert_Update_Covered_Individual(string EmployerTaxId, string ssn)
         {
-            DataTable dt_coveredIndividula = new DataTable();
-            dt_coveredIndividula.Columns.AddRange(new DataColumn[18] {
-                            new DataColumn("Id", typeof(string)),
-                            new DataColumn("firstName", typeof(string)),
-                            new DataColumn("lastName",typeof(string)),
-                            new DataColumn("employeeSSN", typeof(string)),
-                            new DataColumn("birthday", typeof(string)),
-                            new DataColumn("allCoverage",typeof(string)),
-                            new DataColumn("janCoverage", typeof(string)),
-                            new DataColumn("febCoverage", typeof(string)),
-                            new DataColumn("marCoverage",typeof(string)),
-                            new DataColumn("aprCoverage", typeof(string)),
-                            new DataColumn("mayCoverage", typeof(string)),
-                            new DataColumn("junCoverage",typeof(string)),
-                            new DataColumn("julCoverage", typeof(string)),
-                            new DataColumn("augCoverage", typeof(string)),
-                            new DataColumn("sepCoverage",typeof(string)),
-                            new DataColumn("octCoverage", typeof(string)),
-                            new DataColumn("novCoverage", typeof(string)),
-                            new DataColumn("decCoverage",typeof(string))});
             foreach (RepeaterItem item in rpt_IndividualData.Items)
             {
                 TextBox txt_first = (TextBox)item.FindControl("txt_first");
@@ -333,10 +314,162 @@ namespace ACA_WebApplication.Master
                 string sep = (chk_sep.Checked == true) ? "1" : "0"; string oct = (chk_oct.Checked == true) ? "1" : "0"; string nov = (chk_nov.Checked == true) ? "1" : "0";
                 string dec = (chk_dec.Checked == true) ? "1" : "0";
                 if (txt_first.Text != "" && txt_ssn.Text != "")
-                    dt_coveredIndividula.Rows.Add(hdn_CI_id.Value, txt_first.Text, txt_last.Text, txt_ssn.Text, TextManipulation.toDBNULLfromEmpty(txt_dob.Text), all, jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec);
+                    objMaster.insert_Update_Covered_Individual(hdn_id.Value, getCoveredIndividualParams(hdn_EmployerTaxId.Value, ssn, txt_first.Text,txt_middlename.Text , 
+                        txt_last.Text, txt_ssn.Text, txt_dob.Text, all, jan, feb, mar, apr, may, jun,jul, aug,sep,oct,nov, dec, "0"));
             }
-            return dt_coveredIndividula;
         }
+
+        public void Insert_Update_EmployeeCode(string EmployerTaxId, string ssn)
+        {
+            SqlParameter[] param = null;
+            foreach (RepeaterItem item in rpt_code.Items)
+            {
+                #region get Repeater Data
+                HiddenField hdn_filingyear = (HiddenField)item.FindControl("hdn_filingyear");
+                HiddenField hdn_dependent = (HiddenField)item.FindControl("hdn_dependent");
+                HiddenField hdn_flagEmp = (HiddenField)item.FindControl("hdn_flagEmp");
+                HiddenField hdn_disable = (HiddenField)item.FindControl("hdn_disable");
+
+                Label lbl_ALLM_COC = (Label)item.FindControl("lbl_ALLM_COC");
+                Label lbl_JAN_COC = (Label)item.FindControl("lbl_JAN_COC");
+                Label lbl_FEB_COC = (Label)item.FindControl("lbl_FEB_COC");
+                Label lbl_MAR_COC = (Label)item.FindControl("lbl_MAR_COC");
+                Label lbl_APR_COC = (Label)item.FindControl("lbl_APR_COC");
+                Label lbl_MAY_COC = (Label)item.FindControl("lbl_MAY_COC");
+                Label lbl_JUN_COC = (Label)item.FindControl("lbl_JUN_COC");
+                Label lbl_JUL_COC = (Label)item.FindControl("lbl_JUL_COC");
+                Label lbl_AUG_COC = (Label)item.FindControl("lbl_AUG_COC");
+                Label lbl_SEP_COC = (Label)item.FindControl("lbl_SEP_COC");
+                Label lbl_OCT_COC = (Label)item.FindControl("lbl_OCT_COC");
+                Label lbl_NOV_COC = (Label)item.FindControl("lbl_NOV_COC");
+                Label lbl_DEC_COC = (Label)item.FindControl("lbl_DEC_COC");
+
+                Label lbl_ALLM_LCMP = (Label)item.FindControl("lbl_ALLM_LCMP");
+                Label lbl_JAN_LCMP = (Label)item.FindControl("lbl_JAN_LCMP");
+                Label lbl_FEB_LCMP = (Label)item.FindControl("lbl_FEB_LCMP");
+                Label lbl_MAR_LCMP = (Label)item.FindControl("lbl_MAR_LCMP");
+                Label lbl_APR_LCMP = (Label)item.FindControl("lbl_APR_LCMP");
+                Label lbl_MAY_LCMP = (Label)item.FindControl("lbl_MAY_LCMP");
+                Label lbl_JUN_LCMP = (Label)item.FindControl("lbl_JUN_LCMP");
+                Label lbl_JUL_LCMP = (Label)item.FindControl("lbl_JUL_LCMP");
+                Label lbl_AUG_LCMP = (Label)item.FindControl("lbl_AUG_LCMP");
+                Label lbl_SEP_LCMP = (Label)item.FindControl("lbl_SEP_LCMP");
+                Label lbl_OCT_LCMP = (Label)item.FindControl("lbl_OCT_LCMP");
+                Label lbl_NOV_LCMP = (Label)item.FindControl("lbl_NOV_LCMP");
+                Label lbl_DEC_LCMP = (Label)item.FindControl("lbl_DEC_LCMP");
+
+                Label lbl_ALLM_SHC = (Label)item.FindControl("lbl_ALLM_SHC");
+                Label lbl_JAN_SHC = (Label)item.FindControl("lbl_JAN_SHC");
+                Label lbl_FEB_SHC = (Label)item.FindControl("lbl_FEB_SHC");
+                Label lbl_MAR_SHC = (Label)item.FindControl("lbl_MAR_SHC");
+                Label lbl_APR_SHC = (Label)item.FindControl("lbl_APR_SHC");
+                Label lbl_MAY_SHC = (Label)item.FindControl("lbl_MAY_SHC");
+                Label lbl_JUN_SHC = (Label)item.FindControl("lbl_JUN_SHC");
+                Label lbl_JUL_SHC = (Label)item.FindControl("lbl_JUL_SHC");
+                Label lbl_AUG_SHC = (Label)item.FindControl("lbl_AUG_SHC");
+                Label lbl_SEP_SHC = (Label)item.FindControl("lbl_SEP_SHC");
+                Label lbl_OCT_SHC = (Label)item.FindControl("lbl_OCT_SHC");
+                Label lbl_NOV_SHC = (Label)item.FindControl("lbl_NOV_SHC");
+                Label lbl_DEC_SHC = (Label)item.FindControl("lbl_DEC_SHC");
+                #endregion
+
+                #region Param
+                param = new SqlParameter[47];
+                param[0] = new SqlParameter("@EmployerTaxId", EmployerTaxId);
+                param[1] = new SqlParameter("@ssn", ssn);
+                param[2] = new SqlParameter("@filingYear", hdn_filingyear.Value);
+                param[3] = new SqlParameter("@hourlyAmount", TextManipulation.toDBNULLfromEmpty(txt_hourly.Text));
+                param[4] = new SqlParameter("@salaryAmount", TextManipulation.toDBNULLfromEmpty(txt_salary.Text));
+                param[5] = new SqlParameter("@ALLM_COC", lbl_ALLM_COC.Text);
+                param[6] = new SqlParameter("@JAN_COC", lbl_JAN_COC.Text);
+                param[7] = new SqlParameter("@FEB_COC", lbl_FEB_COC.Text);
+                param[8] = new SqlParameter("@MAR_COC", lbl_MAR_COC.Text);
+                param[9] = new SqlParameter("@APR_COC", lbl_APR_COC.Text);
+                param[10] = new SqlParameter("@MAY_COC", lbl_MAY_COC.Text);
+                param[11] = new SqlParameter("@JUN_COC", lbl_JUN_COC.Text);
+                param[12] = new SqlParameter("@JUL_COC", lbl_JUL_COC.Text);
+                param[13] = new SqlParameter("@AUG_COC", lbl_AUG_COC.Text);
+                param[14] = new SqlParameter("@SEP_COC", lbl_SEP_COC.Text);
+                param[15] = new SqlParameter("@OCT_COC", lbl_OCT_COC.Text);
+                param[16] = new SqlParameter("@NOV_COC", lbl_NOV_COC.Text);
+                param[17] = new SqlParameter("@DEC_COC", lbl_DEC_COC.Text);
+                param[18] = new SqlParameter("@ALLM_LCMP", lbl_ALLM_LCMP.Text);
+                param[19] = new SqlParameter("@JAN_LCMP", lbl_JAN_LCMP.Text);
+                param[20] = new SqlParameter("@FEB_LCMP", lbl_FEB_LCMP.Text);
+                param[21] = new SqlParameter("@MAR_LCMP", lbl_MAR_LCMP.Text);
+                param[22] = new SqlParameter("@APR_LCMP", lbl_APR_LCMP.Text);
+                param[23] = new SqlParameter("@MAY_LCMP", lbl_MAY_LCMP.Text);
+                param[24] = new SqlParameter("@JUN_LCMP", lbl_JUN_LCMP.Text);
+                param[25] = new SqlParameter("@JUL_LCMP", lbl_JUL_LCMP.Text);
+                param[26] = new SqlParameter("@AUG_LCMP", lbl_AUG_LCMP.Text);
+                param[27] = new SqlParameter("@SEP_LCMP", lbl_SEP_LCMP.Text);
+                param[28] = new SqlParameter("@OCT_LCMP", lbl_OCT_LCMP.Text);
+                param[29] = new SqlParameter("@NOV_LCMP", lbl_NOV_LCMP.Text);
+                param[30] = new SqlParameter("@DEC_LCMP", lbl_DEC_LCMP.Text);
+                param[31] = new SqlParameter("@ALLM_SHC", lbl_ALLM_SHC.Text);
+                param[32] = new SqlParameter("@JAN_SHC", lbl_JAN_SHC.Text);
+                param[33] = new SqlParameter("@FEB_SHC", lbl_FEB_SHC.Text);
+                param[34] = new SqlParameter("@MAR_SHC", lbl_MAR_SHC.Text);
+                param[35] = new SqlParameter("@APR_SHC", lbl_APR_SHC.Text);
+                param[36] = new SqlParameter("@MAY_SHC", lbl_MAY_SHC.Text);
+                param[37] = new SqlParameter("@JUN_SHC", lbl_JUN_SHC.Text);
+                param[38] = new SqlParameter("@JUL_SHC", lbl_JUL_SHC.Text);
+                param[39] = new SqlParameter("@AUG_SHC", lbl_AUG_SHC.Text);
+                param[40] = new SqlParameter("@SEP_SHC", lbl_SEP_SHC.Text);
+                param[41] = new SqlParameter("@OCT_SHC", lbl_OCT_SHC.Text);
+                param[42] = new SqlParameter("@NOV_SHC", lbl_NOV_SHC.Text);
+                param[43] = new SqlParameter("@DEC_SHC", lbl_DEC_SHC.Text);
+                param[44] = new SqlParameter("@isDependent", hdn_dependent.Value);
+                param[45] = new SqlParameter("@flaggedEmployee", hdn_flagEmp.Value);
+                param[46] = new SqlParameter("@disableCoding", hdn_disable.Value);
+                #endregion
+
+                objMaster.insert_Update_EmployeeCode(hdn_id.Value, param);
+            }
+        }
+
+        #endregion
+
+        #region Delete subtable records
+        public void Delete_HireName(string EmployerTaxId, string ssn)
+        {
+            foreach (RepeaterItem item in rptHiredata.Items)
+            {
+                HiddenField hdn_hirename = (HiddenField)item.FindControl("hdn_hirename");
+                if(hdn_hirename!=null)
+                    objMaster.Delete_HireName(hdn_EmployerTaxId.Value, ssn, hdn_hirename.Value);
+            }
+        }
+
+        public void Delete_Status(string EmployerTaxId, string ssn)
+        {
+            foreach (RepeaterItem item in rptHiredata.Items)
+            {
+                HiddenField statusName = (HiddenField)item.FindControl("hdn_statusName");
+                if(statusName!=null)
+                    objMaster.Delete_Status(hdn_EmployerTaxId.Value, ssn, statusName.Value);
+            }
+        }
+        public void Delete_Enrollment(string EmployerTaxId, string ssn)
+        {
+            foreach (RepeaterItem item in rptHiredata.Items)
+            {
+                HiddenField enrollmentName = (HiddenField)item.FindControl("hdn_enrollmentName");
+                if(enrollmentName!=null)
+                objMaster.Delete_Status(hdn_EmployerTaxId.Value, ssn, enrollmentName.Value);
+            }
+        }
+        public void Delete_CoveredIndividual(string EmployerTaxId, string ssn)
+        {
+            foreach (RepeaterItem item in rptHiredata.Items)
+            {
+                TextBox txt_ssn = (TextBox)item.FindControl("txt_ssn");
+                if(txt_ssn!=null)
+                objMaster.Delete_CoveredIndividual(hdn_EmployerTaxId.Value, ssn, txt_ssn.Text);
+            }
+        }
+        
+
 
         #endregion
 
@@ -431,21 +564,120 @@ namespace ACA_WebApplication.Master
         }
         #endregion
 
-        protected void lbl_close_Click(object sender, EventArgs e)
+        #region Parameter
+
+        private SqlParameter[] getEmployeeParams()
         {
-            lightDiv.Visible = false;
-            fadeDiv.Visible = false;
+            SqlParameter[] param = null;
+            param = new SqlParameter[12];
+            param[0] = new SqlParameter("@firstName", txt_firstname.Text);
+            param[1] = new SqlParameter("@middleName", txt_middlename.Text);
+            param[2] = new SqlParameter("@lastName", txt_lastname.Text);
+            param[3] = new SqlParameter("@ssn", txt_SSN.Text);
+            param[4] = new SqlParameter("@birthday", TextManipulation.toDBNULLfromEmpty(txt_dob.Text));
+            param[5] = new SqlParameter("@address", txt_address1.Text);
+            param[6] = new SqlParameter("@address2", txt_address2.Text);
+            param[7] = new SqlParameter("@city", txt_city.Text);
+            param[8] = new SqlParameter("@state", drp_state.Text);
+            param[9] = new SqlParameter("@zip", txt_zipcode.Text);
+            param[10] = new SqlParameter("@country", drp_country.Text);
+            param[11] = new SqlParameter("@email", txt_email.Text);
+            return param;
         }
+
+
+        private SqlParameter[] getHireParams(string employerTaxId, string ssn, string hireName, string startDate, string endDate)
+        {
+            SqlParameter[] param = null;
+
+            param = new SqlParameter[5];
+            param[0] = new SqlParameter("@EmployerTaxId", employerTaxId);
+            param[1] = new SqlParameter("@ssn", txt_SSN.Text.Trim());
+            param[2] = new SqlParameter("@hireName", hireName);
+            param[3] = new SqlParameter("@startDate",TextManipulation.toDBNULLfromEmpty(startDate));
+            param[4] = new SqlParameter("@endDate", TextManipulation.toDBNULLfromEmpty(endDate));
+            return param;
+        }
+
+        private SqlParameter[] getStatusParams(string employerTaxId, string employeeSSN, string statusName,string status, string startDate,string endDate)
+            {
+            SqlParameter[] param = null;
+
+            param = new SqlParameter[6];
+            param[0] = new SqlParameter("@EmployerTaxId", employerTaxId);
+            param[1] = new SqlParameter("@ssn", employeeSSN);
+            param[2] = new SqlParameter("@statusName", statusName);
+            param[3] = new SqlParameter("@status", status);
+            param[4] = new SqlParameter("@startDate", TextManipulation.toDBNULLfromEmpty(startDate));
+            param[5] = new SqlParameter("@endDate", TextManipulation.toDBNULLfromEmpty(endDate));
+            return param;
+        }
+
+        private SqlParameter[] getEnrollmentParams(string employerTaxId, string employeeSSN, string planName, string enrollmentName, string unionMember, string contributionStartDate, string contributionEndDate, string coverageOfferDate, string isEnrolled, 
+            string coverageStartDate,  string coverageEndDate, string cobraEnrolled, string cobraStartDate, string cobraEndDate)
+        {
+            SqlParameter[] param = null;
+            param = new SqlParameter[14];
+            param[0] = new SqlParameter("@EmployerTaxId", employerTaxId);
+            param[1] = new SqlParameter("@ssn", employeeSSN);
+            param[2] = new SqlParameter("@planName", planName.toDBNULLfromEmpty());
+            param[3] = new SqlParameter("@enrollmentName", enrollmentName);
+            param[4] = new SqlParameter("@unionMember", unionMember);
+            param[5] = new SqlParameter("@contributionStartDate", TextManipulation.toDBNULLfromEmpty(contributionStartDate));
+            param[6] = new SqlParameter("@contributionEndDate", TextManipulation.toDBNULLfromEmpty(contributionEndDate));
+            param[7] = new SqlParameter("@coverageOfferDate", TextManipulation.toDBNULLfromEmpty(coverageOfferDate));
+            param[8] = new SqlParameter("@isEnrolled", isEnrolled);
+            param[9] = new SqlParameter("@CoverageStartDate", TextManipulation.toDBNULLfromEmpty(coverageStartDate));
+            param[10] = new SqlParameter("@coverageEndDate", TextManipulation.toDBNULLfromEmpty(coverageEndDate));
+            param[11] = new SqlParameter("@COBRAEnrolled", cobraEnrolled);
+            param[12] = new SqlParameter("@COBRAStartDate", TextManipulation.toDBNULLfromEmpty(cobraStartDate));
+            param[13] = new SqlParameter("@COBRAEndDate", TextManipulation.toDBNULLfromEmpty(cobraEndDate));
+            return param;
+        }
+
+        private SqlParameter[] getCoveredIndividualParams(string employerTaxId, string employeeSSN, string firstName, string middleName,
+            string lastName, string ssn, string birthday, string allCoverage, string janCoverage, string febCoverage, string marCoverage,
+            string aprCoverage, string mayCoverage, string junCoverage, string julCoverage, string augCoverage, string sepCoverage, 
+            string octCoverage, string novCoverage, string decCoverage, string disableCoding)
+        {
+            SqlParameter[] param = null;
+            param = new SqlParameter[21];
+            param[0] = new SqlParameter("@EmployerTaxId", employerTaxId);
+            param[1] = new SqlParameter("@ssnEmployee", employeeSSN);
+            param[2] = new SqlParameter("@firstName", firstName);
+            param[3] = new SqlParameter("@middleName", middleName);
+            param[4] = new SqlParameter("@lastName", lastName);
+            param[5] = new SqlParameter("@ssn", ssn);
+            param[6] = new SqlParameter("@birthday", TextManipulation.toDBNULLfromEmpty(birthday));
+            param[7] = new SqlParameter("@allCoverage", allCoverage);
+            param[8] = new SqlParameter("@janCoverage", janCoverage);
+            param[9] = new SqlParameter("@febCoverage", febCoverage);
+            param[10] = new SqlParameter("@marCoverage", marCoverage);
+            param[11] = new SqlParameter("@aprCoverage", aprCoverage);
+            param[12] = new SqlParameter("@mayCoverage", mayCoverage);
+            param[13] = new SqlParameter("@junCoverage", junCoverage);
+            param[14] = new SqlParameter("@julCoverage", julCoverage);
+            param[15] = new SqlParameter("@augCoverage", augCoverage);
+            param[16] = new SqlParameter("@sepCoverage", sepCoverage);
+            param[17] = new SqlParameter("@octCoverage", octCoverage);
+            param[18] = new SqlParameter("@novCoverage", novCoverage);
+            param[19] = new SqlParameter("@decCoverage", decCoverage);
+            param[20] = new SqlParameter("@disableCoding", disableCoding);
+            return param;
+        }
+        
+        #endregion
 
         #region Add hiredata
 
         public DataTable dt_hiredate()
         {
             DataTable dt_hiredata = new DataTable();
-            dt_hiredata.Columns.AddRange(new DataColumn[3] {
+            dt_hiredata.Columns.AddRange(new DataColumn[4] {
                             new DataColumn("Id", typeof(string)),
                             new DataColumn("startDate", typeof(string)),
-                            new DataColumn("endDate",typeof(string))});
+                            new DataColumn("endDate",typeof(string)),
+                            new DataColumn("hirename",typeof(string))});
 
             return dt_hiredata;
         }
@@ -509,9 +741,10 @@ namespace ACA_WebApplication.Master
         public DataTable dtStatus()
         {
             DataTable dt_Status = new DataTable();
-            dt_Status.Columns.AddRange(new DataColumn[4] {
+            dt_Status.Columns.AddRange(new DataColumn[5] {
                             new DataColumn("Id", typeof(int)),
                             new DataColumn("Status", typeof(string)),
+                            new DataColumn("statusName", typeof(string)),
                             new DataColumn("startDate", typeof(string)),
                             new DataColumn("endDate",typeof(string))});
             return dt_Status;
@@ -594,32 +827,26 @@ namespace ACA_WebApplication.Master
         public DataTable dtCoverage()
         {
             DataTable dt_Coverage = new DataTable();
-            dt_Coverage.Columns.AddRange(new DataColumn[12] {
+            dt_Coverage.Columns.AddRange(new DataColumn[13] {
                             new DataColumn("Id", typeof(int)),
                             new DataColumn("unionMember", typeof(int)),
                             new DataColumn("contributionStartDate", typeof(string)),
                             new DataColumn("contributionEndDate",typeof(string)),
                             new DataColumn("coverageOfferDate", typeof(string)),
-                            new DataColumn("PlanId", typeof(string)),
+                            new DataColumn("name", typeof(string)),
                             new DataColumn("isEnrolled",typeof(int)),
                             new DataColumn("coverageStartDate", typeof(string)),
                             new DataColumn("coverageEndDate", typeof(string)),
                             new DataColumn("cobraEnrolled", typeof(int)),
                             new DataColumn("cobraStartDate",typeof(string)),
-                            new DataColumn("cobraEndDate",typeof(string))});
+                            new DataColumn("cobraEndDate",typeof(string)),
+                            new DataColumn("enrollmentName", typeof(string))});
             return dt_Coverage;
         }
         protected void rpt_coverage_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             DropDownList drp_plan = (DropDownList)e.Item.FindControl("drp_plan");
             HiddenField hdn_planId = (HiddenField)e.Item.FindControl("hdn_planId");
-
-            DataTable dt = objMaster.drp_Plan(hdn_companytax_id.Value);
-            drp_plan.DataSource = dt; ;
-            drp_plan.DataValueField = "Id";
-            drp_plan.DataTextField = "Name";
-            drp_plan.DataBind();
-            drp_plan.Items.Insert(0, new ListItem("--Select--", ""));
 
             CheckBox chk_unionMember = (CheckBox)e.Item.FindControl("chk_unionMember");
             CheckBox chk_enrolled = (CheckBox)e.Item.FindControl("chk_enrolled");
@@ -632,11 +859,11 @@ namespace ACA_WebApplication.Master
             chk_cobraEnrolled.Checked = hdn_cobraEnrolled.Value == "0" ? false : true;
 
             TextBox txt_contributionStartDate = (TextBox)e.Item.FindControl("txt_contributionStartDate");
+            TextBox txt_name = (TextBox)e.Item.FindControl("txt_name");
             Button btn_coverageplus = (Button)e.Item.FindControl("btn_coverageplus");
             Button btn_coverageminus = (Button)e.Item.FindControl("btn_coverageminus");
 
-            drp_plan.Items.FindByValue(hdn_planId.Value).Selected = true;
-            if (drp_plan.Text != "")
+            if (txt_name.Text != "")
             {
                 btn_coverageminus.Visible = true;
                 btn_coverageplus.Visible = false;
@@ -659,8 +886,7 @@ namespace ACA_WebApplication.Master
                 TextBox txt_contributionStartDate = (TextBox)item.FindControl("txt_contributionStartDate");
                 TextBox txt_contributionEndDate = (TextBox)item.FindControl("txt_contributionEndDate");
                 TextBox txt_coverageOfferDate = (TextBox)item.FindControl("txt_coverageOfferDate");
-                DropDownList drp_plan = (DropDownList)item.FindControl("drp_plan");
-                HiddenField hdn_planId = (HiddenField)item.FindControl("hdn_planId");
+                TextBox txt_plan = (TextBox)item.FindControl("txt_name");
                 HiddenField hdn_enrolled = (HiddenField)item.FindControl("hdn_enrolled");
                 TextBox txt_coverageStartDate = (TextBox)item.FindControl("txt_coverageStartDate");
                 TextBox txt_coverageEndDate = (TextBox)item.FindControl("txt_coverageEndDate");
@@ -668,7 +894,7 @@ namespace ACA_WebApplication.Master
                 TextBox txt_cobraStartDate = (TextBox)item.FindControl("txt_cobraStartDate");
                 TextBox txt_cobraEndDate = (TextBox)item.FindControl("txt_cobraEndDate");
                 dt_Coverage.Rows.Add(hdn_coverageId.Value, hdn_unionMember.Value, txt_contributionStartDate.Text, txt_contributionEndDate.Text,
-                    txt_coverageOfferDate.Text, drp_plan.Text, hdn_enrolled.Value, txt_coverageStartDate.Text, txt_coverageEndDate.Text,
+                    txt_coverageOfferDate.Text, txt_plan.Text, hdn_enrolled.Value, txt_coverageStartDate.Text, txt_coverageEndDate.Text,
                     hdn_cobraEnrolled.Value, txt_cobraStartDate.Text, txt_cobraEndDate.Text);
             }
             dt_Coverage.Rows.Add(0, 0, null, null, null, null, 0, null, null, 0, null, null);
@@ -690,8 +916,7 @@ namespace ACA_WebApplication.Master
                 TextBox txt_contributionStartDate = (TextBox)item.FindControl("txt_contributionStartDate");
                 TextBox txt_contributionEndDate = (TextBox)item.FindControl("txt_contributionEndDate");
                 TextBox txt_coverageOfferDate = (TextBox)item.FindControl("txt_coverageOfferDate");
-                DropDownList drp_plan = (DropDownList)item.FindControl("drp_plan");
-                HiddenField hdn_planId = (HiddenField)item.FindControl("hdn_planId");
+                TextBox txt_plan = (TextBox)item.FindControl("txt_name");
                 HiddenField hdn_enrolled = (HiddenField)item.FindControl("hdn_enrolled");
                 TextBox txt_coverageStartDate = (TextBox)item.FindControl("txt_coverageStartDate");
                 TextBox txt_coverageEndDate = (TextBox)item.FindControl("txt_coverageEndDate");
@@ -699,7 +924,7 @@ namespace ACA_WebApplication.Master
                 TextBox txt_cobraStartDate = (TextBox)item.FindControl("txt_cobraStartDate");
                 TextBox txt_cobraEndDate = (TextBox)item.FindControl("txt_cobraEndDate");
                 dt_Coverage.Rows.Add(hdn_coverageId.Value, hdn_unionMember.Value, txt_contributionStartDate.Text, txt_contributionEndDate.Text,
-                    txt_coverageOfferDate.Text, drp_plan.Text, hdn_enrolled.Value, txt_coverageStartDate.Text, txt_coverageEndDate.Text,
+                    txt_coverageOfferDate.Text, txt_plan.Text, hdn_enrolled.Value, txt_coverageStartDate.Text, txt_coverageEndDate.Text,
                     hdn_cobraEnrolled.Value, txt_cobraStartDate.Text, txt_cobraEndDate.Text);
             }
             //dt_Coverage.Rows.Add(0, 0, null, null, null, null, 0, null, null, 0, null, null);
@@ -872,5 +1097,11 @@ namespace ACA_WebApplication.Master
             txtsearch.Text = "";
             txtsearch.Focus();
         }
+        protected void lbl_close_Click(object sender, EventArgs e)
+        {
+            lightDiv.Visible = false;
+            fadeDiv.Visible = false;
+        }
+
     }
 }

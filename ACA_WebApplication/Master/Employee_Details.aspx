@@ -107,9 +107,15 @@
                                              <td>
                                                  <asp:DropDownList ID="drp_employer" CssClass="cmb" runat="server">
                                                  </asp:DropDownList>
+                                                 <asp:RequiredFieldValidator ControlToValidate="drp_employer" ID="RFV1" ForeColor="Red" ValidationGroup="save" runat="server" Display="None" ErrorMessage="<b> Missing Field</b><br />A Employer is required."></asp:RequiredFieldValidator>
+                                                 <ajaxToolkit:ValidatorCalloutExtender Width="200px" HighlightCssClass="validatorCalloutHighlight" ID="ValidatorCalloutExtender1" TargetControlID="RFV1" runat="server"></ajaxToolkit:ValidatorCalloutExtender>
                                              </td>
                                              <td>Social Security Number</td><td>
                                                 <asp:TextBox ID="txt_SSN" class="txt" runat="server"></asp:TextBox>
+                                                <asp:RegularExpressionValidator ForeColor="Red" ValidationGroup="save" ValidationExpression="^\d{3}-\d{2}-\d{4}$" ID="Regxval1" Display="None" ControlToValidate="txt_SSN" runat="server" ErrorMessage="<b> Error Field</b><br />Invalid SSN."></asp:RegularExpressionValidator>
+                                                <asp:RequiredFieldValidator ControlToValidate="txt_SSN" ID="RFV2" Display="None" ForeColor="Red" ValidationGroup="save" runat="server" ErrorMessage="<b> Missing Field</b><br />A SSN is required."></asp:RequiredFieldValidator>
+                                                <ajaxToolkit:ValidatorCalloutExtender Width="200px" PopupPosition="BottomLeft" HighlightCssClass="validatorCalloutHighlight" ID="ValidatorCalloutExtender2" TargetControlID="Regxval1" runat="server"></ajaxToolkit:ValidatorCalloutExtender>
+                                                <ajaxToolkit:ValidatorCalloutExtender Width="200px" PopupPosition="BottomLeft" HighlightCssClass="validatorCalloutHighlight" ID="ValidatorCalloutExtender3" TargetControlID="RFV2" runat="server"></ajaxToolkit:ValidatorCalloutExtender>
                                              </td>
                                          </tr>
 
@@ -207,7 +213,8 @@
                                                                                  <td>
                                                                                      <asp:TextBox ID="txt_startdate" MaxLength="10" AutoComplete="off" placeholder="MM/dd/yyyy" Text='<%# FixDateFormat(Eval("startDate").ToString()) %>' CssClass="txt" runat="server"></asp:TextBox>
                                                                                      <ajaxToolkit:CalendarExtender CssClass="black" ID="CalendarExtender1" Enabled="true" Format="MM/dd/yyyy" TargetControlID="txt_startdate" runat="server"></ajaxToolkit:CalendarExtender>
-                                                                                     <asp:RequiredFieldValidator ControlToValidate="txt_startdate" ID="RequiredFieldValidator1" ForeColor="Red" ValidationGroup="sub_hire" runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>
+                                                                                     <asp:RequiredFieldValidator ControlToValidate="txt_startdate" ID="RequiredFieldValidator1" ForeColor="Red" ValidationGroup="sub_hire" Display="None" runat="server" ErrorMessage="<b>Missing Field</b><br/>A Hire Date is Required."></asp:RequiredFieldValidator>
+                                                                                     <ajaxToolkit:ValidatorCalloutExtender Width="200px" HighlightCssClass="validatorCalloutHighlight" ID="ValidatorCalloutExtender1" TargetControlID="RequiredFieldValidator1" runat="server"></ajaxToolkit:ValidatorCalloutExtender>
                                                                                  </td>
                                                                                  <td>
                                                                                      <asp:TextBox ID="txt_enddate" MaxLength="10" AutoComplete="off" placeholder="MM/dd/yyyy" Text='<%# FixDateFormat(Eval("endDate").ToString()) %>' CssClass="txt" runat="server"></asp:TextBox>
@@ -215,6 +222,7 @@
                                                                                  </td>
                                                                                  <td>
                                                                                      <asp:HiddenField ID="hdn_hireId" Value='<%# Eval("Id") %>' runat="server" />
+                                                                                     <asp:HiddenField ID="hdn_hirename" Value='<%# Eval("hirename") %>' runat="server" />
                                                                                      <asp:Button ID="btn_hireplus" CssClass="imgbtnplus" ValidationGroup="sub_hire" OnClick="btn_hireplus_Click" runat="server" />
                                                                                      <asp:Button ID="btn_hireminus" CssClass="imgbtnminus" ClientIDMode="Static" Visible="false" OnClick="btn_hireminus_Click" runat="server" />
                                                                                  </td>
@@ -253,18 +261,21 @@
                                                                                      <asp:DropDownList ID="drp_status" CssClass="cmb" runat="server">
                                                                                      </asp:DropDownList>
                                                                                      <asp:HiddenField ID="hdn_status" runat="server" Value='<%# Eval("Status") %>' />
-                                                                                     <asp:RequiredFieldValidator ControlToValidate="drp_status" ID="RequiredFieldVsdalidator1" InitialValue="" ForeColor="Red" ValidationGroup="sub_status" runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>
+                                                                                     <asp:RequiredFieldValidator ControlToValidate="drp_status" ID="RequiredFieldVsdalidator1" InitialValue="" ForeColor="Red" Display="None" ValidationGroup="sub_status" runat="server" ErrorMessage="<b>Missing Field</b><br/>A Status is required."></asp:RequiredFieldValidator>
+                                                                                     <ajaxToolkit:ValidatorCalloutExtender Width="200px" HighlightCssClass="validatorCalloutHighlight" ID="ValidatorfCalloutExtender1" TargetControlID="RequiredFieldVsdalidator1" runat="server"></ajaxToolkit:ValidatorCalloutExtender>
                                                                                  </td>
                                                                                  <td>
                                                                                      <asp:TextBox ID="txt_startdate" AutoComplete="off" placeholder="MM/dd/yyyy" Text='<%# FixDateFormat(Eval("startDate").ToString()) %>' CssClass="txt" runat="server"></asp:TextBox>
-                                                                                     <asp:RequiredFieldValidator ControlToValidate="txt_startdate" ID="RequiredFieldValidator2" ForeColor="Red" ValidationGroup="sub_status" runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>
+                                                                                     <asp:RequiredFieldValidator ControlToValidate="txt_startdate" ID="RequiredFieldValidator2" ForeColor="Red" Display="None" ValidationGroup="sub_status" runat="server" ErrorMessage="<b>Missing Field</b><br/>A Start Date is required."></asp:RequiredFieldValidator>
                                                                                      <ajaxToolkit:CalendarExtender CssClass="black" ID="CalendaDrExtender2" Enabled="true" Format="MM/dd/yyyy" TargetControlID="txt_startdate" runat="server"></ajaxToolkit:CalendarExtender>
+                                                                                     <ajaxToolkit:ValidatorCalloutExtender Width="200px" HighlightCssClass="validatorCalloutHighlight" ID="ValidatorCalloustExtender4" TargetControlID="RequiredFieldValidator2" runat="server"></ajaxToolkit:ValidatorCalloutExtender>
                                                                                  </td>
                                                                                  <td>
                                                                                      <asp:TextBox ID="txt_enddate" AutoComplete="off" placeholder="MM/dd/yyyy" Text='<%# FixDateFormat(Eval("endDate").ToString()) %>' CssClass="txt" runat="server"></asp:TextBox></td>
                                                                                  <ajaxToolkit:CalendarExtender CssClass="black" ID="CalendarExtender3" PopupPosition="BottomRight" Enabled="true" Format="MM/dd/yyyy" TargetControlID="txt_enddate" runat="server"></ajaxToolkit:CalendarExtender>
                                                                                  <td>
                                                                                      <asp:HiddenField ID="hdn_statusId" Value='<%# Eval("Id") %>' runat="server" />
+                                                                                     <asp:HiddenField ID="hdn_statusName" Value='<%# Eval("statusName") %>' runat="server" />
                                                                                      <asp:Button ID="btn_statusplus" CssClass="imgbtnplus" ValidationGroup="sub_status" OnClick="btn_statusplus_Click" runat="server" />
                                                                                      <asp:Button ID="btn_statusminus" CssClass="imgbtnminus" ClientIDMode="Static" Visible="false" OnClick="btn_statusminus_Click" runat="server" />
                                                                                  </td>
@@ -319,11 +330,9 @@
                                                                              <ajaxToolkit:CalendarExtender CssClass="black" ID="CalendarExtender5" Enabled="true" Format="MM/dd/yyyy" TargetControlID="txt_coverageOfferDate" runat="server"></ajaxToolkit:CalendarExtender>
                                                                          </td>
                                                                          <td>
-                                                                             <asp:RequiredFieldValidator Display="Dynamic" ControlToValidate="drp_plan" ID="RequiredFieldVsdalidator1" InitialValue="" ForeColor="Red" ValidationGroup="sub_coverage" runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>
-                                                                             <asp:DropDownList ID="drp_plan" CssClass="cmb_short" runat="server">
-                                                                             </asp:DropDownList>
-                                                                             <asp:HiddenField ID="hdn_planId" Value='<%# Eval("PlanId") %>' runat="server" />
-                                                                             <%--<asp:TextBox ID="txt_name" Text='<%# Eval("name") %>' CssClass="txt_short" runat="server"></asp:TextBox>--%>
+                                                                             <asp:RequiredFieldValidator Display="None" ControlToValidate="txt_name" ID="RequiredFieldVsdalidator1" InitialValue="" ForeColor="Red" ValidationGroup="sub_coverage" runat="server" ErrorMessage="<b>Missing Field</b><br>A Plan name is Required."></asp:RequiredFieldValidator>
+                                                                             <asp:TextBox ID="txt_name" Text='<%# Eval("name") %>' CssClass="txt_short" runat="server"></asp:TextBox>
+                                                                             <ajaxToolkit:ValidatorCalloutExtender Width="200px" HighlightCssClass="validatorCalloutHighlight" ID="ValidatorCalloutExtender1" TargetControlID="RequiredFieldVsdalidator1" runat="server"></ajaxToolkit:ValidatorCalloutExtender>
                                                                          </td>
                                                                          <td>
                                                                              <asp:CheckBox ID="chk_enrolled" runat="server" />
@@ -351,6 +360,7 @@
                                                                          </td>
                                                                          <td>
                                                                              <asp:HiddenField ID="hdn_coverageId" Value='<%# Eval("Id") %>' runat="server" />
+                                                                             <asp:HiddenField ID="hdn_enrollmentName" Value='<%# Eval("enrollmentName") %>' runat="server" />
                                                                              <asp:Button ID="btn_coverageplus" CssClass="imgbtnplus" ValidationGroup="sub_coverage" OnClick="btn_coverageplus_Click" runat="server" />
                                                                              <asp:Button ID="btn_coverageminus" CssClass="imgbtnminus" ClientIDMode="Static" Visible="false" OnClick="btn_coverageminus_Click" runat="server" />
                                                                          </td>
@@ -394,7 +404,8 @@
                                                                      <tr>
                                                                          <td>
                                                                              <asp:TextBox ID="txt_first" Text='<%# Eval("firstName") %>' CssClass="txt_short" runat="server"></asp:TextBox>
-                                                                             <asp:RequiredFieldValidator ID="rfv" runat="server" ValidationGroup="sub_CI" ControlToValidate="txt_first" ForeColor="Red" ErrorMessage="*" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                                             <asp:RequiredFieldValidator ID="rfv" runat="server" ValidationGroup="sub_CI" ControlToValidate="txt_first" ForeColor="Red" ErrorMessage="<b>Missing field</b><br/>A first name is required." Display="None"></asp:RequiredFieldValidator>
+                                                                             <ajaxToolkit:ValidatorCalloutExtender Width="200px" HighlightCssClass="validatorCalloutHighlight" ID="ValidatorCalloutExtender1" TargetControlID="rfv" runat="server"></ajaxToolkit:ValidatorCalloutExtender>
                                                                          </td>
                                                                          <td>
                                                                              <asp:TextBox ID="txt_last" Text='<%# Eval("lastName") %>' CssClass="txt_short" runat="server"></asp:TextBox>
@@ -496,51 +507,57 @@
                                              <ItemTemplate>
                                                  <tr>
                                                      <td>Offer of Coverage</td>
-                                                     <td><%# Eval("ALLM_COC") %></td>
-                                                     <td><%# Eval("JAN_COC") %></td>
-                                                     <td><%# Eval("FEB_COC") %></td>
-                                                     <td><%# Eval("MAR_COC") %></td>
-                                                     <td><%# Eval("APR_COC") %></td>
-                                                     <td><%# Eval("MAY_COC") %></td>
-                                                     <td><%# Eval("JUN_COC") %></td>
-                                                     <td><%# Eval("JUL_COC") %></td>
-                                                     <td><%# Eval("AUG_COC") %></td>
-                                                     <td><%# Eval("SEP_COC") %></td>
-                                                     <td><%# Eval("OCT_COC") %></td>
-                                                     <td><%# Eval("NOV_COC") %></td>
-                                                     <td><%# Eval("DEC_COC") %></td>
+                                                     <td><asp:Label ID="lbl_ALLM_COC" runat="server" Text='<%# Eval("ALLM_COC") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_JAN_COC" runat="server" Text='<%# Eval("JAN_COC") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_FEB_COC" runat="server" Text='<%# Eval("FEB_COC") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_MAR_COC" runat="server" Text='<%# Eval("MAR_COC") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_APR_COC" runat="server" Text='<%# Eval("APR_COC") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_MAY_COC" runat="server" Text='<%# Eval("MAY_COC") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_JUN_COC" runat="server" Text='<%# Eval("JUN_COC") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_JUL_COC" runat="server" Text='<%# Eval("JUL_COC") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_AUG_COC" runat="server" Text='<%# Eval("AUG_COC") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_SEP_COC" runat="server" Text='<%# Eval("SEP_COC") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_OCT_COC" runat="server" Text='<%# Eval("OCT_COC") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_NOV_COC" runat="server" Text='<%# Eval("NOV_COC") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_DEC_COC" runat="server" Text='<%# Eval("DEC_COC") %>'></asp:Label></td>
                                                  </tr>
                                                  <tr>
                                                      <td>Premimum Amount</td>
-                                                     <td><%# Eval("ALLM_LCMP") %></td>
-                                                     <td><%# Eval("JAN_LCMP") %></td>
-                                                     <td><%# Eval("FEB_LCMP") %></td>
-                                                     <td><%# Eval("MAR_LCMP") %></td>
-                                                     <td><%# Eval("APR_LCMP") %></td>
-                                                     <td><%# Eval("MAY_LCMP") %></td>
-                                                     <td><%# Eval("JUN_LCMP") %></td>
-                                                     <td><%# Eval("JUL_LCMP") %></td>
-                                                     <td><%# Eval("AUG_LCMP") %></td>
-                                                     <td><%# Eval("SEP_LCMP") %></td>
-                                                     <td><%# Eval("OCT_LCMP") %></td>
-                                                     <td><%# Eval("NOV_LCMP") %></td>
-                                                     <td><%# Eval("DEC_LCMP") %></td>
+                                                     <td><asp:Label ID="lbl_ALLM_LCMP" runat="server" Text='<%# Eval("ALLM_LCMP") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_JAN_LCMP" runat="server" Text='<%# Eval("JAN_LCMP") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_FEB_LCMP" runat="server" Text='<%# Eval("FEB_LCMP") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_MAR_LCMP" runat="server" Text='<%# Eval("MAR_LCMP") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_APR_LCMP" runat="server" Text='<%# Eval("APR_LCMP") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_MAY_LCMP" runat="server" Text='<%# Eval("MAY_LCMP") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_JUN_LCMP" runat="server" Text='<%# Eval("JUN_LCMP") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_JUL_LCMP" runat="server" Text='<%# Eval("JUL_LCMP") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_AUG_LCMP" runat="server" Text='<%# Eval("AUG_LCMP") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_SEP_LCMP" runat="server" Text='<%# Eval("SEP_LCMP") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_OCT_LCMP" runat="server" Text='<%# Eval("OCT_LCMP") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_NOV_LCMP" runat="server" Text='<%# Eval("NOV_LCMP") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_DEC_LCMP" runat="server" Text='<%# Eval("DEC_LCMP") %>'></asp:Label></td>
                                                  </tr>
                                                  <tr>
                                                      <td>Applicable Section 4980</td>
-                                                     <td><%# Eval("ALLM_SHC") %></td>
-                                                     <td><%# Eval("JAN_SHC") %></td>
-                                                     <td><%# Eval("FEB_SHC") %></td>
-                                                     <td><%# Eval("MAR_SHC") %></td>
-                                                     <td><%# Eval("APR_SHC") %></td>
-                                                     <td><%# Eval("MAY_SHC") %></td>
-                                                     <td><%# Eval("JUN_SHC") %></td>
-                                                     <td><%# Eval("JUL_SHC") %></td>
-                                                     <td><%# Eval("AUG_SHC") %></td>
-                                                     <td><%# Eval("SEP_SHC") %></td>
-                                                     <td><%# Eval("OCT_SHC") %></td>
-                                                     <td><%# Eval("NOV_SHC") %></td>
-                                                     <td><%# Eval("DEC_SHC") %></td>
+                                                     <td><asp:Label ID="lbl_ALLM_SHC" runat="server" Text='<%# Eval("ALLM_SHC") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_JAN_SHC" runat="server" Text='<%# Eval("JAN_SHC") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_FEB_SHC" runat="server" Text='<%# Eval("FEB_SHC") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_MAR_SHC" runat="server" Text='<%# Eval("MAR_SHC") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_APR_SHC" runat="server" Text='<%# Eval("APR_SHC") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_MAY_SHC" runat="server" Text='<%# Eval("MAY_SHC") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_JUN_SHC" runat="server" Text='<%# Eval("JUN_SHC") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_JUL_SHC" runat="server" Text='<%# Eval("JUL_SHC") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_AUG_SHC" runat="server" Text='<%# Eval("AUG_SHC") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_SEP_SHC" runat="server" Text='<%# Eval("SEP_SHC") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_OCT_SHC" runat="server" Text='<%# Eval("OCT_SHC") %>'></asp:Label></td>
+                                                     <td><asp:Label ID="lbl_NOV_SHC" runat="server" Text='<%# Eval("NOV_SHC") %>'></asp:Label></td>
+                                                     <td>
+                                                         <asp:Label ID="lbl_DEC_SHC" runat="server" Text='<%# Eval("DEC_SHC") %>'></asp:Label>
+                                                         <asp:HiddenField ID="hdn_filingyear" Value='<%# Eval("filingYear") %>' runat="server" />
+                                                         <asp:HiddenField ID="hdn_dependent" Value='<%# Eval("isDependent") %>' runat="server" />
+                                                         <asp:HiddenField ID="hdn_flagEmp" Value='<%# Eval("flaggedEmployee") %>' runat="server" />
+                                                         <asp:HiddenField ID="hdn_disable" Value='<%# Eval("disableCoding") %>' runat="server" />
+                                                     </td>
                                                  </tr>
                                              </ItemTemplate>
                                          </asp:Repeater>
@@ -551,6 +568,7 @@
                                 <%-- Button save and cancel--%>
                               <div class="employee_info4">
                                     <asp:HiddenField ID="hdn_id" Value="0" runat="server" />
+                                    <asp:HiddenField ID="hdn_EmployerTaxId" Value="" runat="server" />
                                     <asp:Button ID="btn_save" ValidationGroup="save"  CssClass="btn1" OnClick="btn_Save_Click" runat="server" Text="Save" />
                                     <asp:Button ID="btn_reset" CssClass="btn1" OnClick="btn_reset_Click" runat="server" Text="Clear" />
                                     <asp:Button ID="btn_delete" OnClientClick="return confirm('Are you sure you want to delete this Employer?');" CssClass="btn1" Visible="false" OnClick="btn_delete_Click" runat="server" Text="Delete" />

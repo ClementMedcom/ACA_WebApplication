@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Layout.Master" AutoEventWireup="true" CodeBehind="Employer_Details.aspx.cs" Inherits="ACA_WebApplication.Master.Employer_Details" %>
 
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
      <link href="../css/Employer.css" rel="stylesheet" />
     <link href="../css/FormStyle.css" rel="stylesheet" />
@@ -11,6 +13,7 @@
             });
         }
     </script>
+    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
@@ -113,7 +116,8 @@
                                                 <td>
                                                     <asp:TextBox ID="txt_employerName" class="txt" runat="server"></asp:TextBox>
                                                     <br />
-                                                    <asp:RequiredFieldValidator ControlToValidate="txt_employerName" ID="RequiredFieldValidator1" ForeColor="Red" ValidationGroup="save" runat="server" ErrorMessage="Required"></asp:RequiredFieldValidator>
+                                                    <asp:RequiredFieldValidator ControlToValidate="txt_employerName" ID="RFV1" ForeColor="Red" ValidationGroup="save" runat="server" Display="None" ErrorMessage="<b> Missing Field</b><br />A name is required."></asp:RequiredFieldValidator>
+                                                    <ajaxToolkit:ValidatorCalloutExtender Width="200px" HighlightCssClass="validatorCalloutHighlight" ID="ValidatorCalloutExtender1" TargetControlID="RFV1" runat="server"></ajaxToolkit:ValidatorCalloutExtender>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -121,8 +125,10 @@
                                                 <td>
                                                     <asp:TextBox ID="txt_ein" MaxLength="10" class="txt" runat="server"></asp:TextBox>
                                                     <br />
-                                                    <asp:RegularExpressionValidator ForeColor="Red" ValidationGroup="save" Display="Dynamic" ValidationExpression="^\d{2}-\d{7}$" ID="REV" ControlToValidate="txt_ein" runat="server" ErrorMessage="Invalid EIN"></asp:RegularExpressionValidator>
-                                                    <asp:RequiredFieldValidator ControlToValidate="txt_ein" ID="RequiredFieldValidator2" Display="Dynamic" ForeColor="Red" ValidationGroup="save" runat="server" ErrorMessage="Required"></asp:RequiredFieldValidator>
+                                                    <asp:RegularExpressionValidator ForeColor="Red" ValidationGroup="save" ValidationExpression="^\d{2}-\d{7}$" ID="Regxval1" Display="None" ControlToValidate="txt_ein" runat="server" ErrorMessage="<b> Error Field</b><br />Invalid EIN."></asp:RegularExpressionValidator>
+                                                    <asp:RequiredFieldValidator ControlToValidate="txt_ein" ID="RFV2" Display="None" ForeColor="Red" ValidationGroup="save" runat="server" ErrorMessage="<b> Missing Field</b><br />A EIN is required."></asp:RequiredFieldValidator>
+                                                    <ajaxToolkit:ValidatorCalloutExtender Width="200px" HighlightCssClass="validatorCalloutHighlight" ID="ValidatorCalloutExtender2" TargetControlID="Regxval1" runat="server"></ajaxToolkit:ValidatorCalloutExtender>
+                                                    <ajaxToolkit:ValidatorCalloutExtender Width="200px" HighlightCssClass="validatorCalloutHighlight" ID="ValidatorCalloutExtender3" TargetControlID="RFV2" runat="server"></ajaxToolkit:ValidatorCalloutExtender>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -252,11 +258,6 @@
                                                         </tr>
                                                     </table>
                                                 </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="1">
-                                                <br />
-                                                    </td>
                                             </tr>
                                             <tr>
                                                 <td>

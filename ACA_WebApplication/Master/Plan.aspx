@@ -7,12 +7,6 @@
                  $('.over').css('background-color', 'white');
                  $(this).css({ 'background-color': '#add5f3', 'border-radius': '4px' });
              });
-
-             var repeater1Control = document.getElementById('<%= rpt_codetbl.ClientID %>');
-             function unchk() {
-                 alert("");
-                 $('input:checkbox[id$=CheckSelect]', repeater1Control).attr('checked', false);
-             }
          }
     </script>
       <link href="../css/Employer.css" rel="stylesheet" />

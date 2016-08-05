@@ -31,62 +31,14 @@ namespace BLL
 
         #endregion
 
-        #region Item_Master
-
-        public int insert_update_item()
-        {
-            SqlCommand cmd = new SqlCommand("Usp_ItemAdd");
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Id", Id);
-            cmd.Parameters.AddWithValue("@ItemName", Item_Name);
-            cmd.Parameters.AddWithValue("@qty", qty);
-            cmd.Parameters.AddWithValue("@unitPrince", unitprice);
-            cmd.Parameters.Add("@Result", SqlDbType.Int, 4);
-            cmd.Parameters["@Result"].Direction = ParameterDirection.Output;
-            objDB.ExecuteQuery(cmd);
-            return Convert.ToInt32(cmd.Parameters["@Result"].Value);
-        }
-        public int list_delete()
-        {
-            SqlCommand cmd = new SqlCommand("usp_ItemDelete");
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Id", Id);
-            cmd.Parameters.Add("@Result", SqlDbType.Int, 4);
-            cmd.Parameters["@Result"].Direction = ParameterDirection.Output;
-            objDB.ExecuteQuery(cmd);
-            return Convert.ToInt32(cmd.Parameters["@Result"].Value);
-        }
-        public DataSet list_item(int pageIndex, string search, int PageSize, int sort)
-        {
-            //DataSet ds = new DataSet();
-            SqlCommand cmd = new SqlCommand("usp_ItemSelect");
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
-            cmd.Parameters.AddWithValue("@PageSize", PageSize);
-            cmd.Parameters.AddWithValue("@search", search);
-            cmd.Parameters.AddWithValue("@sort", sort);
-            return objDB.GetDataSet(cmd); ;
-        }
-        public DataSet Edit_Item()
-        {
-            SqlCommand cmd = new SqlCommand("Usp_ItemEdit");
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Id", Id);
-            return objDB.GetDataSet(cmd); ;
-        }
-        #endregion
-
         #region Company
 
-        public DataSet list_Company(string companyTaxId, int pageIndex, string search, int PageSize)
+        public DataSet list_Company(string companyTaxId)
         {
             //DataSet ds = new DataSet();
-            SqlCommand cmd = new SqlCommand("Usp_Company_list");
+            SqlCommand cmd = new SqlCommand("usp_CompanySelect");
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@CompanyTaxID", null);
-            cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
-            cmd.Parameters.AddWithValue("@PageSize", PageSize);
-            cmd.Parameters.AddWithValue("@search", search);
             return objDB.GetDataSet(cmd); ;
         }
 
@@ -94,16 +46,13 @@ namespace BLL
 
         #region Employer
 
-        public DataSet list_Employer(string companyTaxId, int pageIndex, string search, int PageSize)
+        public DataSet list_Employer(string companyTaxId)
         {
             //DataSet ds = new DataSet();
-            SqlCommand cmd = new SqlCommand("usp_Employer_list");
+            SqlCommand cmd = new SqlCommand("usp_EmployerMSelect");
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@CompanyTaxID", companyTaxId);
             cmd.Parameters.AddWithValue("@EmployerTaxID", null);
-            cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
-            cmd.Parameters.AddWithValue("@PageSize", PageSize);
-            cmd.Parameters.AddWithValue("@search", search);
             return objDB.GetDataSet(cmd); ;
         }
 
@@ -116,16 +65,16 @@ namespace BLL
             return objDB.GetDataTable(cmd); ;
         }
 
-        public int Insert_Update_Employer(string Id, params SqlParameter[] parameters)
+        public DataSet Insert_Update_Employer(string Id, params SqlParameter[] parameters)
         {
-            SqlCommand cmd = new SqlCommand("usp_EmployerAction");
+            SqlCommand cmd;
+            if (Id=="0")
+                cmd = new SqlCommand("usp_EmployerAdd");
+            else
+                cmd = new SqlCommand("usp_EmployerModify");
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Id", Id);
             cmd.Parameters.AddRange(parameters);
-            cmd.Parameters.Add("@Result", SqlDbType.Int, 4);
-            cmd.Parameters["@Result"].Direction = ParameterDirection.Output;
-            objDB.ExecuteQuery(cmd);
-            return Convert.ToInt32(cmd.Parameters["@Result"].Value);
+            return objDB.GetDataSet(cmd); 
         }
         public int Delete_Employer(string tax_id)
         {
@@ -144,14 +93,11 @@ namespace BLL
         public DataSet list_Employee(string companyTaxId, int pageIndex, string search, int PageSize)
         {
             //DataSet ds = new DataSet();
-            SqlCommand cmd = new SqlCommand("usp_Employee_list");
+            SqlCommand cmd = new SqlCommand("usp_EmployeeASelect");
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@CompanyTaxID", companyTaxId);
             cmd.Parameters.AddWithValue("@EmployerTaxID", null);
             cmd.Parameters.AddWithValue("@ssn", null);
-            cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
-            cmd.Parameters.AddWithValue("@PageSize", PageSize);
-            cmd.Parameters.AddWithValue("@search", search);
             return objDB.GetDataSet(cmd); ;
         }
 
@@ -164,35 +110,181 @@ namespace BLL
             return objDB.GetDataTable(cmd); ;
         }
 
-        public DataTable drp_Plan(string companyTaxId)
+        //Get Employee
+        public DataSet Edit_Employee(string CompanyTaxId, string EmployerTaxId, string ssn)
         {
-            SqlCommand cmd = new SqlCommand("usp_EmployerPlanSelect");
+            SqlCommand cmd = new SqlCommand("usp_EmployeeASelect");
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@CompanyTaxID", companyTaxId);
-            cmd.Parameters.AddWithValue("@name", null);
+            cmd.Parameters.AddWithValue("@CompanyTaxId", CompanyTaxId);
+            cmd.Parameters.AddWithValue("@EmployerTaxId", EmployerTaxId);
+            cmd.Parameters.AddWithValue("@ssn", ssn);
+            return objDB.GetDataSet(cmd); ;
+        }
+        //Get Hire Name
+        public DataTable Edit_HireName(string CompanyTaxId, string EmployerTaxId, string ssn)
+        {
+            SqlCommand cmd = new SqlCommand("usp_EmployeeHireSpanSelect");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@CompanyTaxId", CompanyTaxId);
+            cmd.Parameters.AddWithValue("@EmployerTaxId", EmployerTaxId);
+            cmd.Parameters.AddWithValue("@ssn", ssn);
             return objDB.GetDataTable(cmd); ;
         }
 
-        public DataSet Edit_Employee(string EmployerTaxId,string ssn,string Id)
+        //get Status
+        public DataTable Edit_Status(string CompanyTaxId, string EmployerTaxId, string ssn)
         {
-            SqlCommand cmd = new SqlCommand("usp_EmployeeDetails");
+            SqlCommand cmd = new SqlCommand("usp_EmployeeStatusSelect");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@CompanyTaxId", CompanyTaxId);
+            cmd.Parameters.AddWithValue("@EmployerTaxId", EmployerTaxId);
+            cmd.Parameters.AddWithValue("@ssn", ssn);
+            return objDB.GetDataTable(cmd); ;
+        }
+        //get Employee Enrollment
+        public DataTable Edit_EmployeeEnrollment(string CompanyTaxId, string EmployerTaxId, string ssn)
+        {
+            SqlCommand cmd = new SqlCommand("usp_EmployeeEnrollmentSelect");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@CompanyTaxId", CompanyTaxId);
+            cmd.Parameters.AddWithValue("@EmployerTaxId", EmployerTaxId);
+            cmd.Parameters.AddWithValue("@ssn", ssn);
+            return objDB.GetDataTable(cmd); ;
+        }
+        //get Employee code
+        public DataTable Edit_EmployeeCode(string CompanyTaxId, string EmployerTaxId, string ssn)
+        {
+            SqlCommand cmd = new SqlCommand("usp_EmployeeCodeSelect");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@CompanyTaxId", CompanyTaxId);
+            cmd.Parameters.AddWithValue("@EmployerTaxId", EmployerTaxId);
+            cmd.Parameters.AddWithValue("@ssn", ssn);
+            return objDB.GetDataTable(cmd); ;
+        }
+        //get employee covered individual
+        public DataTable Edit_CoveredIndividual(string CompanyTaxId, string EmployerTaxId, string ssn)
+        {
+            SqlCommand cmd = new SqlCommand("usp_CoveredIndividualSelect");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@CompanyTaxId", CompanyTaxId);
+            cmd.Parameters.AddWithValue("@EmployerTaxId", EmployerTaxId);
+            cmd.Parameters.AddWithValue("@ssn", ssn);
+            return objDB.GetDataTable(cmd); ;
+        }
+
+        public DataSet Insert_Update_Employee(string Id, params SqlParameter[] parameters)
+        {
+            SqlCommand cmd;
+            if (Id == "0")
+                cmd = new SqlCommand("usp_EmployeeAdd");
+            else
+                cmd = new SqlCommand("usp_EmployeeAModify");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddRange(parameters);
+            return objDB.GetDataSet(cmd);
+        }
+        //Delete Employee Hire 
+        public void Delete_HireName(string EmployerTaxId, string ssn, string hireName)
+        {
+            SqlCommand cmd = new SqlCommand("usp_EmployeeHireSpanDelete");
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@EmployerTaxId", EmployerTaxId);
             cmd.Parameters.AddWithValue("@ssn", ssn);
-            cmd.Parameters.AddWithValue("@Id", Id);
-            return objDB.GetDataSet(cmd); ;
+            cmd.Parameters.AddWithValue("@hireName", hireName);
+            objDB.ExecuteQuery(cmd);
+        }
+        //Delete Employee Status
+        public void Delete_Status(string EmployerTaxId, string ssn, string statusName)
+        {
+            SqlCommand cmd = new SqlCommand("usp_EmployeeStatusDelete");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@EmployerTaxId", EmployerTaxId);
+            cmd.Parameters.AddWithValue("@ssn", ssn);
+            cmd.Parameters.AddWithValue("@statusName", statusName);
+            objDB.ExecuteQuery(cmd);
+        }
+        //Delete Employee Enrollment
+        public void Delete_Enrollment(string EmployerTaxId, string ssn, string enrollmentName)
+        {
+            SqlCommand cmd = new SqlCommand("usp_EmployeeEnrollmentDelete");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@EmployerTaxId", EmployerTaxId);
+            cmd.Parameters.AddWithValue("@ssn", ssn);
+            cmd.Parameters.AddWithValue("@enrollmentName", enrollmentName);
+            objDB.ExecuteQuery(cmd);
         }
 
-        public int Insert_Update_Employee(string Id, params SqlParameter[] parameters)
+        //Delete Employee Enrollment
+        public void Delete_CoveredIndividual(string EmployerTaxId, string ssnEmployee, string ssn)
         {
-            SqlCommand cmd = new SqlCommand("Usp_EmployeeAction");
+            SqlCommand cmd = new SqlCommand("usp_CoveredIndividualDelete");
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Id", Id);
-            cmd.Parameters.AddRange(parameters);
-            cmd.Parameters.Add("@Result", SqlDbType.Int, 4);
-            cmd.Parameters["@Result"].Direction = ParameterDirection.Output;
+            cmd.Parameters.AddWithValue("@EmployerTaxId", EmployerTaxId);
+            cmd.Parameters.AddWithValue("@ssnEmployee", ssnEmployee);
+            cmd.Parameters.AddWithValue("@ssn", ssn);
             objDB.ExecuteQuery(cmd);
-            return Convert.ToInt32(cmd.Parameters["@Result"].Value);
+        }
+
+        //update Employee Hire
+        public void insert_Update_Hire(string id, params SqlParameter[] parameters)
+        {
+            SqlCommand cmd;
+            if (id == "0")
+                cmd = new SqlCommand("usp_EmployeeHireSpanAdd");
+            else
+                cmd = new SqlCommand("usp_EmployeeHireSpanModify");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddRange(parameters);
+            objDB.ExecuteQuery(cmd);
+        }
+        // update Employee Status
+        public void insert_Update_Status(string id, params SqlParameter[] parameters)
+        {
+            SqlCommand cmd;
+            if (id == "0")
+                cmd = new SqlCommand("usp_EmployeeStatusAdd");
+            else
+                cmd = new SqlCommand("usp_EmployeeStatusModify");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddRange(parameters);
+            objDB.ExecuteQuery(cmd);
+        }
+        //update Employee Enrollment
+        public void insert_Update_Enrollment(string id, params SqlParameter[] parameters)
+        {
+            SqlCommand cmd;
+            if (id == "0")
+                cmd = new SqlCommand("usp_EmployeeEnrollmentAdd");
+            else
+                cmd = new SqlCommand("usp_EmployeeEnrollmentModify");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddRange(parameters);
+            objDB.ExecuteQuery(cmd);
+        }
+        //update Employee Covered Individual
+        public void insert_Update_Covered_Individual(string id, params SqlParameter[] parameters)
+        {
+            SqlCommand cmd;
+            if (id == "0")
+                cmd = new SqlCommand("usp_CoveredIndividualAdd");
+            else
+                cmd = new SqlCommand("usp_CoveredIndividualModify");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddRange(parameters);
+            objDB.ExecuteQuery(cmd);
+        }
+
+        //update Employee Covered Individual
+        public void insert_Update_EmployeeCode(string id, params SqlParameter[] parameters)
+        {
+            SqlCommand cmd;
+            if (id == "0")
+                cmd = new SqlCommand("usp_EmployeeCodeAdd");
+            else
+                cmd = new SqlCommand("usp_EmployeeCodeModify");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddRange(parameters);
+            objDB.ExecuteQuery(cmd);
         }
 
         #endregion
@@ -202,32 +294,58 @@ namespace BLL
         public DataSet list_Plan(string companyTaxId, int pageIndex, string search, int PageSize)
         {
             //DataSet ds = new DataSet();
-            SqlCommand cmd = new SqlCommand("usp_EmployerPlan_list");
+            SqlCommand cmd = new SqlCommand("usp_EmployerPlanSelect");
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@CompanyTaxID", companyTaxId);
-            //cmd.Parameters.AddWithValue("@EmployerTaxID", null);
-            cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
-            cmd.Parameters.AddWithValue("@PageSize", PageSize);
-            cmd.Parameters.AddWithValue("@search", search);
+            cmd.Parameters.AddWithValue("@name", null);
             return objDB.GetDataSet(cmd); ;
         }
         public DataSet getPlanDetails(string companyTaxId)
         {
-            SqlCommand cmd = new SqlCommand("usp_PlanDetails");
+            SqlCommand cmd = new SqlCommand("usp_EmployerPlanSelect");
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@CompanyTaxID", companyTaxId);
             return objDB.GetDataSet(cmd); ;
         }
-
-        public int Insert_Update_EmployerPlan(params SqlParameter[] parameters)
+        public DataSet getPremiumDetails(string companyTaxId)
         {
-            SqlCommand cmd = new SqlCommand("Usp_PlanAction");
+            SqlCommand cmd = new SqlCommand("usp_PremiumSelect");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@CompanyTaxID", companyTaxId);
+            return objDB.GetDataSet(cmd); 
+        }
+
+        
+
+        public DataSet Insert_Update_EmployerPlan(string id,params SqlParameter[] parameters)
+        {
+            SqlCommand cmd;
+            if (id == "0")
+                cmd = new SqlCommand("usp_EmployerPlanAdd");
+            else
+                cmd = new SqlCommand("usp_EmployerPlanModify");
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddRange(parameters);
-            cmd.Parameters.Add("@Result", SqlDbType.Int, 4);
-            cmd.Parameters["@Result"].Direction = ParameterDirection.Output;
+            return objDB.GetDataSet(cmd);
+        }
+        public void insert_Update_Premium(string id, params SqlParameter[] parameters)
+        {
+            SqlCommand cmd;
+            if (id == "0")
+                cmd = new SqlCommand("usp_PremiumAdd");
+            else
+                cmd = new SqlCommand("usp_PremiumModify");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddRange(parameters);
             objDB.ExecuteQuery(cmd);
-            return Convert.ToInt32(cmd.Parameters["@Result"].Value);
+        }
+        public void PremiumDelete(string companyTaxId, string name)
+        {
+            SqlCommand cmd = new SqlCommand("usp_PremiumDelete");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@CompanyTaxId", companyTaxId);
+            cmd.Parameters.AddWithValue("@name", name);
+            objDB.ExecuteQuery(cmd);
         }
 
         #endregion

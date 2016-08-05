@@ -150,6 +150,7 @@
     <Content Include="css\StyleSheet2.css" />
     <Content Include="Employee.aspx" />
     <Content Include="Employer.aspx" />
+    <Content Include="Global.asax" />
     <Content Include="Home.aspx" />
     <Content Include="icons\company.png" />
     <Content Include="icons\excel.png" />
@@ -223,6 +224,9 @@
     </Compile>
     <Compile Include="Employer.aspx.designer.cs">
       <DependentUpon>Employer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Home.aspx.cs">
       <DependentUpon>Home.aspx</DependentUpon>
