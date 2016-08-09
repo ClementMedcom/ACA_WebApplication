@@ -17,11 +17,7 @@ namespace ACA_WebApplication
 
         protected void Session_Start(object sender, EventArgs e)
         {
-            Session["UserSession"] = null;
-            Session["UserName"] = null;
-            Session["LastLogin"] = null;
-            Session["Tax_Id"] = null;
-            Session["Company_Name"] = null;
+
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)

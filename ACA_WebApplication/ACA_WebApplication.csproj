@@ -147,6 +147,7 @@
     <Content Include="css\login.css" />
     <Content Include="css\StyleSheet1.css" />
     <Content Include="css\StyleSheet2.css" />
+    <Content Include="Global.asax" />
     <Content Include="Home.aspx" />
     <Content Include="icons\company.png" />
     <Content Include="icons\excel.png" />
@@ -200,6 +201,9 @@
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="Home.aspx.cs">
       <DependentUpon>Home.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
