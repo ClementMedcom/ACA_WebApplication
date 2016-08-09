@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Layout.Master" AutoEventWireup="true" CodeBehind="Employer_Details.aspx.cs" Inherits="ACA_WebApplication.Master.Employer_Details" %>
 
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
      <link href="../css/Employer.css" rel="stylesheet" />
     <link href="../css/FormStyle.css" rel="stylesheet" />
@@ -11,6 +13,7 @@
             });
         }
     </script>
+    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
@@ -35,35 +38,36 @@
                 </Triggers>
                 <ContentTemplate>
                     <div class="grid_container">
-                        <div style="overflow-y:auto;min-height:500px;max-height:500px;width:100%;overflow-x: hidden;">
                         <asp:TextBox ID="txtsearch" CssClass="srch" AutoPostBack="true" runat="server" placeholder="Search Employer" OnTextChanged="txtsearch_TextChanged"></asp:TextBox>
-                            <a href="#" class="btn medium" title="Search" style="background-color:#0294A5; border-radius:5px;padding:0px;margin-bottom:1px;" >
-             <span class="button-content">
-                <i class="glyph-icon icon-search font-white"></i>
-            </span>
-        </a>
-                            <asp:LinkButton class="btn medium" ID="btn_refresh" style="background-color:#0294A5; border-radius:5px;padding:0px;margin-bottom:1px;" runat="server" OnClick="Refresh"><span class="button-content">
+                            <a href="#" class="btn medium" title="Search" style="background-color: #0294A5; border-radius: 5px; padding: 0px; margin-bottom: 1px;">
+                                <span class="button-content">
+                                    <i class="glyph-icon icon-search font-white"></i>
+                                </span>
+                            </a>
+                            <asp:LinkButton class="btn medium" ID="btn_refresh" Style="background-color: #0294A5; border-radius: 5px; padding: 0px; margin-bottom: 1px;" runat="server" OnClick="Refresh"><span class="button-content">
                 <i class="glyph-icon icon-refresh font-white"></i>
             </span></asp:LinkButton>
-                        <asp:Repeater ID="rptEmployer" OnItemCommand="rptEmployer_ItemCommand" runat="server">
-                            <ItemTemplate>
-                                <asp:LinkButton ID="lb_emp_list" ClientIDMode="AutoID" Style="text-decoration: none;" CommandName="Edit" runat="server">
-                                    <div class="employer_list over">
-                                        <div class="serial">
-                                            <%# Eval("RowNumber") %>
+                        <div style="overflow-y: auto; min-height: 500px; max-height: 500px; width: 100%; overflow-x: hidden;">
+                            
+                            <asp:Repeater ID="rptEmployer" OnItemCommand="rptEmployer_ItemCommand" OnItemDataBound="rptEmployer_OnItemDataBound" runat="server">
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="lb_emp_list" ClientIDMode="AutoID" Style="text-decoration: none;" CommandName="Edit" runat="server">
+                                        <div class="employer_list over">
+                                            <div class="serial" id="mainemployer" runat="server">
+                                                <%# Eval("RowNumber") %>
+                                            </div>
+                                            <div class="detail">
+                                                <b>Tax Id :</b> <%# Eval("EmployerTaxId") %> &nbsp;&nbsp;&nbsp;<asp:Image ID="img_flag" runat="server" /><br />
+                                                <%# Eval("name") %><br />
+
+                                            </div>
+                                            <asp:HiddenField ID="hdn_EmpTax_Id" Value='<%# Eval("EmployerTaxId") %>' runat="server" />
+                                            <asp:HiddenField ID="hdn_CompanyTax_Id" Value='<%# Eval("CompanyTaxID") %>' runat="server" />
                                         </div>
-                                        <div class="detail">
-                                            <b>Tax Id :</b> <%# Eval("EmployerTaxId") %><br />
-                                            <%# Eval("name") %><br />
-                                           
-                                        </div>
-                                        <asp:HiddenField ID="hdn_EmpTax_Id" Value='<%# Eval("EmployerTaxId") %>' runat="server" />
-                                        <asp:HiddenField ID="hdn_CompanyTax_Id" Value='<%# Eval("CompanyTaxID") %>' runat="server" />
-                                    </div>
-                                </asp:LinkButton>
-                            </ItemTemplate>
-                        </asp:Repeater>
-                            </div>
+                                    </asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </div>
                         <table>
                             <tr>
                                 <td>
@@ -113,7 +117,8 @@
                                                 <td>
                                                     <asp:TextBox ID="txt_employerName" class="txt" runat="server"></asp:TextBox>
                                                     <br />
-                                                    <asp:RequiredFieldValidator ControlToValidate="txt_employerName" ID="RequiredFieldValidator1" ForeColor="Red" ValidationGroup="save" runat="server" ErrorMessage="Required"></asp:RequiredFieldValidator>
+                                                    <asp:RequiredFieldValidator ControlToValidate="txt_employerName" ID="RFV1" ForeColor="Red" ValidationGroup="save" runat="server" Display="None" ErrorMessage="<b> Missing Field</b><br />A name is required."></asp:RequiredFieldValidator>
+                                                    <ajaxToolkit:ValidatorCalloutExtender Width="200px" HighlightCssClass="validatorCalloutHighlight" ID="ValidatorCalloutExtender1" TargetControlID="RFV1" runat="server"></ajaxToolkit:ValidatorCalloutExtender>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -121,8 +126,10 @@
                                                 <td>
                                                     <asp:TextBox ID="txt_ein" MaxLength="10" class="txt" runat="server"></asp:TextBox>
                                                     <br />
-                                                    <asp:RegularExpressionValidator ForeColor="Red" ValidationGroup="save" Display="Dynamic" ValidationExpression="^\d{2}-\d{7}$" ID="REV" ControlToValidate="txt_ein" runat="server" ErrorMessage="Invalid EIN"></asp:RegularExpressionValidator>
-                                                    <asp:RequiredFieldValidator ControlToValidate="txt_ein" ID="RequiredFieldValidator2" Display="Dynamic" ForeColor="Red" ValidationGroup="save" runat="server" ErrorMessage="Required"></asp:RequiredFieldValidator>
+                                                    <asp:RegularExpressionValidator ForeColor="Red" ValidationGroup="save" ValidationExpression="^\d{2}-\d{7}$" ID="Regxval1" Display="None" ControlToValidate="txt_ein" runat="server" ErrorMessage="<b> Error Field</b><br />Invalid EIN."></asp:RegularExpressionValidator>
+                                                    <asp:RequiredFieldValidator ControlToValidate="txt_ein" ID="RFV2" Display="None" ForeColor="Red" ValidationGroup="save" runat="server" ErrorMessage="<b> Missing Field</b><br />A EIN is required."></asp:RequiredFieldValidator>
+                                                    <ajaxToolkit:ValidatorCalloutExtender Width="200px" HighlightCssClass="validatorCalloutHighlight" ID="ValidatorCalloutExtender2" TargetControlID="Regxval1" runat="server"></ajaxToolkit:ValidatorCalloutExtender>
+                                                    <ajaxToolkit:ValidatorCalloutExtender Width="200px" HighlightCssClass="validatorCalloutHighlight" ID="ValidatorCalloutExtender3" TargetControlID="RFV2" runat="server"></ajaxToolkit:ValidatorCalloutExtender>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -254,11 +261,6 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td colspan="1">
-                                                <br />
-                                                    </td>
-                                            </tr>
-                                            <tr>
                                                 <td>
                                                     <table class="mon_table">
                                                        <thead>
@@ -273,7 +275,7 @@
                                                             <td></td>--%>
                                                         </tr>
                                                            </thead>
-                                                        <asp:Repeater ID="rpt_montable" OnItemDataBound="rpt_montable_OnItemDataBound" runat="server">
+                                                        <asp:Repeater ID="rpt_montable"  runat="server">
                                                             <ItemTemplate>
                                                                 <tr>
                                                                     <td>

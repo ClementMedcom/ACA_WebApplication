@@ -39,15 +39,56 @@ namespace ACA_WebApplication.Master
             {
                 DataSet ds = objMaster.list_Plan(companyTaxId, pageIndex, search, PageSize);
                 DataTable dt = ds.Tables[0];
-                DataTable dt1 = ds.Tables[1];
-                rptPlan.DataSource = dt;
-                rptPlan.DataBind();
-                if (dt1.Rows.Count > 0)
+               
+                IEnumerable<DataRow> query1 = from all_data in dt.AsEnumerable()
+                                              where all_data.Field<string>("name").ToLower().StartsWith(search.ToLower())
+                                              orderby all_data.Field<string>("name")
+                                              select all_data;
+                if (query1.Any())
                 {
-                    hid_rowcount.Value = dt1.Rows[0]["RowCnt"].ToString();
-                    lbl_pagenum.Text = dt1.Rows[0]["page_num"].ToString();
-                    lbl_result.Text = "Showing Results " + dt1.Rows[0]["Start"] + "-" + dt1.Rows[0]["Endpage"] + " Out of " + dt1.Rows[0]["RowCnt"] + " Records";
+                    DataTable dt1 = query1.CopyToDataTable<DataRow>();
+                    dt1.Columns.Add("RowNumber", typeof(System.Int32));
+                    int ColumnValue = 0;
+                    foreach (DataRow dr in dt1.Rows)
+                    {
+                        ColumnValue = ColumnValue + 1;
+                        dr["RowNumber"] = ColumnValue.ToString();
+                    }
+                    DataTable dt_temp = (from all_data in dt1.AsEnumerable()
+                                         where all_data.Field<string>("name").ToLower().StartsWith(search.ToLower())
+                                         orderby all_data.Field<string>("name")
+                                         select all_data).Skip((pageIndex - 1) * Convert.ToInt32(drp_count.Text)).Take(PageSize).CopyToDataTable<DataRow>();
+                    int total_rows = dt1.Rows.Count;
+                    rptPlan.DataSource = dt_temp;
+                    rptPlan.DataBind();
+                    hid_rowcount.Value = total_rows.ToString();
+                    lbl_pagenum.Text = pageIndex.ToString();
+                    int start_record = ((pageIndex - 1) * Convert.ToInt32(drp_count.Text)) + 1;
+                    int End_record = ((pageIndex - 1) * Convert.ToInt32(drp_count.Text)) + Convert.ToInt32(drp_count.Text);
+                    if (End_record > total_rows)
+                    {
+                        End_record = total_rows;
+                    }
+                    lbl_result.Text = "Showing Results " + start_record + "-" + End_record + " Out of " + total_rows + " Records";
                 }
+                else
+                {
+                    rptPlan.DataSource = null;
+                    rptPlan.DataBind();
+                    hid_rowcount.Value = "0";
+                    lbl_pagenum.Text = "1";
+                    lbl_result.Text = "Showing Results " + 0 + "-" + 0 + " Out of " + 0 + " Records";
+                }
+
+
+                //rptPlan.DataSource = dt;
+                //rptPlan.DataBind();
+                //if (dt1.Rows.Count > 0)
+                //{
+                //    hid_rowcount.Value = dt1.Rows[0]["RowCnt"].ToString();
+                //    lbl_pagenum.Text = dt1.Rows[0]["page_num"].ToString();
+                //    lbl_result.Text = "Showing Results " + dt1.Rows[0]["Start"] + "-" + dt1.Rows[0]["Endpage"] + " Out of " + dt1.Rows[0]["RowCnt"] + " Records";
+                //}
             }
             catch (Exception ex)
             {
@@ -62,12 +103,12 @@ namespace ACA_WebApplication.Master
                 HiddenField hdn_Plan_Id = (HiddenField)e.Item.FindControl("hdn_Plan_Id");
                 HiddenField hdn_CompanyTax_Id = (HiddenField)e.Item.FindControl("hdn_CompanyTax_Id");
                 DataSet ds = objMaster.getPlanDetails(hdn_CompanyTax_Id.Value);
+                DataSet ds1 = objMaster.getPremiumDetails(hdn_CompanyTax_Id.Value);
                 DataTable dt1 = ds.Tables[0];
-                DataTable dt2 = ds.Tables[1];
+               // DataTable dt2 = ds.Tables[1];
 
 
-                //var d1 = dt1.Select("").FirstOrDefault(x => (int)x["Id"] == Convert.ToInt32(hdn_Plan_Id.Value));
-
+              
                 IEnumerable<DataRow> temp1 = from id in dt1.AsEnumerable()
                                              where id.Field<int>("ID") == Convert.ToInt32(hdn_Plan_Id.Value)
                                              select id;
@@ -83,14 +124,14 @@ namespace ACA_WebApplication.Master
                 if (dt3.Rows[0]["fundingType"].ToString() == "1" || dt3.Rows[0]["fundingType"].ToString() == "Fully-Insured") drp_fundingtype.Text = "Fully-Insured";
                 else if (dt3.Rows[0]["fundingType"].ToString() == "0" || dt3.Rows[0]["fundingType"].ToString() == "Self-Funded") drp_fundingtype.Text = "Self-Funded";
                 else drp_fundingtype.Text = "";
-
                 txt_days.Text = dt3.Rows[0]["waitingDays"].ToString();
-
                 drp_waitingperiod.Text = TextManipulation.toWaitingPeriod(dt3.Rows[0]["eligibile1stOfMonth"].ToString());
                 drp_dependence.Text = TextManipulation.toYesNo(dt3.Rows[0]["offeredSpouse"].ToString());
                 drp_dependence.Text = TextManipulation.toYesNo(dt3.Rows[0]["offeredDependents"].ToString());
                 drp_termination.Text = TextManipulation.toYesNo(dt3.Rows[0]["planTermTermination"].ToString());
-                drp_renewalmonth.Text =dt3.Rows[0]["planRenewal"].ToString();
+                string planre = dt3.Rows[0]["planRenewal"].ToString();
+                if (planre != "")
+                    drp_renewalmonth.Text =dt3.Rows[0]["planRenewal"].ToString();
                 drp_minvalue.Text = TextManipulation.toYesNo(dt3.Rows[0]["minimumValue"].ToString());
 
                 if (dt3.Rows[0]["bandingType"].ToString() != "NULL")
@@ -103,7 +144,8 @@ namespace ACA_WebApplication.Master
                 rpt_codetbl.DataBind();
 
                 //bind banding table
-                IEnumerable<DataRow> temp2 = from id in dt2.AsEnumerable()
+                DataTable dt5 = ds1.Tables[0];
+                IEnumerable<DataRow> temp2 = from id in dt5.AsEnumerable()
                                              where id.Field<int>("EmployerPlanId") == Convert.ToInt32(hdn_Plan_Id.Value)
                                              select id;
                 DataTable dt4 = new DataTable();
@@ -136,9 +178,28 @@ namespace ACA_WebApplication.Master
 
         protected void btn_Save_Click(object sender, EventArgs e)
         {
-            DataTable dt_Premimum = getPremimum();
-            int result = objMaster.Insert_Update_EmployerPlan(getPlanParams(dt_Premimum));
-            if (result == 1)
+            DataSet ds = objMaster.Insert_Update_EmployerPlan(hdn_id.Value,getPlanParams());
+            //to delete the premium details
+            if (hdn_id.Value != "0")
+                objMaster.PremiumDelete(hdn_companytax_id.Value, txt_planName.Text.Trim());
+            //premium banding update
+            foreach (RepeaterItem item in rpttable.Items)
+            {
+                TextBox bandingValueStart = (TextBox)item.FindControl("tb1");
+                TextBox bandingValueEnd = (TextBox)item.FindControl("tb2");
+                TextBox bandingStartDate = (TextBox)item.FindControl("tb3");
+                TextBox bandingEndDate = (TextBox)item.FindControl("tb4");
+                TextBox amount = (TextBox)item.FindControl("tb5");
+                if (bandingValueStart.Text != "" && bandingValueEnd.Text != "")
+                    objMaster.insert_Update_Premium(hdn_id.Value, getPremiumParams("Banding"+item.ItemIndex, bandingValueStart.Text, bandingValueEnd.Text, bandingStartDate.Text, bandingEndDate.Text, amount.Text));
+            }
+            if (ds.Tables.Count > 0)
+            {
+                lbl_msg.Text = ds.Tables[0].Rows[0][0].ToString();
+                lightDiv.Visible = true;
+                fadeDiv.Visible = true;
+            }
+            else
             {
                 if (hdn_id.Value == "0")
                     lbl_msg.Text = "Plan Added Successfully";
@@ -149,12 +210,21 @@ namespace ACA_WebApplication.Master
                 list_Plan(hdn_companytax_id.Value, 1, "", 10);
                 ClearEmployerPlan();
             }
-            else
-            {
-                lbl_msg.Text = "Sorry! Faild to Process";
-                lightDiv.Visible = true;
-                fadeDiv.Visible = true;
-            }
+        }
+        private SqlParameter[] getPremiumParams(string bandingName, string bandingValueStart, string bandingValueEnd, string bandingStartDate, string bandingEndDate, string amount)
+        {
+            SqlParameter[] param = null;
+
+            param = new SqlParameter[8];
+            param[0] = new SqlParameter("@CompanyTaxID", hdn_companytax_id.Value);
+            param[1] = new SqlParameter("@name", txt_planName.Text);
+            param[2] = new SqlParameter("@bandingName", bandingName);
+            param[3] = new SqlParameter("@bandingValueStart", bandingValueStart);
+            param[4] = new SqlParameter("@bandingValueEnd", bandingValueEnd);
+            param[5] = new SqlParameter("@bandingStartDate", FixDateFormat(bandingStartDate));
+            param[6] = new SqlParameter("@bandingEndDate", FixDateFormat(bandingEndDate));
+            param[7] = new SqlParameter("@amount",TextManipulation.toDBNULLfromEmpty(amount));
+            return param;
         }
 
         protected void btn_Clear_Click(object sender, EventArgs e)
@@ -184,10 +254,10 @@ namespace ACA_WebApplication.Master
             rpt_codetbl.DataSource = dt_code();
             rpt_codetbl.DataBind();
         }
-        private SqlParameter[] getPlanParams(DataTable dt_premimum)
+        private SqlParameter[] getPlanParams()
         {
             SqlParameter[] param = null;
-            param = new SqlParameter[32];
+            param = new SqlParameter[30];
             param[0] = new SqlParameter("@CompanyTaxID", hdn_companytax_id.Value);
             param[1] = new SqlParameter("@name", txt_planName.Text.Trim());
             param[2] = new SqlParameter("@medicalPlan",TextManipulation.planTypetoNumber(drp_plantype.Text));
@@ -197,7 +267,7 @@ namespace ACA_WebApplication.Master
             param[6] = new SqlParameter("@waitingDays", TextManipulation.WaitingPeriodtoNumber(drp_waitingperiod.Text));
             param[7] = new SqlParameter("@eligibile1stOfMonth",TextManipulation.toDBNULLfromEmpty(txt_days.Text.Trim()));
             param[8] = new SqlParameter("@fundingType", drp_fundingtype.Text);
-            param[9] = new SqlParameter("@planRenewal", drp_renewalmonth.Text);
+            param[9] = new SqlParameter("@planRenewal", TextManipulation.toDBNULLfromEmpty(drp_renewalmonth.Text));
             param[10] = new SqlParameter("@planTermTermination", TextManipulation.convertYesNotoNumber(drp_termination.Text));
             param[11] = new SqlParameter("@minimumValue", TextManipulation.convertYesNotoNumber(drp_minvalue.Text));
             foreach(RepeaterItem item in rpt_codetbl.Items)
@@ -241,8 +311,8 @@ namespace ACA_WebApplication.Master
                 param[28] = new SqlParameter("@code2H", (chk_code2H.Checked == true ? 1 : 0));
                 param[29] = new SqlParameter("@code2I", (chk_code2I.Checked == true ? 1 : 0));
             }
-            param[30]= new SqlParameter("@dt_premimum", dt_premimum);
-            param[31] = new SqlParameter("@Id", hdn_id.Value);
+            //param[30]= new SqlParameter("@dt_premimum", dt_premimum);
+            //param[31] = new SqlParameter("@Id", hdn_id.Value);
             return param;
         }
         protected void txtsearch_TextChanged(object sender, EventArgs e)
@@ -448,26 +518,26 @@ namespace ACA_WebApplication.Master
         {
             DataTable dt = new DataTable();
             dt.Columns.AddRange(new DataColumn[18]
-           {
-                            new DataColumn("code1A",typeof(string)),
-                            new DataColumn("code1B",typeof(string)),
-                            new DataColumn("code1C",typeof(string)),
-                            new DataColumn("code1D",typeof(string)),
-                            new DataColumn("code1E",typeof(string)),
-                            new DataColumn("code1F",typeof(string)),
-                            new DataColumn("code1G",typeof(string)),
-                            new DataColumn("code1H",typeof(string)),
-                            new DataColumn("code1I",typeof(string)),
-                            new DataColumn("code2A",typeof(string)),
-                            new DataColumn("code2B",typeof(string)),
-                            new DataColumn("code2C",typeof(string)),
-                            new DataColumn("code2D",typeof(string)),
-                            new DataColumn("code2E",typeof(string)),
-                            new DataColumn("code2F",typeof(string)),
-                            new DataColumn("code2G",typeof(string)),
-                            new DataColumn("code2H",typeof(string)),
-                            new DataColumn("code2I",typeof(string))
-           });
+               {
+                                new DataColumn("code1A",typeof(string)),
+                                new DataColumn("code1B",typeof(string)),
+                                new DataColumn("code1C",typeof(string)),
+                                new DataColumn("code1D",typeof(string)),
+                                new DataColumn("code1E",typeof(string)),
+                                new DataColumn("code1F",typeof(string)),
+                                new DataColumn("code1G",typeof(string)),
+                                new DataColumn("code1H",typeof(string)),
+                                new DataColumn("code1I",typeof(string)),
+                                new DataColumn("code2A",typeof(string)),
+                                new DataColumn("code2B",typeof(string)),
+                                new DataColumn("code2C",typeof(string)),
+                                new DataColumn("code2D",typeof(string)),
+                                new DataColumn("code2E",typeof(string)),
+                                new DataColumn("code2F",typeof(string)),
+                                new DataColumn("code2G",typeof(string)),
+                                new DataColumn("code2H",typeof(string)),
+                                new DataColumn("code2I",typeof(string))
+               });
             dt.Rows.Add(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
             return dt;
         }

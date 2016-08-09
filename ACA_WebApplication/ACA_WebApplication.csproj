@@ -137,7 +137,6 @@
     <Content Include="bin\Microsoft.AI.WindowsServer.dll" />
     <Content Include="bin\Microsoft.ApplicationInsights.dll" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
-    <Content Include="Companies.aspx" />
     <Content Include="css\Employer.css" />
     <Content Include="css\footer.css" />
     <Content Include="css\FormStyle.css" />
@@ -148,8 +147,6 @@
     <Content Include="css\login.css" />
     <Content Include="css\StyleSheet1.css" />
     <Content Include="css\StyleSheet2.css" />
-    <Content Include="Employee.aspx" />
-    <Content Include="Employer.aspx" />
     <Content Include="Home.aspx" />
     <Content Include="icons\company.png" />
     <Content Include="icons\excel.png" />
@@ -170,6 +167,7 @@
     <Content Include="img\logo.jpg" />
     <Content Include="img\page_under_construction.jpg" />
     <Content Include="img\pwd.png" />
+    <Content Include="img\red-flag.png" />
     <Content Include="img\uname.png" />
     <Content Include="js\jquery.min.js.js" />
     <Content Include="Login.aspx" />
@@ -186,9 +184,7 @@
     <Content Include="assets\fonts\font_awesome\fontawesome-webfont_aea8981c.woff" />
     <Content Include="bin\ACA_WebApplication.dll.config" />
     <None Include="Properties\PublishProfiles\Test3.pubxml" />
-    <Content Include="plan.aspx" />
     <Content Include="Profile.aspx" />
-    <Content Include="Test2.aspx" />
     <Content Include="Upload.aspx" />
     <Content Include="web.config" />
     <None Include="web.Debug.config">
@@ -197,33 +193,13 @@
     <None Include="web.Release.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
+    <Content Include="Web.sitemap" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Companies.aspx.cs">
-      <DependentUpon>Companies.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Companies.aspx.designer.cs">
-      <DependentUpon>Companies.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Employee.aspx.cs">
-      <DependentUpon>Employee.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Employee.aspx.designer.cs">
-      <DependentUpon>Employee.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Employer.aspx.cs">
-      <DependentUpon>Employer.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Employer.aspx.designer.cs">
-      <DependentUpon>Employer.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Home.aspx.cs">
       <DependentUpon>Home.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -273,13 +249,6 @@
     <Compile Include="Master\Plan.aspx.designer.cs">
       <DependentUpon>Plan.aspx</DependentUpon>
     </Compile>
-    <Compile Include="plan.aspx.cs">
-      <DependentUpon>plan.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="plan.aspx.designer.cs">
-      <DependentUpon>plan.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Profile.aspx.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -288,13 +257,6 @@
       <DependentUpon>Profile.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Test2.aspx.cs">
-      <DependentUpon>Test2.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Test2.aspx.designer.cs">
-      <DependentUpon>Test2.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Upload.aspx.cs">
       <DependentUpon>Upload.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

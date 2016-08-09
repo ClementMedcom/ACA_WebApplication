@@ -16,7 +16,11 @@ namespace ACA_WebApplication
         Master_BLL objMaster = new Master_BLL();
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                Session.Clear();
+                Session.Abandon();
+            }
         }
 
         protected void btn_login_Click(object sender, EventArgs e)
@@ -27,35 +31,56 @@ namespace ACA_WebApplication
             Session["UserSession"] = userSession;
             try
             {
-                dtUser = objMaster.checkUserLogin(txt_uname.Text.Trim(), txt_pwd.Text.Trim(), userSession, "LOGIN");
-                //dtUser = objMaster.checkUserLogin(objMaster.Encrypt(txt_uname.Text.Trim()), objMaster.Encrypt(txt_pwd.Text.Trim()), userSession, "LOGIN");
-                if (dtUser != null)
+                //dtUser = objMaster.checkUserLogin(txt_uname.Text.Trim(), txt_pwd.Text.Trim(), userSession, "LOGIN");
+                ////dtUser = objMaster.checkUserLogin(objMaster.Encrypt(txt_uname.Text.Trim()), objMaster.Encrypt(txt_pwd.Text.Trim()), userSession, "LOGIN");
+                //if (dtUser != null)
+                //{
+                //    if (dtUser.Columns.Contains("RES"))
+                //    {
+                //        lb_status.Text = dtUser.Rows[0][0].ToString();
+                //        ClearPage();
+                //    }
+                //    else
+                //    {
+                //        Session["UserID"] = dtUser.Rows[0]["UserID"];
+                //        Session["UserName"] = dtUser.Rows[0]["UserName"];
+                //        Session["LastLogin"] = dtUser.Rows[0]["LastLogin"];
+                //        Session["UserRole"]= dtUser.Rows[0]["UserRole"]; 
+                //        if(Session["UserRole"].ToString().Trim()=="2")
+                //        {
+                //            Response.Redirect("~/Admin/AdminHome.aspx");
+                //        }
+                //        else if (Session["UserRole"].ToString().Trim() == "1")
+                //        {
+                //            Response.Redirect("~/Master/Company_List.aspx");
+                //        }
+                //    }
+                //}
+                //else
+                //{
+                //    ClearPage();
+                //    lb_status.Text = "Unexpected error.";
+                //}
+                if (txt_uname.Text=="james" || txt_uname.Text == "robin" || txt_uname.Text == "sainish" || txt_uname.Text == "anto")
                 {
-                    if (dtUser.Columns.Contains("RES"))
+                    if (txt_pwd.Text == "123")
                     {
-                        lb_status.Text = dtUser.Rows[0][0].ToString();
-                        ClearPage();
+                        Session["UserID"] = txt_uname.Text;
+                        Session["UserName"] = "Micheal James";
+                        Session["LastLogin"] = System.DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss");
+                        Session["UserRole"] = 1;
+                        Response.Redirect("~/Master/Company_List.aspx");
                     }
                     else
                     {
-                        Session["UserID"] = dtUser.Rows[0]["UserID"];
-                        Session["UserName"] = dtUser.Rows[0]["UserName"];
-                        Session["LastLogin"] = dtUser.Rows[0]["LastLogin"];
-                        Session["UserRole"]= dtUser.Rows[0]["UserRole"]; 
-                        if(Session["UserRole"].ToString().Trim()=="2")
-                        {
-                            Response.Redirect("~/Admin/AdminHome.aspx");
-                        }
-                        else if (Session["UserRole"].ToString().Trim() == "1")
-                        {
-                            Response.Redirect("~/Master/Company_List.aspx");
-                        }
+                        lb_status.Text = "Invalid Password";
+                        txt_pwd.Focus();
                     }
                 }
                 else
                 {
-                    ClearPage();
-                    lb_status.Text = "Unexpected error.";
+                    lb_status.Text = "Invalid User";
+                    txt_uname.Focus();
                 }
             }
             catch (Exception ex)

@@ -22,13 +22,14 @@
 
 }
 .employer_list{
-    border-bottom:1px solid #2381e9;
+    border-bottom:1px solid #0294a5;
     padding:5px;
     margin:5px;
     height:35px;
     color:black; 
     overflow:hidden;
     cursor:pointer;
+    border-radius:4px;
 }
 .serial{
     background-color:#0294a5;
@@ -216,7 +217,7 @@ div::-webkit-scrollbar-thumb {
 }
 .gen_info td{
    height:27px;
-   min-width:140px;
+   /*min-width:140px;*/
 }
 .txt{
     width:160px;
@@ -350,3 +351,9 @@ div::-webkit-scrollbar-thumb {
 }
 /*Employee form end*/
 
+/*Validation ajax*/
+
+.ajax__validatorcallout div, .ajax__validatorcallout td{
+    border: solid 1px #0294a5;
+    background-color: #f3f1e1;
+}

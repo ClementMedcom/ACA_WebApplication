@@ -21,7 +21,6 @@
     <!-- Medcom Admin CSS Core -->
     <link rel="stylesheet" type="text/css" href="../assets/css/master/Main.min.css" />
     <!-- Theme UI -->
-
     <link id="layout-theme" rel="stylesheet" type="text/css" href="../assets/themes/master/color-schemes/dark-blue.min.css" />
 
     <!-- MEDCOM Admin Responsive -->
@@ -112,7 +111,14 @@
                         </li>
                     </ul>
                 </div>
-                    <div style="margin-top:17px;"><asp:Label ID="lbl_companyname" runat="server" Text="" ForeColor="#FFFF66" Font-Size="10" Font-Italic="True"></asp:Label></div>
+                    <div style="margin-top:17px;"><asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" ShowStartingNode="true" StartingNodeUrl="~/Home.aspx" />
+        <asp:SiteMapPath ID="SiteMapPath1" runat="server" PathSeparator=" / " ForeColor="White" Font-Names="Verdana" Font-Size="0.9em">
+            <CurrentNodeStyle ForeColor="#99FF99" />
+            <NodeStyle Font-Bold="True" ForeColor="#FF9900" />
+            <PathSeparatorStyle ForeColor="White" Font-Bold="True" />
+            <RootNodeStyle Font-Bold="True" ForeColor="#FF8000" />
+        </asp:SiteMapPath><asp:Label ID="lbl_companyname" runat="server" Text="" Font-Names="Verdana" ForeColor="#FFFF66" Font-Size="0.9em"></asp:Label>
+                    </div>
             </div>
             <!-- #page-header -->
 
@@ -122,15 +128,13 @@
                     <div class="divider mrg5T mobile-hidden"></div>
                     <ul>
                         <li>
-                            <%--<a href="../Home.aspx" title="Home">
-                                <i class="glyph-icon icon-home "></i>--%>
-                            <asp:LinkButton ID="lb_home" runat="server" title="Home" PostBackUrl="~/Home.aspx"><i class="glyph-icon icon-home "></i>Home</asp:LinkButton>
-                            <%--Home
-                            </a>--%>
+                            <a href="../Home.aspx" title="Home"><i class="glyph-icon icon-home "></i>Home</a>
+                            <%--<asp:LinkButton ID="lb_home" runat="server" title="Home" PostBackUrl="~/Home.aspx"><i class="glyph-icon icon-home "></i>Home</asp:LinkButton>--%>
                         </li>
                         <li>
-                            <asp:LinkButton ID="lb_companies" runat="server" title="Companies" PostBackUrl="~/Master/Company_List.aspx"><i class="glyph-icon icon-globe"></i>
-                                Companies</asp:LinkButton>
+                            <a href="../Master/Company_List.aspx" title="Companies"><i class="glyph-icon icon-globe"></i>Companies</a>
+                            <%--<asp:LinkButton ID="lb_companies" runat="server" title="Companies" PostBackUrl="~/Master/Company_List.aspx"><i class="glyph-icon icon-globe"></i>
+                                Companies</asp:LinkButton>--%>
                         </li>
                         <li>
                             <asp:LinkButton ID="lb_employer" runat="server" title="Employer" PostBackUrl="~/Master/Employer_Details.aspx" Enabled="false"><i class="glyph-icon icon-lock"></i>
@@ -141,12 +145,14 @@
                                 Employee</asp:LinkButton>
                         </li>
                         <li>
-                            <asp:LinkButton ID="lb_plan" runat="server" title="Plans" PostBackUrl="~/Master/Plan.aspx" Enabled="false"><i class="glyph-icon icon-list-alt"></i>
-                                Plan</asp:LinkButton>
+                            <a href="../Master/Plan.aspx" title="Plan"><i class="glyph-icon icon-list-alt"></i>Plan</a>
+                            <%--<asp:LinkButton ID="lb_plan" runat="server" title="Plans" PostBackUrl="~/Master/Plan.aspx" Enabled="false"><i class="glyph-icon icon-list-alt"></i>
+                                Plan</asp:LinkButton>--%>
                         </li>
                         <li>
-                            <asp:LinkButton ID="lb_upload" runat="server" title="Upload" PostBackUrl="~/Upload.aspx" Enabled="false"><i class="glyph-icon icon-upload"></i>
-                                Upload</asp:LinkButton>
+                            <a href="../Upload.aspx" title="Upload"><i class="glyph-icon icon-upload"></i>Upload</a>
+                            <%--<asp:LinkButton ID="lb_upload" runat="server" title="Upload" PostBackUrl="~/Upload.aspx" Enabled="false"><i class="glyph-icon icon-upload"></i>
+                                Upload</asp:LinkButton>--%>
                         </li>
                         <li>
                             <a href="javascript:;" title="Reports">

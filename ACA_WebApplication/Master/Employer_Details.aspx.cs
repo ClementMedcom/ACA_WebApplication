@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace ACA_WebApplication.Master
@@ -33,17 +34,59 @@ namespace ACA_WebApplication.Master
         {
             try
             {
-                DataSet ds = objMaster.list_Employer(companyTaxId, pageIndex, search, PageSize);
+                DataSet ds = objMaster.list_Employer(companyTaxId);
                 DataTable dt = ds.Tables[0];
-                DataTable dt1 = ds.Tables[1];
-                rptEmployer.DataSource = dt;
-                rptEmployer.DataBind();
-                if (dt1.Rows.Count > 0)
+                IEnumerable<DataRow> query1 = from all_data in dt.AsEnumerable()
+                                              where all_data.Field<string>("EmployerTaxId").ToLower().StartsWith(search.ToLower()) || all_data.Field<string>("name").ToLower().StartsWith(search.ToLower())
+                                              orderby all_data.Field<string>("EmployerTaxId")
+                                              select all_data;
+                if (query1.Any())
                 {
-                    hid_rowcount.Value = dt1.Rows[0]["RowCnt"].ToString();
-                    lbl_pagenum.Text = dt1.Rows[0]["page_num"].ToString();
-                    lbl_result.Text = "Showing Results " + dt1.Rows[0]["Start"] + "-" + dt1.Rows[0]["Endpage"] + " Out of " + dt1.Rows[0]["RowCnt"] + " Records";
+                    query1 = from all_data in query1
+                                              orderby all_data.Field<Int16>("isCompany") descending
+                                              select all_data;
+                    DataTable dt1 = query1.CopyToDataTable<DataRow>();
+                    dt1.Columns.Add("RowNumber", typeof(System.Int32));
+                    int ColumnValue = 0;
+                    foreach (DataRow dr in dt1.Rows)
+                    {
+                        ColumnValue = ColumnValue + 1;
+                        dr["RowNumber"] = ColumnValue.ToString();
+                    }
+
+                    DataTable dt_temp = (from all_data in dt1.AsEnumerable()
+                                         where all_data.Field<string>("EmployerTaxId").ToLower().StartsWith(search.ToLower()) || all_data.Field<string>("name").ToLower().StartsWith(search.ToLower())
+                                         orderby all_data.Field<Int16>("isCompany") descending
+                                         select all_data).Skip((pageIndex - 1) * Convert.ToInt32(drp_count.Text)).Take(PageSize).CopyToDataTable<DataRow>();
+                    int total_rows = dt1.Rows.Count;
+                    rptEmployer.DataSource = dt_temp;
+                    rptEmployer.DataBind();
+                    hid_rowcount.Value = total_rows.ToString();
+                    lbl_pagenum.Text = pageIndex.ToString();
+                    int start_record = ((pageIndex - 1) * Convert.ToInt32(drp_count.Text)) + 1;
+                    int End_record = ((pageIndex - 1) * Convert.ToInt32(drp_count.Text)) + Convert.ToInt32(drp_count.Text);
+                    if (End_record > total_rows)
+                    {
+                        End_record = total_rows;
+                    }
+                    lbl_result.Text = "Showing Results " + start_record + "-" + End_record + " Out of " + total_rows + " Records";
                 }
+                else
+                {
+                    rptEmployer.DataSource = null;
+                    rptEmployer.DataBind();
+                    hid_rowcount.Value = "0";
+                    lbl_pagenum.Text = "1";
+                    lbl_result.Text = "Showing Results " + 0 + "-" + 0 + " Out of " + 0 + " Records";
+                }
+
+
+                //if (dt1.Rows.Count > 0)
+                //{
+                //    hid_rowcount.Value = dt1.Rows[0]["RowCnt"].ToString();
+                //    lbl_pagenum.Text = dt1.Rows[0]["page_num"].ToString();
+                //    lbl_result.Text = "Showing Results " + dt1.Rows[0]["Start"] + "-" + dt1.Rows[0]["Endpage"] + " Out of " + dt1.Rows[0]["RowCnt"] + " Records";
+                //}
             }
             catch (Exception ex)
             {
@@ -78,11 +121,12 @@ namespace ACA_WebApplication.Master
                 drp_origincode.Text = dr["originCode"].ToString();
                 txt_shop.Text = dr["SHOPIdentifier"].ToString();
                 hdn_isCompany.Value = dr["isCompany"].ToString();
-                hdn_id.Value= dr["Id"].ToString().PadLeft(9, '0');
+                hdn_id.Value= dr["Id"].ToString();
                 OfferMethod.Checked = Convert.ToBoolean(string.IsNullOrWhiteSpace(dr["eligibility_A"].ToString()) ? 0 : dr["eligibility_A"]);
                 OfferMethodRelief.Checked = Convert.ToBoolean(string.IsNullOrWhiteSpace(dr["eligibility_B"].ToString()) ? 0 : dr["eligibility_B"]);
                 Section4980H.Checked = Convert.ToBoolean(string.IsNullOrWhiteSpace(dr["eligibility_C"].ToString()) ? 0 : dr["eligibility_C"]);
                 OfferMethod98.Checked = Convert.ToBoolean(string.IsNullOrWhiteSpace(dr["eligibility_D"].ToString()) ? 0 : dr["eligibility_D"]);
+                chk_disable.Checked = Convert.ToBoolean(string.IsNullOrWhiteSpace(dr["disableChanges"].ToString()) ? 0 : dr["disableChanges"]);
 
                 //create the data table for the datagrid. 
                 DataTable part3Table = createDataTable();
@@ -115,17 +159,18 @@ namespace ACA_WebApplication.Master
                 btn_Save.Text = "Update";
             }
         }
-        protected void rpt_montable_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+        protected void rptEmployer_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            //for (int i = 0; i < 13; i++)
-            //{
-            //    CheckBox chk_minimum = (CheckBox)e.Item.FindControl("minimum_" + i.ToString());
-            //    CheckBox chk_aggregate = (CheckBox)e.Item.FindControl("group_" + i.ToString());
-            //    HiddenField hdn_chk_minimum = (HiddenField)e.Item.FindControl("hdn_chk_minimum");
-            //    HiddenField hdn_chk_aggregate = (HiddenField)e.Item.FindControl("hdn_chk_aggregate");
-            //    chk_minimum.Checked = hdn_chk_minimum.Value == "0" ? false : true;
-            //    chk_aggregate.Checked = hdn_chk_aggregate.Value == "0" ? false : true;
-            //}
+            Image img_flag = (Image)e.Item.FindControl("img_flag");
+            HiddenField hdn_EmpTax_Id = (HiddenField)e.Item.FindControl("hdn_EmpTax_Id");
+            string hdn_companytax = hdn_companytax_id.Value;
+            HtmlGenericControl div_mainemployer = (HtmlGenericControl)e.Item.FindControl("mainemployer");
+            
+            if (hdn_EmpTax_Id.Value == hdn_companytax)
+            {
+                img_flag.ImageUrl = "~/img/red-flag.png";
+                div_mainemployer.Attributes.CssStyle["background-color"] = "#3E434A";
+            }
         }
 
         protected void btn_Save_Click(object sender, EventArgs e)
@@ -149,10 +194,16 @@ namespace ACA_WebApplication.Master
                 foreignAddress = 1;
             }
 
-            int result = objMaster.Insert_Update_Employer(hdn_id.Value, getEmployerParams(foreignAddress));
-            if (result == 1)
+            DataSet ds = objMaster.Insert_Update_Employer(hdn_id.Value, getEmployerParams(foreignAddress));
+            if(ds.Tables.Count >0)
             {
-                if(hdn_id.Value=="0")
+                lbl_msg.Text = ds.Tables[0].Rows[0][0].ToString();
+                lightDiv.Visible = true;
+                fadeDiv.Visible = true;
+            }
+            else
+            {
+                if (hdn_id.Value == "0")
                     lbl_msg.Text = "Employer Added Successfully";
                 else
                     lbl_msg.Text = "Employer Updated Successfully";
@@ -160,12 +211,6 @@ namespace ACA_WebApplication.Master
                 fadeDiv.Visible = true;
                 list_Employer(hdn_companytax_id.Value, 1, "", 10);
                 clearEmployerForm();
-            }
-            else
-            {
-                lbl_msg.Text = "Sorry! Faild to Process";
-                lightDiv.Visible = true;
-                fadeDiv.Visible = true;
             }
         }
         protected void btn_reset_Click(object sender, EventArgs e)
@@ -215,6 +260,7 @@ namespace ACA_WebApplication.Master
             OfferMethodRelief.Checked = false;
             Section4980H.Checked = false;
             OfferMethod98.Checked = false;
+            chk_disable.Checked = false;
             DataTable part3Table = createDataTable();
             DataRow row;
 
@@ -247,7 +293,7 @@ namespace ACA_WebApplication.Master
 
         protected void txtsearch_TextChanged(object sender, EventArgs e)
         {
-            list_Employer(hdn_companytax_id.Value, Convert.ToInt32(lbl_pagenum.Text), txtsearch.Text, Convert.ToInt32(drp_count.Text));
+            list_Employer(hdn_companytax_id.Value,1, txtsearch.Text, Convert.ToInt32(drp_count.Text));
             txtsearch.Focus();
         }
 
@@ -498,29 +544,6 @@ namespace ACA_WebApplication.Master
 
             return param;
         }
-        //protected void rpt_montable_ItemCommand(object source, RepeaterCommandEventArgs e)
-        //{
-        //    if (e.CommandName == "UP")
-        //    {
-        //        int index = Convert.ToInt32(e.CommandArgument);
-
-        //        DataTable aleMonthly = ((DataView)rpt_montable.DataSource).ToTable();
-        //        for (int i = index - 1; i >= 0; i--)
-        //        {
-        //            for (int j = 1; j < 6; j++)
-        //            {
-        //                aleMonthly.Rows[i][j] = aleMonthly.Rows[index][j];
-        //            }
-        //        }
-
-        //        rpt_montable.DataSource = new DataView(aleMonthly);
-        //        rpt_montable.DataBind();
-        //    }
-        //    if (e.CommandName == "DOWN")
-        //    {
-
-        //    }
-        //}
 
         protected void Refresh(object sender, EventArgs e)
         {

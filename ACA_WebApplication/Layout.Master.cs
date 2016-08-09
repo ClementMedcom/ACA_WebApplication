@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Xml;
 
 namespace ACA_WebApplication
 {
@@ -25,11 +27,9 @@ namespace ACA_WebApplication
                 }
                 else
                 {
-                    lbl_companyname.Text = "Welcome " + Session["Company_Name"].ToString();
+                    lbl_companyname.Text = " / "+Session["Company_Name"].ToString();
                     lb_employee.Enabled = true;
                     lb_employer.Enabled = true;
-                    lb_plan.Enabled = true;
-                    lb_upload.Enabled = true;
                 }
             }
             catch (Exception)
@@ -37,6 +37,7 @@ namespace ACA_WebApplication
 
             }
         }
+
         private Boolean CheckUserSession()
         {
             try

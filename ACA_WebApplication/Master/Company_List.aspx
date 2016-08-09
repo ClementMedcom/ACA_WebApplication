@@ -21,6 +21,7 @@
             <asp:PostBackTrigger ControlID="img_but_excell" />
             <asp:PostBackTrigger ControlID="img_btn_pdf" />
             <asp:AsyncPostBackTrigger ControlID="btn_refresh" />
+            <asp:AsyncPostBackTrigger ControlID="lbl_close" />
         </Triggers>
         <ContentTemplate>
             <div class="page_heading">
@@ -136,13 +137,13 @@
                 </table>--%>
             </div>
             <div style="clear: both;"></div>
-            <%--<div id="lightDiv" runat="server" visible="false" class="white_content">
+            <div id="lightDiv" runat="server" visible="false" class="white_content">
                 <asp:Label runat="server" ForeColor="White" Text="" ID="lbl_msg"></asp:Label>
                 <asp:LinkButton ID="lbl_close" Style="float: right; margin: 45px 13px; background-color: #130E0E; padding: 1% 3%; text-decoration: none; border-radius: 3px; color: #CEA937;"
                     Text="Close" runat="server" OnClick="lbl_close_Click"></asp:LinkButton>
             </div>
             <div id="fadeDiv" runat="server" visible="false" class="black_overlay"></div>
-            </div>--%>
+            </div>
             
         </ContentTemplate>
     </asp:UpdatePanel>
