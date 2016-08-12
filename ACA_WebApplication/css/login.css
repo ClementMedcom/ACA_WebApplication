@@ -1,5 +1,4 @@
 html {
-  font-size: 100%;
   line-height: 1.5;
   height: 100%;
 }
@@ -9,8 +8,8 @@ body {
   margin: 0;
   font-family: 'Work Sans', Arial, Helvetica, sans-serif;
   min-height: 100%;
-  background: #eaf0f2;
-  color: #777;
+  background:url(../img/loginbg.jpg) no-repeat;
+  background-size:100%;
 }
 
 
@@ -20,14 +19,19 @@ body {
   position: absolute;
   padding:8px;
   width: 24em;
+  height:300px;
   left: 50%;
   top: 50%;
   border:1px solid gray;
   display:block;
-  background-color:white;
+  background: rgba(0, 0, 0, 0.6);
   text-align:center;
   transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
   border-radius: .25rem;
+  overflow:hidden;
   animation: intro .8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
  /* Intro animation */
@@ -43,24 +47,31 @@ body {
 }
 
 /*logo*/
-.logo{
-
+.txtcontainer{
+    width:100%;
+    display:inline-block;
+    background: rgba(0, 0, 0, 0.6);
+}
+.icon{
+    width:5%;
+    margin:5px 0px 0px 2px;
 }
 
 /*input box*/
 .txt{
-    width:70%;
+    width:80%;
     height:30px;
     border:none;
-    color:grey;
+    color:white;
     padding:5px;
     margin-top:15px;
+    background:none;
     border-bottom:1px solid gray;   
   }
 
 .txt:focus {
   outline: 0;
-  border-color: #ccc;
+  border-color: #0294A5;
   enable-background:initial;
 }
 input:-webkit-autofill {
@@ -73,7 +84,7 @@ input:-webkit-autofill {
   padding: 10px;
   color: white;
   width:120px;
-  background: #0294A5;
+  background: rgba(0, 0, 0, 0.6);
   border-radius: .25rem;
   letter-spacing: .2em;
    
@@ -89,21 +100,56 @@ input:-webkit-autofill {
     padding-top:20px;
     cursor:pointer;
 }
+.loginfrm{
+     z-index:1;
+    height:12em;
+    position: absolute;
+    padding:8px;
+    width: 23em;
+    left: 0%;
+    top: 25%;
+    display:block;
+    background:none;
+    text-align:center;
+    color:#0294A5;
+    border-radius: .25rem;
+}
 .forget_form{
     z-index:1;
     height:12em;
     position: absolute;
     padding:8px;
     width: 23em;
-    left: 50%;
-    top: -50%;
+    left: 0%;
+    top: 20%;
     display:block;
-    background-color:white;
+    background: none;
     text-align:center;
     color:#0294A5;
-    transform: translate(-50%,-40%);
+    transform: translate(-100%,25%);
+    -moz-transform: translate(-100%,25%);
+    -webkit-transform: translate(-100%,25%);
+    -ms-transform: translate(-100%,25%);
     border-radius: .25rem;
 }
 .status{
     float:left;
+}
+
+
+/*compatibility codes*/
+::-webkit-input-placeholder {
+   color: 	#757575;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: 	#757575;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: 	#757575;  
+}
+
+:-ms-input-placeholder {  
+   color: 	#757575;  
 }

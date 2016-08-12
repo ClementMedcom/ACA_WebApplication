@@ -27,9 +27,12 @@ namespace ACA_WebApplication
                 }
                 else
                 {
-                    lbl_companyname.Text = " / "+Session["Company_Name"].ToString();
-                    lb_employee.Enabled = true;
-                    lb_employer.Enabled = true;
+                    lbl_companyname.Text = " : "+Session["Company_Name"].ToString()+" / ";
+                    //lb_employee.Enabled = true;
+                    //lb_employer.Enabled = true;
+                    lb_plan.Attributes.CssStyle.Add("pointer-events", "unset");
+                    lb_employer.Attributes.CssStyle.Add("pointer-events", "unset");
+                    lb_employee.Attributes.CssStyle.Add("pointer-events", "unset");
                 }
             }
             catch (Exception)
