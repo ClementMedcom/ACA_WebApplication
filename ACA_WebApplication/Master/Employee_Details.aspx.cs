@@ -31,6 +31,7 @@ namespace ACA_WebApplication.Master
                     ClearEmployeeForm();
                     load_Employer();
                     load_dropdown();
+                    
                 }
             }
             txtsearch.Focus();
