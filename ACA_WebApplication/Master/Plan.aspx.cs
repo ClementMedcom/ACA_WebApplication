@@ -124,9 +124,9 @@ namespace ACA_WebApplication.Master
                 if (dt3.Rows[0]["fundingType"].ToString() == "1" || dt3.Rows[0]["fundingType"].ToString() == "Fully-Insured") drp_fundingtype.Text = "Fully-Insured";
                 else if (dt3.Rows[0]["fundingType"].ToString() == "0" || dt3.Rows[0]["fundingType"].ToString() == "Self-Funded") drp_fundingtype.Text = "Self-Funded";
                 else drp_fundingtype.Text = "";
-                txt_days.Text = dt3.Rows[0]["waitingDays"].ToString();
-                drp_waitingperiod.Text = TextManipulation.toWaitingPeriod(dt3.Rows[0]["eligibile1stOfMonth"].ToString());
-                drp_dependence.Text = TextManipulation.toYesNo(dt3.Rows[0]["offeredSpouse"].ToString());
+                txt_days.Text = dt3.Rows[0]["eligibile1stOfMonth"].ToString();
+                drp_waitingperiod.Text = TextManipulation.toWaitingPeriod(dt3.Rows[0]["waitingDays"].ToString());
+                drp_spouse.Text = TextManipulation.toYesNo(dt3.Rows[0]["offeredSpouse"].ToString());
                 drp_dependence.Text = TextManipulation.toYesNo(dt3.Rows[0]["offeredDependents"].ToString());
                 drp_termination.Text = TextManipulation.toYesNo(dt3.Rows[0]["planTermTermination"].ToString());
                 string planre = dt3.Rows[0]["planRenewal"].ToString();
@@ -540,6 +540,12 @@ namespace ACA_WebApplication.Master
                });
             dt.Rows.Add(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
             return dt;
+        }
+        protected void Refresh(object sender, EventArgs e)
+        {
+            list_Plan(hdn_companytax_id.Value, 1, "", 10);
+            txtsearch.Text = "";
+            txtsearch.Focus();
         }
     }
 }

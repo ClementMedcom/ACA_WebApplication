@@ -22,76 +22,99 @@ namespace ACA_WebApplication
                 Session.Abandon();
             }
         }
-
-        protected void btn_login_Click(object sender, EventArgs e)
+        [System.Web.Services.WebMethod]
+        public static int chk_login(string param)
         {
-            lb_status.Text = string.Empty;
+            string[] splitval = param.Split(',');
+            string username = splitval[0].ToString();
+            string password = splitval[1].ToString();
+            Login log = new Login();
+            int loginChk = log.btn_login_Click(username, password);
+            return loginChk;
+        }
+        public int btn_login_Click(string username, string password)
+        {
+            //lb_status.Text = string.Empty;
             DataTable dtUser = new DataTable();
-            string userSession = Guid.NewGuid().ToString();
-            Session["UserSession"] = userSession;
+            int ack = 0;
             try
             {
-                //dtUser = objMaster.checkUserLogin(txt_uname.Text.Trim(), txt_pwd.Text.Trim(), userSession, "LOGIN");
-                ////dtUser = objMaster.checkUserLogin(objMaster.Encrypt(txt_uname.Text.Trim()), objMaster.Encrypt(txt_pwd.Text.Trim()), userSession, "LOGIN");
-                //if (dtUser != null)
-                //{
-                //    if (dtUser.Columns.Contains("RES"))
-                //    {
-                //        lb_status.Text = dtUser.Rows[0][0].ToString();
-                //        ClearPage();
-                //    }
-                //    else
-                //    {
-                //        Session["UserID"] = dtUser.Rows[0]["UserID"];
-                //        Session["UserName"] = dtUser.Rows[0]["UserName"];
-                //        Session["LastLogin"] = dtUser.Rows[0]["LastLogin"];
-                //        Session["UserRole"]= dtUser.Rows[0]["UserRole"]; 
-                //        if(Session["UserRole"].ToString().Trim()=="2")
-                //        {
-                //            Response.Redirect("~/Admin/AdminHome.aspx");
-                //        }
-                //        else if (Session["UserRole"].ToString().Trim() == "1")
-                //        {
-                //            Response.Redirect("~/Master/Company_List.aspx");
-                //        }
-                //    }
-                //}
-                //else
-                //{
-                //    ClearPage();
-                //    lb_status.Text = "Unexpected error.";
-                //}
-                if (txt_uname.Text=="james" || txt_uname.Text == "robin" || txt_uname.Text == "sainish" || txt_uname.Text == "anto")
+                dtUser = objMaster.checkUserLogin(username);
+                if (dtUser.Rows.Count > 0)
                 {
-                    if (txt_pwd.Text == "123")
+                    if (dtUser.Rows[0]["username"].ToString() == username && dtUser.Rows[0]["password"].ToString() == password)
                     {
-                        Session["UserID"] = txt_uname.Text;
-                        Session["UserName"] = "Micheal James";
-                        Session["LastLogin"] = System.DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss");
-                        Session["UserRole"] = 1;
-                        Response.Redirect("~/Master/Company_List.aspx");
+                        HttpContext.Current.Session["UserID"] = dtUser.Rows[0]["id"].ToString();
+                        HttpContext.Current.Session["UserName"] = dtUser.Rows[0]["username"].ToString();
+                        HttpContext.Current.Session["name"] = dtUser.Rows[0]["name"].ToString();
+                        //Response.Redirect("~/Master/Company_List.aspx");
+                        ack= 1;
                     }
                     else
                     {
-                        lb_status.Text = "Invalid Password";
-                        txt_pwd.Focus();
+                        //lb_status.Text = "Invalid Password";
+                        //txt_pwd.Focus();
+                        ack = 0;
                     }
+
                 }
                 else
                 {
-                    lb_status.Text = "Invalid User";
-                    txt_uname.Focus();
+                    //lb_status.Text = "Invalid Password";
+                    //txt_pwd.Focus();
+                    ack = 0;
                 }
             }
             catch (Exception ex)
             {
-                
+
             }
             finally
             {
                 dtUser.Dispose();
             }
+            return ack;
         }
+        //protected void btn_login_Click(object sender, EventArgs e)
+        //{
+        //    lb_status.Text = string.Empty;
+        //    DataTable dtUser = new DataTable();
+
+        //    try
+        //    {
+        //        dtUser = objMaster.checkUserLogin(txt_uname.Text.Trim());
+        //        if (dtUser.Rows.Count>0)
+        //        {
+        //            if(dtUser.Rows[0]["username"].ToString() ==txt_uname.Text.Trim() && dtUser.Rows[0]["password"].ToString() == txt_pwd.Text.Trim())
+        //            {
+        //                Session["UserID"] = dtUser.Rows[0]["id"].ToString();
+        //                Session["UserName"] = dtUser.Rows[0]["username"].ToString();
+        //                Session["name"] = dtUser.Rows[0]["name"].ToString();
+        //                Response.Redirect("~/Master/Company_List.aspx");
+
+        //            }
+        //            else
+        //            {
+        //                lb_status.Text = "Invalid Password";
+        //                txt_pwd.Focus();
+        //            }
+
+        //        }
+        //        else
+        //        {
+        //            lb_status.Text = "Invalid Password";
+        //            txt_pwd.Focus();
+        //        }
+        //                   }
+        //    catch (Exception ex)
+        //    {
+
+        //    }
+        //    finally
+        //    {
+        //        dtUser.Dispose();
+        //    }
+        //}
         #region " [ Private Function ] "  
         private void ClearPage()
         {

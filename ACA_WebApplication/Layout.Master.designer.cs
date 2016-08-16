@@ -91,7 +91,7 @@ namespace ACA_WebApplication {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lb_employer;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor lb_employer;
         
         /// <summary>
         /// lb_employee control.
@@ -100,25 +100,16 @@ namespace ACA_WebApplication {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lb_employee;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor lb_employee;
         
         /// <summary>
-        /// Label1 control.
+        /// lb_plan control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
-        
-        /// <summary>
-        /// lbl_lastlogin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_lastlogin;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor lb_plan;
         
         /// <summary>
         /// smContent control.
