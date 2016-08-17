@@ -18,14 +18,11 @@ namespace BLL
         public decimal unitprice;
 
         #region Login
-        public DataTable checkUserLogin(string uname, string pwd, string userSession, string mode)
+        public DataTable checkUserLogin(string username)
         {
-            SqlCommand cmd = new SqlCommand("USP_UserLogin");
+            SqlCommand cmd = new SqlCommand("usp_UserSelect");
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@loginID", uname);
-            cmd.Parameters.AddWithValue("@password", pwd);
-            cmd.Parameters.AddWithValue("@sessionID", userSession);
-            cmd.Parameters.AddWithValue("@mode", mode);
+            cmd.Parameters.AddWithValue("@username", username);
             return objDB.GetDataTable(cmd); ;
         }
 
@@ -33,12 +30,13 @@ namespace BLL
 
         #region Company
 
-        public DataSet list_Company(string companyTaxId)
+        public DataSet list_Company(string companyTaxId,string Username)
         {
             //DataSet ds = new DataSet();
             SqlCommand cmd = new SqlCommand("usp_CompanySelect");
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@CompanyTaxID", null);
+            cmd.Parameters.AddWithValue("@username", Username); 
             return objDB.GetDataSet(cmd); ;
         }
 
@@ -46,13 +44,14 @@ namespace BLL
 
         #region Employer
 
-        public DataSet list_Employer(string companyTaxId)
+        public DataSet list_Employer(string companyTaxId, string Username)
         {
             //DataSet ds = new DataSet();
             SqlCommand cmd = new SqlCommand("usp_EmployerMSelect");
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@CompanyTaxID", companyTaxId);
             cmd.Parameters.AddWithValue("@EmployerTaxID", null);
+            cmd.Parameters.AddWithValue("@username", Username);
             return objDB.GetDataSet(cmd); ;
         }
 
@@ -90,7 +89,7 @@ namespace BLL
 
         #region Employee
 
-        public DataSet list_Employee(string companyTaxId, int pageIndex, string search, int PageSize)
+        public DataSet list_Employee(string companyTaxId, int pageIndex, string search, int PageSize, string Username)
         {
             //DataSet ds = new DataSet();
             SqlCommand cmd = new SqlCommand("usp_EmployeeASelect");
@@ -98,6 +97,7 @@ namespace BLL
             cmd.Parameters.AddWithValue("@CompanyTaxID", companyTaxId);
             cmd.Parameters.AddWithValue("@EmployerTaxID", null);
             cmd.Parameters.AddWithValue("@ssn", null);
+            cmd.Parameters.AddWithValue("@username", Username);
             return objDB.GetDataSet(cmd); ;
         }
 

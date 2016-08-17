@@ -42,7 +42,14 @@
                 );
 
             });
+        function page_load() {
+            function showProgress() {
+                var updateProgress = $get("<%= UpdateProgress1.ClientID %>");
+                updateProgress.style.display = "block";
+            }
+        }
     </script>
+       
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
@@ -65,11 +72,11 @@
                     MEDCOM
                     <%--<a href="javascript:;" class="tooltip-button" data-placement="bottom" title="Close sidebar" id="close-sidebar" style="background-image:url('../assets/images/icons/Left_Arrow.png');background-size:15px;width:40px;height:40px;background-repeat:no-repeat;margin-top:22px;">--%>
                     <a href="javascript:;" class="tooltip-button" data-placement="bottom" title="Close sidebar" id="close-sidebar">
-                        <i class="glyph-icon icon-chevron-left"></i>
+                        <i class="glyph-icon icon-reorder"></i>
                     </a>
                     <%--<a href="javascript:;" class="tooltip-button hidden" data-placement="bottom" title="Open sidebar" id="rm-close-sidebar" style="background-image:url('../assets/images/icons/Right_Arrow.png');background-size:15px;width:40px;height:40px;background-repeat:no-repeat;margin-top:22px;">--%>
                     <a href="javascript:;" class="tooltip-button hidden" data-placement="bottom" title="Open sidebar" id="rm-close-sidebar">
-                        <i class="glyph-icon icon-chevron-right"></i>
+                        <i class="glyph-icon icon-reorder"></i>
                     </a>
                     <a href="javascript:;" class="tooltip-button hidden" title="Navigation Menu" id="responsive-open-menu">
                         <i class="glyph-icon icon-align-justify"></i>
@@ -79,7 +86,7 @@
 
                 <div class="user-profile dropdown">
                     <a href="javascript:;" title="" class="user-ico clearfix" data-toggle="dropdown">
-                        <img width="36" src="../assets/images/user.png" alt="" />
+                        <img width="36" src="../assets/images/user.png" alt="" style="border: 1px solid #808080;border-radius: 4px;" />
                         <span>
                             <asp:Label ID="lbl_name" runat="server" Text="Welcome"></asp:Label></span>
                         <%-- <img src="../assets/images/icons/Down_Arrow.png" alt="" style="height:10px;width:10px;margin-top:23px;" />--%>
@@ -111,13 +118,78 @@
                         </li>
                     </ul>
                 </div>
+
+                <%--<div class="dropdown dash-menu">
+                    <div class="top-icon-bar">
+                        <div class="dropdown">
+
+                        <a data-toggle="dropdown" href="javascript:;" title="">
+                            <span class="badge badge-absolute bg-green">3</span>
+                            <i class="glyph-icon icon-bell"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <div tabindex="5001" style="overflow: hidden;" class="scrollable-content medium-box scrollable-small">
+
+                                <ul class="no-border notifications-box">
+                                    <li>
+                                        <span class="btn bg-orange icon-notification glyph-icon icon-user"></span>
+                                        <span class="notification-text">Version Update 8.0</span>
+                                        <div class="notification-time">
+                                            Few seconds ago
+                                            <span class="glyph-icon icon-time"></span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="bg-green btn icon-notification glyph-icon icon-user"></span>
+                                        <span class="notification-text font-green font-bold">Medcom welcome message</span>
+                                        <div class="notification-time">
+                                            <b>2 hours</b> ago
+                                            <span class="glyph-icon icon-time"></span>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                            </div>
+                            <div class="pad10A button-pane button-pane-alt text-center">
+                                <a href="#" class="btn medium primary-bg">
+                                    <span class="button-content">View all notifications</span>
+                                </a>
+                            </div>
+
+                        <div style="width: 8px; z-index: 1050; cursor: default; position: absolute; top: 0px; left: 467px; height: 200px; display: none;" class="nicescroll-rails" id="ascrail2001"><div style="position: relative; top: 0px; float: right; width: 4px; height: 0px; background-color: rgb(54, 54, 54); border: 2px solid transparent; background-clip: padding-box; border-radius: 2px;"></div></div><div style="height: 8px; z-index: 1050; top: 192px; left: 0px; position: absolute; cursor: default; display: none;" class="nicescroll-rails" id="ascrail2001-hr"><div style="position: relative; top: 0px; height: 4px; width: 0px; background-color: rgb(54, 54, 54); border: 2px solid transparent; background-clip: padding-box; border-radius: 2px;"></div></div></div>
+                    </div>
+                        <div class="dropdown">
+
+                        <a data-toggle="dropdown" href="javascript:;" title="">
+                            <span class="badge badge-absolute bg-red">1</span>
+                            <i class="glyph-icon icon-cog"></i>
+                        </a>
+                        <div class="dropdown-menu">
+
+                            <div class="small-box">
+                                <div class="popover-title">Change screen layout</div>
+                                <div class="pad10A clearfix">
+                                    <a class="fluid-layout-btn bg-blue-alt medium btn" href="javascript:;" title=""><span class="button-content">Full width layout</span></a>
+                                    <a class="boxed-layout-btn bg-blue-alt medium btn hidden" href="javascript:;" title=""><span class="button-content">Boxed layout</span></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                </div>--%>
+
                     <div style="margin-top:17px;"><asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" ShowStartingNode="true" StartingNodeUrl="~/Home.aspx" />
-        <asp:SiteMapPath ID="SiteMapPath1" runat="server" PathSeparator=" / " ForeColor="White" Font-Names="Verdana" Font-Size="0.9em">
-            <CurrentNodeStyle ForeColor="#99FF99" />
-            <NodeStyle Font-Bold="True" ForeColor="#FF9900" />
+                <a href="../Home.aspx" title="Home" style="margin-left:5px;">
+                        <i class="glyph-icon icon-home font-white"></i>
+                    </a>
+                <asp:SiteMapPath ID="SiteMapPath1" runat="server" PathSeparator=" / " ForeColor="White" Font-Names="Verdana" Font-Size="0.9em">
+            <CurrentNodeStyle ForeColor="Orange" />
+            <NodeStyle Font-Bold="True" ForeColor="White" />
             <PathSeparatorStyle ForeColor="White" Font-Bold="True" />
-            <RootNodeStyle Font-Bold="True" ForeColor="#FF8000" />
-        </asp:SiteMapPath><asp:Label ID="lbl_companyname" runat="server" Text="" Font-Names="Verdana" ForeColor="#FFFF66" Font-Size="0.9em"></asp:Label>
+            <RootNodeStyle Font-Bold="True" ForeColor="White" />
+        </asp:SiteMapPath>
+                        <asp:Label ID="lbl_companyname" runat="server" Text="" Font-Names="Verdana" ForeColor="#FFFF66" Font-Size="0.9em"></asp:Label>
                     </div>
             </div>
             <!-- #page-header -->
@@ -132,20 +204,22 @@
                             <%--<asp:LinkButton ID="lb_home" runat="server" title="Home" PostBackUrl="~/Home.aspx"><i class="glyph-icon icon-home "></i>Home</asp:LinkButton>--%>
                         </li>
                         <li>
-                            <a href="../Master/Company_List.aspx" title="Companies"><i class="glyph-icon icon-globe"></i>Companies</a>
+                            <a href="../Master/Company_List.aspx"  title="Companies"><i class="glyph-icon icon-globe"></i>Companies</a>
                             <%--<asp:LinkButton ID="lb_companies" runat="server" title="Companies" PostBackUrl="~/Master/Company_List.aspx"><i class="glyph-icon icon-globe"></i>
                                 Companies</asp:LinkButton>--%>
                         </li>
                         <li>
-                            <asp:LinkButton ID="lb_employer" runat="server" title="Employer" PostBackUrl="~/Master/Employer_Details.aspx" Enabled="false"><i class="glyph-icon icon-lock"></i>
-                                Employer</asp:LinkButton>
+                            <a href="~/Master/Employer_Details.aspx" id="lb_employer" style="pointer-events:none;" runat="server" title="Employer"><i class="glyph-icon icon-user"></i>Employer</a>
+                             <%--<asp:LinkButton ID="lb_employer" runat="server" title="Employer" PostBackUrl="~/Master/Employer_Details.aspx" Enabled="false"><i class="glyph-icon icon-lock"></i>
+                                Employer</asp:LinkButton>--%>
                         </li>
                         <li>
-                            <asp:LinkButton ID="lb_employee" runat="server" title="Employee" PostBackUrl="~/Master/Employee_Details.aspx" Enabled="false"><i class="glyph-icon icon-user"></i>
-                                Employee</asp:LinkButton>
+                            <a href="~/Master/Employee_Details.aspx" id="lb_employee" style="pointer-events:none;" runat="server"  title="Employee"><i class="glyph-icon icon-group"></i>Employee</a>
+                           <%-- <asp:LinkButton ID="lb_employee" runat="server" title="Employee" PostBackUrl="~/Master/Employee_Details.aspx" Enabled="false"><i class="glyph-icon icon-user"></i>
+                                Employee</asp:LinkButton>--%>
                         </li>
                         <li>
-                            <a href="../Master/Plan.aspx" title="Plan"><i class="glyph-icon icon-list-alt"></i>Plan</a>
+                            <a href="~/Master/Plan.aspx" id="lb_plan" style="pointer-events:none;" runat="server"  title="Plan"><i class="glyph-icon icon-list-alt"></i>Plan</a>
                             <%--<asp:LinkButton ID="lb_plan" runat="server" title="Plans" PostBackUrl="~/Master/Plan.aspx" Enabled="false"><i class="glyph-icon icon-list-alt"></i>
                                 Plan</asp:LinkButton>--%>
                         </li>
@@ -239,10 +313,10 @@
 
                             </ul>
                         </li>
-                        <div class="divider mrg5T mobile-hidden"></div>
+                        <%--<div class="divider mrg5T mobile-hidden"></div>
                         <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:Label ID="Label1" runat="server" Text="Last account activity" ForeColor="#FFFFFF" Font-Size="8"></asp:Label></br>
                             <asp:Label ID="lbl_lastlogin" runat="server" Text="" ForeColor="#FFFF66" ToolTip="Last Login" Font-Size="10" Font-Italic="True"></asp:Label>
-                        </li>
+                        </li>--%>
                     </ul>
                     <div class="divider mrg5T mobile-hidden"></div>
 

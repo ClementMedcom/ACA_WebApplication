@@ -4,7 +4,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div style="width:99%;">
     <h4 class="heading-1 bg-white radius-all-4 btn text-left display-block pad10A clearfix">
-    <i class="bg-purple radius-all-100 glyph-icon icon-tags heading-icon"></i>
+    <i class="bg-twitter radius-all-100 glyph-icon icon-tags heading-icon"></i>
     <div class="heading-content">
         Welcome to MEDCOM !
         <small>
@@ -18,7 +18,7 @@
             <div class="col-md-6" style="width:100%">
 
                 <div class="content-box">
-                    <h3 class="content-box-header bg-purple">
+                    <h3 class="content-box-header bg-twitter">
                         <div class="glyph-icon icon-separator">
                             <i class="glyph-icon icon-comments font-size-18"></i>
                         </div>
@@ -59,7 +59,7 @@ Please contact us at&nbsp;<a href="mailto://sales@medcom.net">sales@medcom.net</
             <div class="col-md-4">
 
                 <div style="display: block;" class="content-box animated">
-                    <h3 class="content-box-header ui-state-default bg-green">
+                    <h3 class="content-box-header ui-state-default bg-twitter">
                         <span class="float-left">News Update 1</span>
                         <a data-original-title="" href="#" class="float-right icon-separator btn ui-state-default tooltip-button remove-button" data-animation="flipOutY" data-placement="left" title="">
                             <i class="glyph-icon icon-remove"></i>
@@ -74,7 +74,7 @@ Please contact us at&nbsp;<a href="mailto://sales@medcom.net">sales@medcom.net</
             <div class="col-md-4">
 
                 <div style="display: block;" class="content-box animated">
-                    <h3 class="content-box-header ui-state-default bg-green">
+                    <h3 class="content-box-header ui-state-default bg-twitter">
                         <span class="float-left">News Update 2</span>
                         <a data-original-title="" href="#" class="float-right icon-separator btn ui-state-default tooltip-button remove-button" data-animation="fadeOutLeft" data-placement="left" title="">
                             <i class="glyph-icon icon-remove"></i>
@@ -89,7 +89,7 @@ Please contact us at&nbsp;<a href="mailto://sales@medcom.net">sales@medcom.net</
             <div class="col-md-4">
 
                 <div style="display: block;" class="content-box animated">
-                    <h3 class="content-box-header ui-state-default bg-green">
+                    <h3 class="content-box-header ui-state-default bg-twitter">
                         <span class="float-left">News Update 3</span>
                         <a data-original-title="" href="#" class="float-right icon-separator btn ui-state-default tooltip-button remove-button" data-animation="fadeOutRight" data-placement="left" title="">
                             <i class="glyph-icon icon-remove"></i>

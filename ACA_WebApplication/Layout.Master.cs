@@ -27,9 +27,12 @@ namespace ACA_WebApplication
                 }
                 else
                 {
-                    lbl_companyname.Text = " / "+Session["Company_Name"].ToString();
-                    lb_employee.Enabled = true;
-                    lb_employer.Enabled = true;
+                    lbl_companyname.Text = " : "+Session["Company_Name"].ToString()+" / ";
+                    //lb_employee.Enabled = true;
+                    //lb_employer.Enabled = true;
+                    lb_plan.Attributes.CssStyle.Add("pointer-events", "unset");
+                    lb_employer.Attributes.CssStyle.Add("pointer-events", "unset");
+                    lb_employee.Attributes.CssStyle.Add("pointer-events", "unset");
                 }
             }
             catch (Exception)
@@ -42,15 +45,15 @@ namespace ACA_WebApplication
         {
             try
             {
-                if (Session["UserSession"].ToString() == null || Session["UserSession"].ToString() == "")
+                if (Session["UserName"].ToString() == null || Session["UserName"].ToString() == "")
                 {
                     return false;
                 }
                 else
                 {
-                    lbl_name.Text = Session["UserName"].ToString().Trim();
-                    lbl_lastlogin.Text = Session["LastLogin"].ToString().Trim();
-                    return true ;
+                    lbl_name.Text = Session["name"].ToString().Trim();
+                    //lbl_lastlogin.Text = Session["LastLogin"].ToString().Trim();
+                    return true;
                 }
             }
             catch (Exception ex)

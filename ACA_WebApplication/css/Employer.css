@@ -3,36 +3,39 @@
 }
 
 .heading{
-    margin:5px;
-    width:98%;
+    margin:5px 0px 5px 0px;
+    width:100%;
     font-size:15px;
-    padding:5px;
+    padding:2px 0px 2px 0px;
     color:white;
     text-align:center;
-    background-color:#0294a5;
+    background-color:#3A92C8;
 }
 .grid_container{
-    margin:5px;
+    margin-left:5px;
     float:left;
     padding:5px;
     display:inline-block;
-    width:20%;
-    min-width:300px;
-    height:540px;
+    width:27%;
+    min-width:250px;
+    height:590px;
+    
 
 }
-.employer_list{
+.grid_list{
     border-bottom:1px solid #0294a5;
     padding:5px;
     margin:5px;
-    height:35px;
+    height:33px;
     color:black; 
     overflow:hidden;
     cursor:pointer;
-    border-radius:4px;
+    /*border-radius:4px;*/
+    /*background-color:white;*/
 }
+
 .serial{
-    background-color:#0294a5;
+    /*background-color:#0294a5;*/
     border-radius:5px;
     display:inline-block;
     float:left;
@@ -41,6 +44,7 @@
     padding:7px 5px 7px 5px ;
     color:white;
     margin:2px 10px 0px 0px ;
+    border:1px solid white;
 }
 .detail{
     padding:2px;
@@ -56,122 +60,45 @@ b{
     width:65%;
     color:black;
     padding:5px;
-    margin:5px;
+    /*margin:5px;*/
     border:1px solid #89b3c1;
 }
 .srch:focus{
     outline:0;
 }
 
-.employer_form{
-    margin:5px;
-    padding:5px;
-    float:left;
-    display:inline-block;
-    width: 69%;
-    height:530px;
-}
-
-.tab{
-    width:100%;
-    padding:5px;
-    font-size:20px;
-    display:block;
-    height:50px;
-}
-
-.ginfo{
-    float:left;
-    display:inline-block;
-    padding:13px;
-    width:200px;
-    color:white;
-    margin-left:2px;
-    border-right:groove;
-    background-color:slategray; 
-    cursor:pointer;
-}
-.cdetail{
-    float:left;
-    display:inline-block;
-    padding:13px;
-    width:150px;
-    color:white;
-    margin-left:2px;
-    background-color:slategray;
-    cursor:pointer;
-}
-
-.tab1{
-    width:90%;
-    height:480px;
-    margin:5px 3px 0px 7px;
-    float:left;
-    display:inline-block;
-    background-color:#F8F8FF;
-     width:95%;
-    height:90%;
-    margin:20px;
-    text-align:left;
-    overflow:hidden;
-}
-.tab2{
-    width:0%;
-    height:480px;
-    float:left;
-    margin:5px 3px 0px 7px;
-    display:inline-block;
-    background-color:#F8F8FF; 
-       text-align:left;
-    overflow:hidden;
-}
-.tab3{
-    width:100%;
-    padding:5px;
-    font-size:20px;
-    height:50px;
-    float:left;
-    display:inline-block;
-    clear:both;
-}
-
 .btn1{
-    width: 15%;
+    width: 150px;
     padding:5px;
-    margin-left:20px;
+    margin:5px 0px 0px 25px;
     border:none;
     font-size:13px;
-    background-color:#0294a5;
+    background-color:#3A92C8;
+    border-bottom-left-radius:10px;
+    border-bottom-right-radius:10px;
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
     color:white;
 }
-.tab1_data{
-    width:95%;
-    height:90%;
-    margin:20px;
-    text-align:left;
+
+grid_list b{
+    transition:margin-left ease-in-out 0.2s;
+    -moz-transition:margin-left ease-in-out 0.2s;
+    -webkit-transition:margin-left ease-in-out 0.2s;
+    -o-transition:margin-left ease-in-out 0.2s;
+    -ms-transition:margin-left ease-in-out 0.2s;
+}
+.grid_list:hover b{
+    margin-left:20px;
+    transition:margin-left ease-in-out 0.2s;
+    -moz-transition:margin-left ease-in-out 0.2s;
+    -webkit-transition:margin-left ease-in-out 0.2s;
+    -o-transition:margin-left ease-in-out 0.2s;
+    -ms-transition:margin-left ease-in-out 0.2s;
 }
 
-.tab2_data{
-     width:95%;
-    height:90%;
-    margin:20px;
-    text-align:left;
-}
 
-
-.tbl_emp{
-    margin-left:30px;
-    float:inherit;
-}
-.hdr{
-    width:100%;
-    text-align:center;
-    background-color:#0294a5;
-    color:white;
-    padding:5px 0px 5px 0px;
-    cursor:pointer;
-    border:none;
-    }
+/* scroll bar color*/
 div::-webkit-scrollbar {
     width: 3px;
     border-color:#2381e9;
@@ -184,107 +111,148 @@ div::-webkit-scrollbar-track {
 
 div::-webkit-scrollbar-thumb {
     border-radius: 10px;
+    background-color:red;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
 
-.gen_info {
-    padding:5px;
-    float:left;
-    display:inline-block;
-    color:black;
-    margin-left:20px;
-}
-.c_details{
-    float:left;
-    display:inline-block;
-    padding:5px;
-    color:black;
-    margin-left:20px;
-}
-
-.mon_table td{
-    padding:1px;
-    color:black;
-    text-align:center;
-    border:1px solid gray;
-}
-.mon_table thead td{
-    background-color:#0294a5;
-    color:white;
-}
-.chk_move{
-    margin-left:100px;
-}
-.gen_info td{
-   height:27px;
-   /*min-width:140px;*/
-}
 .txt{
     width:160px;
     padding:3px;
     border:none;
-    border-bottom:1px solid gray;
+    background:none;
+    height:25px;
+    border-bottom:1px solid #2a3539;
 }
 .txt_short{
     width: 64px;
     padding:3px;
     border:none;
-    border-bottom:1px solid gray;
+    background:none;
+    border-bottom:1px solid #2a3539;
 }
 .txt:focus{
     outline: 0;
+    border-color:#0294a5;
 }
 .txt_short:focus {
     outline: 0;
+    border-color:#0294a5;
 }
 .cmb{
-    width:170px;
-    padding:4px;
+    width:160px;
+    padding:3px;
     border:none;
-    border-bottom:1px solid gray;
+    background:none;
+    height:25px;
+    border-bottom:1px solid #2a3539;
 }
 .cmb:focus{
     outline: 0;
+    
+    border-color:#0294a5;
 }
 
 .cmb_short{
      width:74px;
     padding:3px;
+    background:none;
     border:none;
-    background-color:#eaeffa;
+    background-color:#2a3539;
     border-bottom:1px solid gray;
 }
 .cmb_short:focus {
     outline: 0;
+    
+    border-color:#0294a5;
 }
-/*plan form styles*/
-.planinfo{
-    width:69%;
-    margin:5px;
+
+
+/*Employer form begin*/
+
+.employer_form{
+    /*margin:5px;*/
+    /*padding:5px;*/
     float:left;
-    padding:5px;
     display:inline-block;
-    height:540px;
-    margin: 0 auto;
+    width: 71%;
+    height:610px;
+    margin-left:5px;
 }
-.plan_header{
-    padding:5px; 
-}
-.plan_detail{
-    width:94%;
-    height:50px;
-    margin:10px;
+
+.gen_info {
+    width:100%;
     padding:5px;
+    float:left;
+    display:inline-block;
+    color:black;
+    margin:0 auto;
+}
+.c_details{
+    
+    width:100%;
+    float:left;
+    display:inline-block;
+    padding:5px;
+    color:black;
+    margin:0 auto;
+}
+
+.tbl_emp{
+    margin-left:30px;
+    float:inherit;
+}
+
+.mon_table td{
+    padding:1px 0px 1px 0px;
+    color:black;
+    text-align:center;
     border:1px solid gray;
 }
-.plan_table{
-     width:94%;
-     height:170px;
-     margin:10px;
-     padding:5px;
-     border:1px solid gray;
-     overflow-y:scroll;
+.mon_table thead td{
+    background-color:#3A92C8;
+    color:white;
 }
+.chk_move{
+    margin:0px 0px 0px 100px;
+}
+.gen_info td{
+   height:20px;
+   /*min-width:140px;*/
+}
+
+/*Employer form end*/
+
+/*plan form styles*/
+.planinfo{
+    float:left;
+    display:inline-block;
+    width: 71%;
+    height:610px;
+    margin-left:5px;
+}
+.plan_header{ 
+    width:100%;
+    height:200px;
+    padding:10px 0px 10px 0px;
+    background-color:white;
+}
+.plan_detail{
+    margin:10px 0px 0px 0px;
+    width:100%;
+    height:100px;
+    background-color:white;
+}
+.plan_table{
+     width:100%;
+     padding-top:10px;
+     height:180px;
+     margin:10px 0px 0px 0px;
+     border:1px solid gray;
+     overflow-y:auto;
+     background-color:white;
+}
+
+
 .imgbtnplus{
     width:15px;
     height:15px;
@@ -307,53 +275,56 @@ div::-webkit-scrollbar-thumb {
 
 /*Employee form begining*/
 .employee_form{
-    margin-left:5px;
-    padding:3px;
     float:left;
     display:inline-block;
-    width: 70%;
+    width: 71%;
+    height:610px;
+    margin-left:5px;
+
 }
 .employee_info1
 {
-    width:93%;
+    width:100%;
     float:left;
-    margin:2px 0px 0px 15px;
+    padding:1px 0px 10px 0px;
     display:inline-block;
-    height:190px;
-    padding:5px;
+    height:100px;
+    background-color:white;
 }
 
 .employee_info2
 {
-    width: 70%;
-    margin: 5px 0px 0px 2px;
+    width:99%;
+    float:left;
     display: inline-block;
-    /*height: 214px;*/
-    /*overflow-y: scroll;*/
-    text-align: center;
 }
 .employee_info3
 {
     width:100%;
     float:left;
-    margin:15px 0px 0px 2px;
+    margin:10px 0px 0px 0px;
     display:inline-block;
-    height:100px;
-    overflow-y:auto;
+    height:170px;
     text-align:center;
 }
 .employee_info4 {
-    width: 98%;
+    width: 99%;
     float: left;
     padding-top:3px;
-    margin:10px 0px 0px 2px;
     display: inline-block;
 }
 /*Employee form end*/
 
-/*Validation ajax*/
+/*Validation ajax begin*/
 
-.ajax__validatorcallout div, .ajax__validatorcallout td{
-    border: solid 1px #0294a5;
-    background-color: #f3f1e1;
+.ajax__validatorcallout .ajax__validatorcallout_icon_cell img
+{
+     display: none;
 }
+.ajax__validatorcallout .ajax__validatorcallout_icon_cell
+{
+     height: 20px;
+}
+
+/*Validation ajax end*/
+

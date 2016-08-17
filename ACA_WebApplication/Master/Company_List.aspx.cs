@@ -33,7 +33,7 @@ namespace ACA_WebApplication.Master
         {
             try
             {
-                DataSet ds = objMaster.list_Company(companyTaxId);
+                DataSet ds = objMaster.list_Company(companyTaxId,Session["UserName"].ToString());
                 DataTable dt = ds.Tables[0];
                 IEnumerable<DataRow> query1 = from all_data in dt.AsEnumerable()
                                                where all_data.Field<string>("taxid").ToLower().StartsWith(search.ToLower()) || all_data.Field<string>("name").ToLower().StartsWith(search.ToLower())
@@ -138,7 +138,7 @@ namespace ACA_WebApplication.Master
             try
             {
                 //Get the data from database into datatable
-                DataSet ds = objMaster.list_Company(null);
+                DataSet ds = objMaster.list_Company(null, Session["UserName"].ToString());
                 DataTable dt1 = ds.Tables[0];
                 IEnumerable<DataRow> query1 = from all_data in dt1.AsEnumerable()
                                               where all_data.Field<string>("taxid").ToLower().StartsWith(txtsearch.Text.ToLower()) || all_data.Field<string>("name").ToLower().StartsWith(txtsearch.Text.ToLower())
@@ -147,13 +147,7 @@ namespace ACA_WebApplication.Master
                 if (query1.Any())
                 {
                     DataTable table = query1.CopyToDataTable<DataRow>();
-                    table.Columns.Add("RowNumber", typeof(System.Int32));
-                    int ColumnValue = 0;
-                    foreach (DataRow dr in table.Rows)
-                    {
-                        ColumnValue = ColumnValue + 1;
-                        dr["RowNumber"] = ColumnValue.ToString();
-                    }
+
                     if (table.Rows.Count > 0)
                     {
                         HttpContext.Current.Response.Clear();
@@ -172,28 +166,52 @@ namespace ACA_WebApplication.Master
                         HttpContext.Current.Response.Write("<Table border='1' bgColor='#ffffff' " +
                           "borderColor='#000000' cellSpacing='0' cellPadding='0' " +
                           "style='font-size:10.0pt; font-family:Calibri; background:white;'> <TR>");
-                        //grid's column headers
-                        int columnscount = table.Columns.Count;
-                        for (int j = 0; j < columnscount; j++)
-                        {      //write in new column
-                            HttpContext.Current.Response.Write("<Td>");
-                            //Get column headers  and make it as bold in excel columns
-                            HttpContext.Current.Response.Write("<B>");
-                            HttpContext.Current.Response.Write(table.Columns[j].ToString());
-                            HttpContext.Current.Response.Write("</B>");
-                            HttpContext.Current.Response.Write("</Td>");
-                        }
+                        HttpContext.Current.Response.Write("<Td><B>");
+                        HttpContext.Current.Response.Write("Tax Id");
+                        HttpContext.Current.Response.Write("</B></Td>");
+
+                        HttpContext.Current.Response.Write("<Td><B>");
+                        HttpContext.Current.Response.Write("Name");
+                        HttpContext.Current.Response.Write("</B></Td>");
+                        HttpContext.Current.Response.Write("<Td><B>");
+                        HttpContext.Current.Response.Write("City");
+                        HttpContext.Current.Response.Write("</B></Td>");
+                        HttpContext.Current.Response.Write("<Td><B>");
+                        HttpContext.Current.Response.Write("State");
+                        HttpContext.Current.Response.Write("</B></Td>");
+                        HttpContext.Current.Response.Write("<Td><B>");
+                        HttpContext.Current.Response.Write("Zip Code");
+                        HttpContext.Current.Response.Write("</B></Td>");
+                        HttpContext.Current.Response.Write("<Td><B>");
+                        HttpContext.Current.Response.Write("Country");
+                        HttpContext.Current.Response.Write("</B></Td>");
+                        HttpContext.Current.Response.Write("<Td><B>");
+                        HttpContext.Current.Response.Write("Phone No");
+                        HttpContext.Current.Response.Write("</B></Td>");
+                        HttpContext.Current.Response.Write("<Td><B>");
+                        HttpContext.Current.Response.Write("Contact Name");
+                        HttpContext.Current.Response.Write("</B></Td>");
                         HttpContext.Current.Response.Write("</TR>");
                         foreach (DataRow row in table.Rows)
                         {
                             //write in new row
-                            HttpContext.Current.Response.Write("<TR>");
-                            for (int i = 0; i < table.Columns.Count; i++)
-                            {
-                                HttpContext.Current.Response.Write("<Td>");
-                                HttpContext.Current.Response.Write(row[i].ToString());
-                                HttpContext.Current.Response.Write("</Td>");
-                            }
+                            HttpContext.Current.Response.Write("<TR><Td>");
+                            HttpContext.Current.Response.Write(row[1].ToString());
+                            HttpContext.Current.Response.Write("</Td><Td>");
+                            HttpContext.Current.Response.Write(row[2].ToString());
+                            HttpContext.Current.Response.Write("</Td><Td>");
+                            HttpContext.Current.Response.Write(row[6].ToString());
+                            HttpContext.Current.Response.Write("</Td><Td>");
+                            HttpContext.Current.Response.Write(row[7].ToString());
+                            HttpContext.Current.Response.Write("</Td><Td>");
+                            HttpContext.Current.Response.Write(row[8].ToString());
+                            HttpContext.Current.Response.Write("</Td><Td>");
+                            HttpContext.Current.Response.Write(row[9].ToString());
+                            HttpContext.Current.Response.Write("</Td><Td>");
+                            HttpContext.Current.Response.Write(row[10].ToString());
+                            HttpContext.Current.Response.Write("</Td><Td>");
+                            HttpContext.Current.Response.Write(row[11].ToString());
+                            HttpContext.Current.Response.Write("</Td>");
                             HttpContext.Current.Response.Write("</TR>");
                         }
                         HttpContext.Current.Response.Write("</Table>");
@@ -219,12 +237,13 @@ namespace ACA_WebApplication.Master
             try
             {
                 //Get the data from database into datatable
-                DataSet ds = objMaster.list_Company(null);
+                DataSet ds = objMaster.list_Company(null, Session["UserName"].ToString());
                 DataTable dt1 = ds.Tables[0];
                 IEnumerable<DataRow> query1 = from all_data in dt1.AsEnumerable()
                                               where all_data.Field<string>("taxid").ToLower().StartsWith(txtsearch.Text.ToLower()) || all_data.Field<string>("name").ToLower().StartsWith(txtsearch.Text.ToLower())
                                               orderby all_data.Field<string>("name")
                                               select all_data;
+                //DataTable dt = table;
                 if (query1.Any())
                 {
                     DataTable table = query1.CopyToDataTable<DataRow>();
@@ -237,68 +256,141 @@ namespace ACA_WebApplication.Master
                     }
                     if (table.Rows.Count > 0)
                     {
-                        Document pdfDoc = new Document(PageSize.A4, 5, 5, 5, 5);
+
+                        Document pdfDoc = new Document(PageSize.A4, 5, 5, 2, 5);
                         try
                         {
+
                             PdfWriter.GetInstance(pdfDoc, System.Web.HttpContext.Current.Response.OutputStream);
                             pdfDoc.Open();
-                            Font font8 = FontFactory.GetFont("ARIAL", 5);
+                            BaseFont bf = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+                            //PDF Header table start here
+                            PdfPTable pdftable2 = new PdfPTable(3);
+                            //No border on the PDF table
+                            pdftable2.DefaultCell.Border = Rectangle.NO_BORDER;
+                            //Table width set in percentage  
+                            pdftable2.WidthPercentage = 96;
+                            float[] widths = new float[] { 100f, 60f, 100f };
+                            pdftable2.SetWidths(widths);
+                            //Image display on first row first column
+                            string path = Server.MapPath("~\\img\\logo.png");
+                            iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(path);
+                            PdfPCell cell = new PdfPCell(jpg);
+                            cell.HorizontalAlignment = 0; cell.Border = 0;
+                            jpg.ScaleAbsolute(140f, 25f);
+                            cell.PaddingLeft = 5f;
+                            pdftable2.AddCell(cell);
+                            //companies second column
+                            cell = new PdfPCell(new Phrase("COMPANIES LIST", new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD)));
+                            cell.HorizontalAlignment = 0;  //0=Left, 1=Centre, 2=Right
+                            cell.Border = 0;
+                            pdftable2.AddCell(cell);
+                            //Listed by is third column
+                            if (txtsearch.Text == string.Empty)
+                                txtsearch.Text = "All";
+                            cell = new PdfPCell(new Phrase("Listed By :" + txtsearch.Text, new Font(Font.FontFamily.TIMES_ROMAN, 9, Font.BOLD)));
+                            cell.HorizontalAlignment = 2; /*cell.Colspan = 3;*/ cell.Border = 0;
+                            pdftable2.AddCell(cell);
+                            //Second rows with colspan
+                            cell = new PdfPCell(new Phrase("Total Records : " + table.Rows.Count, new Font(Font.FontFamily.TIMES_ROMAN, 9, Font.BOLD)));
+                            cell.Border = 0; cell.Colspan = 2;
+                            pdftable2.AddCell(cell);
+                            //second row last column
+                            cell = new PdfPCell(new Phrase(System.DateTime.Now.ToString(), new Font(Font.FontFamily.TIMES_ROMAN, 9, Font.BOLD)));
+                            cell.HorizontalAlignment = 2; cell.Border = 0;
+                            pdftable2.AddCell(cell);
+                            pdftable2.SpacingBefore = 5f;
+                            pdfDoc.Add(pdftable2);
+
+                            //Company List PDF table start here
+                            Font font8 = FontFactory.GetFont("ARIAL", 7);
                             BaseColor bc1 = new BaseColor(2, 148, 165);
                             BaseColor fc1 = new BaseColor(255, 255, 255);
-                            DataTable dt = table;
-                            if (dt != null)
+                            //Craete instance of the pdf table and set the number of column in that table  
+                            PdfPTable PdfTable = new PdfPTable(8);
+                            PdfTable.WidthPercentage = 98;
+                            PdfPCell PdfPCell = null;
+                            PdfTable.DefaultCell.Padding = 8;
+                            PdfTable.SpacingBefore = 10;
+                            PdfTable.SpacingAfter = 10;
+                            //column width set here
+                            float[] widthee = new float[] { 20f, 32f, 140f, 55f, 20f, 22f, 40f, 80f };
+
+                            PdfTable.SetWidths(widthee);
+
+                            //PdfTable.DefaultCell.setFixedHeight(70);
+
+                            //Table header
+                            PdfPCell S_No = new PdfPCell(new Phrase("S.No", new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.BOLD, fc1)));
+                            S_No.BackgroundColor = bc1;
+                            S_No.HorizontalAlignment = Element.ALIGN_CENTER;
+                            PdfTable.AddCell(S_No);
+
+                            PdfPCell Tax_Id = new PdfPCell(new Phrase("Tax ID", new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.BOLD, fc1)));
+                            Tax_Id.HorizontalAlignment = Element.ALIGN_CENTER;
+                            Tax_Id.BackgroundColor = bc1;
+                            PdfTable.AddCell(Tax_Id);
+
+                            PdfPCell Company_Name = new PdfPCell(new Phrase("Company Name", new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.BOLD, fc1)));
+                            Company_Name.HorizontalAlignment = Element.ALIGN_CENTER;
+                            Company_Name.BackgroundColor = bc1;
+                            PdfTable.AddCell(Company_Name);
+
+                            PdfPCell city = new PdfPCell(new Phrase("City", new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.BOLD, fc1)));
+                            city.HorizontalAlignment = Element.ALIGN_CENTER;
+                            city.BackgroundColor = bc1;
+                            PdfTable.AddCell(city);
+
+                            PdfPCell state = new PdfPCell(new Phrase("State", new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.BOLD, fc1)));
+                            state.HorizontalAlignment = Element.ALIGN_CENTER;
+                            state.BackgroundColor = bc1;
+                            PdfTable.AddCell(state);
+                            PdfPCell zip = new PdfPCell(new Phrase("Zip", new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.BOLD, fc1)));
+                            zip.HorizontalAlignment = Element.ALIGN_CENTER;
+                            zip.BackgroundColor = bc1;
+                            PdfTable.AddCell(zip);
+
+                            //PdfPCell Country = new PdfPCell(new Phrase("Country", new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.BOLD, fc1)));
+                            //Country.HorizontalAlignment = Element.ALIGN_CENTER;
+                            //Country.BackgroundColor = bc1;
+                            //PdfTable.AddCell(Country);
+
+                            PdfPCell Phone_No = new PdfPCell(new Phrase("Phone No", new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.BOLD, fc1)));
+                            Phone_No.HorizontalAlignment = Element.ALIGN_CENTER;
+                            Phone_No.BackgroundColor = bc1;
+                            PdfTable.AddCell(Phone_No);
+
+                            PdfPCell Contact_Name = new PdfPCell(new Phrase("Contact Name", new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.BOLD, fc1)));
+                            Contact_Name.HorizontalAlignment = Element.ALIGN_CENTER;
+                            Contact_Name.BackgroundColor = bc1;
+                            PdfTable.AddCell(Contact_Name);
+
+                            foreach (DataRow r in table.Rows)
                             {
-                                //Craete instance of the pdf table and set the number of column in that table  
-                                PdfPTable PdfTable = new PdfPTable(5);
-                                PdfPCell PdfPCell = null;
-                                PdfTable.DefaultCell.Padding = 4;
-                                PdfTable.SpacingBefore = 10;
-                                PdfTable.SpacingAfter = 10;
-                                float[] widthee = new float[] { 20f, 40f, 180f, 40f, 50f };
-                                PdfTable.SetWidths(widthee);
+                                PdfPCell = new PdfPCell(new Phrase(new Chunk(r["RowNumber"].ToString(), font8)));
+                                PdfTable.AddCell(PdfPCell);
 
-                                PdfPCell S_No = new PdfPCell(new Phrase("S.No", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD, fc1)));
-                                S_No.BackgroundColor = bc1;
-                                S_No.HorizontalAlignment = Element.ALIGN_CENTER;
-                                PdfTable.AddCell(S_No);
+                                PdfPCell = new PdfPCell(new Phrase(new Chunk(r["taxid"].ToString(), font8)));
+                                PdfTable.AddCell(PdfPCell);
+                                PdfPCell = new PdfPCell(new Phrase(new Chunk(r["name"].ToString(), font8)));
+                                PdfTable.AddCell(PdfPCell);
+                                PdfPCell = new PdfPCell(new Phrase(new Chunk(r["city"].ToString(), font8)));
+                                PdfTable.AddCell(PdfPCell);
+                                PdfPCell = new PdfPCell(new Phrase(new Chunk(r["state"].ToString(), font8)));
+                                PdfTable.AddCell(PdfPCell);
+                                PdfPCell = new PdfPCell(new Phrase(new Chunk(r["zip"].ToString(), font8)));
+                                PdfTable.AddCell(PdfPCell);
+                                //PdfPCell = new PdfPCell(new Phrase(new Chunk(r["country"].ToString(), font8)));
+                                //PdfTable.AddCell(PdfPCell);
+                                PdfPCell = new PdfPCell(new Phrase(new Chunk(r["phoneNumber"].ToString(), font8)));
+                                PdfTable.AddCell(PdfPCell);
+                                PdfPCell = new PdfPCell(new Phrase(new Chunk(r["contactName"].ToString(), font8)));
+                                PdfTable.AddCell(PdfPCell);
 
-                                PdfPCell Tax_Id = new PdfPCell(new Phrase("Tax ID", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD, fc1)));
-                                Tax_Id.HorizontalAlignment = Element.ALIGN_CENTER;
-                                Tax_Id.BackgroundColor = bc1;
-                                PdfTable.AddCell(Tax_Id);
-
-                                PdfPCell Company_Name = new PdfPCell(new Phrase("Company Name", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD, fc1)));
-                                Company_Name.HorizontalAlignment = Element.ALIGN_CENTER;
-                                Company_Name.BackgroundColor = bc1;
-                                PdfTable.AddCell(Company_Name);
-
-                                PdfPCell Total_Employee = new PdfPCell(new Phrase("Total Employees", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD, fc1)));
-                                Total_Employee.HorizontalAlignment = Element.ALIGN_CENTER;
-                                Total_Employee.BackgroundColor = bc1;
-                                PdfTable.AddCell(Total_Employee);
-
-                                PdfPCell Last_Modified = new PdfPCell(new Phrase("Last Modified", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD, fc1)));
-                                Last_Modified.HorizontalAlignment = Element.ALIGN_CENTER;
-                                Last_Modified.BackgroundColor = bc1;
-                                PdfTable.AddCell(Last_Modified);
-
-                                foreach (DataRow r in dt.Rows)
-                                {
-                                    PdfPCell = new PdfPCell(new Phrase(new Chunk(r["RowNumber"].ToString(), font8)));
-                                    PdfTable.AddCell(PdfPCell);
-                                    PdfPCell = new PdfPCell(new Phrase(new Chunk(r["taxid"].ToString(), font8)));
-                                    PdfTable.AddCell(PdfPCell);
-                                    PdfPCell = new PdfPCell(new Phrase(new Chunk(r["name"].ToString(), font8)));
-                                    PdfTable.AddCell(PdfPCell);
-                                    PdfPCell = new PdfPCell(new Phrase(new Chunk(r["totalNumberEE"].ToString(), font8)));
-                                    PdfTable.AddCell(PdfPCell);
-                                    PdfPCell = new PdfPCell(new Phrase(new Chunk(r["lastEdit"].ToString(), font8)));
-                                    PdfTable.AddCell(PdfPCell);
-                                }
-                                //PdfTable.SpacingBefore = 15f; // Give some space after the text or it may overlap the table     
-                                pdfDoc.Open();
-                                pdfDoc.Add(PdfTable); // add pdf table to the document   
                             }
+
+                            pdfDoc.Add(PdfTable); // add pdf table to the document   
+
                             pdfDoc.Close();
                             Response.ContentType = "application/pdf";
                             Response.AddHeader("content-disposition", "attachment; filename=Company_List.pdf");
