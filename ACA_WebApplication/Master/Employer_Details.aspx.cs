@@ -26,6 +26,7 @@ namespace ACA_WebApplication.Master
                     list_Employer(hdn_companytax_id.Value, 1, "", 10);
                     load_dropdown();
                     clearEmployerForm();
+
                 }
                 txtsearch.Focus();
             }
