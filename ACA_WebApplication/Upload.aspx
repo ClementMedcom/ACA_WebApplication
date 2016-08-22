@@ -19,7 +19,7 @@
                     <asp:ListItem > Dependent Information</asp:ListItem>
                 </asp:RadioButtonList>
                         <br />
-            <asp:Button ID="Button1" runat="server" CssClass="btn_nav" Text="Map Fields" />
+            <asp:Button ID="Button1" runat="server" CssClass="btn1" Text="Map Fields" />
                         <br />
                         <br />
                         <asp:Label ID="Label2" runat="server" Text="Label">Number of heading rows to skip? </asp:Label><asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
@@ -28,7 +28,7 @@
                 <asp:ListItem> Delete Existing data and upload</asp:ListItem>
             </asp:CheckBoxList>
             <br />
-            <asp:Button ID="Button2" runat="server"  CssClass="btn_nav" Text="Upload" />
+            <asp:Button ID="Button2" runat="server"   CssClass="btn1" Text="Upload" />
                     </div>
     </div>
     <%--<div class="content-box box-toggle">

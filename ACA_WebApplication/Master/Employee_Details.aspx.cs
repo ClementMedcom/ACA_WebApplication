@@ -1,6 +1,7 @@
 ﻿using BLL;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
@@ -18,6 +19,7 @@ namespace ACA_WebApplication.Master
         DataTable dt_Status = new DataTable();
         DataTable dt_Enrollment = new DataTable();
         DataTable dt_Covered = new DataTable();
+        DataTable dt_plan = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -47,11 +49,11 @@ namespace ACA_WebApplication.Master
         {
             try
             {
-                DataSet ds = objMaster.list_Employee(companyTaxId, pageIndex, search, PageSize);
+                DataSet ds = objMaster.list_Employee(companyTaxId, pageIndex, search, PageSize, Session["UserName"].ToString());
                 DataTable dt = ds.Tables[0];
                 
                 IEnumerable<DataRow> query1 = from all_data in dt.AsEnumerable()
-                                              where all_data.Field<string>("name").ToLower().StartsWith(search.ToLower()) 
+                                              where all_data.Field<string>("name").ToLower().StartsWith(search.ToLower()) || all_data.Field<string>("firstname").ToLower().StartsWith(search.ToLower()) || all_data.Field<string>("Lastname").ToLower().StartsWith(search.ToLower()) || all_data.Field<string>("ssn").ToLower().StartsWith(search.ToLower())
                                               orderby all_data.Field<string>("firstname")
                                               select all_data;
                 if (query1.Any())
@@ -66,7 +68,7 @@ namespace ACA_WebApplication.Master
                     }
 
                     DataTable dt_temp = (from all_data in dt1.AsEnumerable()
-                                         where all_data.Field<string>("name").ToLower().StartsWith(search.ToLower()) 
+                                         where all_data.Field<string>("name").ToLower().StartsWith(search.ToLower()) || all_data.Field<string>("firstname").ToLower().StartsWith(search.ToLower()) || all_data.Field<string>("Lastname").ToLower().StartsWith(search.ToLower()) || all_data.Field<string>("ssn").ToLower().StartsWith(search.ToLower())
                                          orderby all_data.Field<string>("firstname")
                                          select all_data).Skip((pageIndex - 1) * Convert.ToInt32(drp_count.Text)).Take(PageSize).CopyToDataTable<DataRow>();
                     int total_rows = dt1.Rows.Count;
@@ -80,7 +82,7 @@ namespace ACA_WebApplication.Master
                     {
                         End_record = total_rows;
                     }
-                    lbl_result.Text = "Showing Results " + start_record + "-" + End_record + " Out of " + total_rows + " Records";
+                    lbl_result.Text = "Showing " + start_record + "-" + End_record + " Out of " + total_rows + " Records";
                 }
                 else
                 {
@@ -88,12 +90,56 @@ namespace ACA_WebApplication.Master
                     rptEmployee.DataBind();
                     hid_rowcount.Value = "0";
                     lbl_pagenum.Text = "1";
-                    lbl_result.Text = "Showing Results " + 0 + "-" + 0 + " Out of " + 0 + " Records";
+                    lbl_result.Text = "Showing " + 0 + "-" + 0 + " Out of " + 0 + " Records";
                 }
             }
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+        [System.Web.Script.Services.ScriptMethod()]
+        [System.Web.Services.WebMethod]
+        public static List<string> SearchPlan(string prefixText, int count)
+        {
+            using (SqlConnection conn = new SqlConnection())
+            {
+                DataSet ds = new DataSet();
+                conn.ConnectionString = ConfigurationManager.ConnectionStrings["Liveconnection"].ConnectionString;
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.CommandText = "usp_EmployerPlanSelect";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@CompanyTaxID", HttpContext.Current.Session["Tax_Id"].ToString());
+                    cmd.Parameters.AddWithValue("@name", null);
+                    cmd.Connection = conn;
+                    conn.Open();
+                    SqlDataAdapter objadp = new SqlDataAdapter();
+                    objadp.SelectCommand = cmd;
+                    objadp.Fill(ds);
+                    conn.Close();
+                    DataTable dt = ds.Tables[0];
+                    HttpContext.Current.Session["dt_plan"] = dt;
+
+                    IEnumerable<DataRow> query1 = from all_data in dt.AsEnumerable()
+                                                  where all_data.Field<string>("name").ToLower().StartsWith(prefixText.ToLower())
+                                                  orderby all_data.Field<string>("name")
+                                                  select all_data;
+                    List<string> planList = new List<string>();
+                    if (query1.Any())
+                    {
+                        DataTable dt1 = query1.CopyToDataTable<DataRow>();
+                        foreach (DataRow dr in dt1.Rows)
+                        {
+                            planList.Add(dr["name"].ToString());
+                        }
+                    }
+                    else
+                    {
+                        planList.Add("");
+                    }
+                    return planList;
+                }
             }
         }
         protected void rptEmployee_ItemCommand(object source, RepeaterCommandEventArgs e)
@@ -136,6 +182,7 @@ namespace ACA_WebApplication.Master
                     string dbCountry = dt6.Rows[0]["country"].ToString();
                     if (dbCountry == "US")
                         dbCountry = "United States of America";
+                    drp_country.Text = dbCountry;
                     txt_email.Text = dt6.Rows[0]["email"].ToString();
                 }
                 if (dt4.Rows.Count > 0)
@@ -194,8 +241,57 @@ namespace ACA_WebApplication.Master
                 rpt_IndividualData.DataSource = dt5;
                 rpt_IndividualData.DataBind();
 
-                rpt_code.DataSource = dt4;
-                rpt_code.DataBind();
+                //rpt_code.DataSource = dt4;
+                //rpt_code.DataBind();
+                #region EmployeCode 
+
+                drp_1All.Text = dt4.Rows[0]["ALLM_COC"].ToString();
+                drp_1Jan.Text = dt4.Rows[0]["JAN_COC"].ToString();
+                drp_1Feb.Text = dt4.Rows[0]["FEB_COC"].ToString();
+                drp_1Mar.Text = dt4.Rows[0]["MAR_COC"].ToString();
+                drp_1Apr.Text = dt4.Rows[0]["APR_COC"].ToString();
+                drp_1May.Text = dt4.Rows[0]["MAY_COC"].ToString();
+                drp_1Jun.Text = dt4.Rows[0]["JUN_COC"].ToString();
+                drp_1Jul.Text = dt4.Rows[0]["JUL_COC"].ToString();
+                drp_1Aug.Text = dt4.Rows[0]["AUG_COC"].ToString();
+                drp_1Sep.Text = dt4.Rows[0]["SEP_COC"].ToString();
+                drp_1Oct.Text = dt4.Rows[0]["OCT_COC"].ToString();
+                drp_1Nov.Text = dt4.Rows[0]["NOV_COC"].ToString();
+                drp_1Dec.Text = dt4.Rows[0]["DEC_COC"].ToString();
+
+                lbl_ALLM_LCMP.Text = dt4.Rows[0]["ALLM_LCMP"].ToString();
+                lbl_JAN_LCMP.Text = dt4.Rows[0]["JAN_LCMP"].ToString();
+                lbl_FEB_LCMP.Text = dt4.Rows[0]["FEB_LCMP"].ToString();
+                lbl_MAR_LCMP.Text = dt4.Rows[0]["MAR_LCMP"].ToString();
+                lbl_APR_LCMP.Text = dt4.Rows[0]["APR_LCMP"].ToString();
+                lbl_MAY_LCMP.Text = dt4.Rows[0]["MAY_LCMP"].ToString();
+                lbl_JUN_LCMP.Text = dt4.Rows[0]["JUN_LCMP"].ToString();
+                lbl_JUL_LCMP.Text = dt4.Rows[0]["JUL_LCMP"].ToString();
+                lbl_AUG_LCMP.Text = dt4.Rows[0]["AUG_LCMP"].ToString();
+                lbl_SEP_LCMP.Text = dt4.Rows[0]["SEP_LCMP"].ToString();
+                lbl_OCT_LCMP.Text = dt4.Rows[0]["OCT_LCMP"].ToString();
+                lbl_NOV_LCMP.Text = dt4.Rows[0]["NOV_LCMP"].ToString();
+                lbl_DEC_LCMP.Text = dt4.Rows[0]["DEC_LCMP"].ToString();
+
+                drp_2All.Text = dt4.Rows[0]["ALLM_SHC"].ToString();
+                drp_2Jan.Text = dt4.Rows[0]["JAN_SHC"].ToString();
+                drp_2Feb.Text = dt4.Rows[0]["FEB_SHC"].ToString();
+                drp_2Mar.Text = dt4.Rows[0]["MAR_SHC"].ToString();
+                drp_2Apr.Text = dt4.Rows[0]["APR_SHC"].ToString();
+                drp_2May.Text = dt4.Rows[0]["MAY_SHC"].ToString();
+                drp_2Jun.Text = dt4.Rows[0]["JUN_SHC"].ToString();
+                drp_2Jul.Text = dt4.Rows[0]["JUL_SHC"].ToString();
+                drp_2Aug.Text = dt4.Rows[0]["AUG_SHC"].ToString();
+                drp_2Sep.Text = dt4.Rows[0]["SEP_SHC"].ToString();
+                drp_2Oct.Text = dt4.Rows[0]["OCT_SHC"].ToString();
+                drp_2Nov.Text = dt4.Rows[0]["NOV_SHC"].ToString();
+                drp_2Dec.Text = dt4.Rows[0]["DEC_SHC"].ToString();
+
+                hdn_filingyear.Value= dt4.Rows[0]["filingYear"].ToString();
+                hdn_dependent.Value = dt4.Rows[0]["isDependent"].ToString();
+                hdn_flagEmp.Value = dt4.Rows[0]["flaggedEmployee"].ToString();
+                hdn_disable.Value = dt4.Rows[0]["disableCoding"].ToString();
+                #endregion
             }
         }
 
@@ -273,6 +369,9 @@ namespace ACA_WebApplication.Master
         {
             foreach (RepeaterItem item in rpt_coverage.Items)
             {
+                CheckBox chk_unionMember = (CheckBox)item.FindControl("chk_unionMember");
+                CheckBox chk_enrolled = (CheckBox)item.FindControl("chk_enrolled");
+                CheckBox chk_cobraEnrolled = (CheckBox)item.FindControl("chk_cobraEnrolled");
                 HiddenField hdn_coverageId = (HiddenField)item.FindControl("hdn_coverageId");
                 HiddenField hdn_unionMember = (HiddenField)item.FindControl("hdn_unionMember");
                 TextBox txt_contributionStartDate = (TextBox)item.FindControl("txt_contributionStartDate");
@@ -286,8 +385,8 @@ namespace ACA_WebApplication.Master
                 TextBox txt_cobraStartDate = (TextBox)item.FindControl("txt_cobraStartDate");
                 TextBox txt_cobraEndDate = (TextBox)item.FindControl("txt_cobraEndDate");
                 if (txt_name.Text != "")
-                    objMaster.insert_Update_Enrollment(hdn_id.Value, getEnrollmentParams(hdn_EmployerTaxId.Value, ssn, txt_name.Text, "coverage" + item.ItemIndex, hdn_unionMember.Value, txt_contributionStartDate.Text, txt_contributionEndDate.Text, txt_coverageOfferDate.Text,
-                       hdn_enrolled.Value, txt_coverageStartDate.Text, txt_coverageEndDate.Text, hdn_cobraEnrolled.Value, txt_cobraStartDate.Text, txt_cobraEndDate.Text));
+                    objMaster.insert_Update_Enrollment(hdn_id.Value, getEnrollmentParams(hdn_EmployerTaxId.Value, ssn, txt_name.Text, "coverage" + item.ItemIndex, (chk_unionMember.Checked == true ? "1" : "0"), txt_contributionStartDate.Text, txt_contributionEndDate.Text, txt_coverageOfferDate.Text,
+                      (chk_enrolled.Checked == true ? "1" : "0"), txt_coverageStartDate.Text, txt_coverageEndDate.Text, (chk_cobraEnrolled.Checked == true ? "1" : "0"), txt_cobraStartDate.Text, txt_cobraEndDate.Text));
             }
         }
 
@@ -327,110 +426,60 @@ namespace ACA_WebApplication.Master
         public void Insert_Update_EmployeeCode(string EmployerTaxId, string ssn)
         {
             SqlParameter[] param = null;
-            foreach (RepeaterItem item in rpt_code.Items)
-            {
-                #region get Repeater Data
-                HiddenField hdn_filingyear = (HiddenField)item.FindControl("hdn_filingyear");
-                HiddenField hdn_dependent = (HiddenField)item.FindControl("hdn_dependent");
-                HiddenField hdn_flagEmp = (HiddenField)item.FindControl("hdn_flagEmp");
-                HiddenField hdn_disable = (HiddenField)item.FindControl("hdn_disable");
+            
+            #region Param
+            param = new SqlParameter[47];
+            param[0] = new SqlParameter("@EmployerTaxId", EmployerTaxId);
+            param[1] = new SqlParameter("@ssn", ssn);
+            param[2] = new SqlParameter("@filingYear", hdn_filingyear.Value);
+            param[3] = new SqlParameter("@hourlyAmount", TextManipulation.toDBNULLfromEmpty(txt_hourly.Text));
+            param[4] = new SqlParameter("@salaryAmount", TextManipulation.toDBNULLfromEmpty(txt_salary.Text));
+            param[5] = new SqlParameter("@ALLM_COC", drp_1All.Text);
+            param[6] = new SqlParameter("@JAN_COC", drp_1Jan.Text);
+            param[7] = new SqlParameter("@FEB_COC", drp_1Feb.Text);
+            param[8] = new SqlParameter("@MAR_COC", drp_1Mar.Text);
+            param[9] = new SqlParameter("@APR_COC", drp_1Apr.Text);
+            param[10] = new SqlParameter("@MAY_COC", drp_1May.Text);
+            param[11] = new SqlParameter("@JUN_COC", drp_1Jun.Text);
+            param[12] = new SqlParameter("@JUL_COC", drp_1Jul.Text);
+            param[13] = new SqlParameter("@AUG_COC", drp_1Aug.Text);
+            param[14] = new SqlParameter("@SEP_COC", drp_1Sep.Text);
+            param[15] = new SqlParameter("@OCT_COC", drp_1Oct.Text);
+            param[16] = new SqlParameter("@NOV_COC", drp_1Nov.Text);
+            param[17] = new SqlParameter("@DEC_COC", drp_1Dec.Text);
+            param[18] = new SqlParameter("@ALLM_LCMP", lbl_ALLM_LCMP.Text);
+            param[19] = new SqlParameter("@JAN_LCMP", lbl_JAN_LCMP.Text);
+            param[20] = new SqlParameter("@FEB_LCMP", lbl_FEB_LCMP.Text);
+            param[21] = new SqlParameter("@MAR_LCMP", lbl_MAR_LCMP.Text);
+            param[22] = new SqlParameter("@APR_LCMP", lbl_APR_LCMP.Text);
+            param[23] = new SqlParameter("@MAY_LCMP", lbl_MAY_LCMP.Text);
+            param[24] = new SqlParameter("@JUN_LCMP", lbl_JUN_LCMP.Text);
+            param[25] = new SqlParameter("@JUL_LCMP", lbl_JUL_LCMP.Text);
+            param[26] = new SqlParameter("@AUG_LCMP", lbl_AUG_LCMP.Text);
+            param[27] = new SqlParameter("@SEP_LCMP", lbl_SEP_LCMP.Text);
+            param[28] = new SqlParameter("@OCT_LCMP", lbl_OCT_LCMP.Text);
+            param[29] = new SqlParameter("@NOV_LCMP", lbl_NOV_LCMP.Text);
+            param[30] = new SqlParameter("@DEC_LCMP", lbl_DEC_LCMP.Text);
+            param[31] = new SqlParameter("@ALLM_SHC", drp_2All.Text);
+            param[32] = new SqlParameter("@JAN_SHC", drp_2Jan.Text);
+            param[33] = new SqlParameter("@FEB_SHC", drp_2Feb.Text);
+            param[34] = new SqlParameter("@MAR_SHC", drp_2Mar.Text);
+            param[35] = new SqlParameter("@APR_SHC", drp_2Apr.Text);
+            param[36] = new SqlParameter("@MAY_SHC", drp_2May.Text);
+            param[37] = new SqlParameter("@JUN_SHC", drp_2Jun.Text);
+            param[38] = new SqlParameter("@JUL_SHC", drp_2Jul.Text);
+            param[39] = new SqlParameter("@AUG_SHC", drp_2Aug.Text);
+            param[40] = new SqlParameter("@SEP_SHC", drp_2Sep.Text);
+            param[41] = new SqlParameter("@OCT_SHC", drp_2Oct.Text);
+            param[42] = new SqlParameter("@NOV_SHC", drp_2Nov.Text);
+            param[43] = new SqlParameter("@DEC_SHC", drp_2Dec.Text);
+            param[44] = new SqlParameter("@isDependent", hdn_dependent.Value);
+            param[45] = new SqlParameter("@flaggedEmployee", hdn_flagEmp.Value);
+            param[46] = new SqlParameter("@disableCoding", hdn_disable.Value);
+            #endregion
 
-                Label lbl_ALLM_COC = (Label)item.FindControl("lbl_ALLM_COC");
-                Label lbl_JAN_COC = (Label)item.FindControl("lbl_JAN_COC");
-                Label lbl_FEB_COC = (Label)item.FindControl("lbl_FEB_COC");
-                Label lbl_MAR_COC = (Label)item.FindControl("lbl_MAR_COC");
-                Label lbl_APR_COC = (Label)item.FindControl("lbl_APR_COC");
-                Label lbl_MAY_COC = (Label)item.FindControl("lbl_MAY_COC");
-                Label lbl_JUN_COC = (Label)item.FindControl("lbl_JUN_COC");
-                Label lbl_JUL_COC = (Label)item.FindControl("lbl_JUL_COC");
-                Label lbl_AUG_COC = (Label)item.FindControl("lbl_AUG_COC");
-                Label lbl_SEP_COC = (Label)item.FindControl("lbl_SEP_COC");
-                Label lbl_OCT_COC = (Label)item.FindControl("lbl_OCT_COC");
-                Label lbl_NOV_COC = (Label)item.FindControl("lbl_NOV_COC");
-                Label lbl_DEC_COC = (Label)item.FindControl("lbl_DEC_COC");
-
-                Label lbl_ALLM_LCMP = (Label)item.FindControl("lbl_ALLM_LCMP");
-                Label lbl_JAN_LCMP = (Label)item.FindControl("lbl_JAN_LCMP");
-                Label lbl_FEB_LCMP = (Label)item.FindControl("lbl_FEB_LCMP");
-                Label lbl_MAR_LCMP = (Label)item.FindControl("lbl_MAR_LCMP");
-                Label lbl_APR_LCMP = (Label)item.FindControl("lbl_APR_LCMP");
-                Label lbl_MAY_LCMP = (Label)item.FindControl("lbl_MAY_LCMP");
-                Label lbl_JUN_LCMP = (Label)item.FindControl("lbl_JUN_LCMP");
-                Label lbl_JUL_LCMP = (Label)item.FindControl("lbl_JUL_LCMP");
-                Label lbl_AUG_LCMP = (Label)item.FindControl("lbl_AUG_LCMP");
-                Label lbl_SEP_LCMP = (Label)item.FindControl("lbl_SEP_LCMP");
-                Label lbl_OCT_LCMP = (Label)item.FindControl("lbl_OCT_LCMP");
-                Label lbl_NOV_LCMP = (Label)item.FindControl("lbl_NOV_LCMP");
-                Label lbl_DEC_LCMP = (Label)item.FindControl("lbl_DEC_LCMP");
-
-                Label lbl_ALLM_SHC = (Label)item.FindControl("lbl_ALLM_SHC");
-                Label lbl_JAN_SHC = (Label)item.FindControl("lbl_JAN_SHC");
-                Label lbl_FEB_SHC = (Label)item.FindControl("lbl_FEB_SHC");
-                Label lbl_MAR_SHC = (Label)item.FindControl("lbl_MAR_SHC");
-                Label lbl_APR_SHC = (Label)item.FindControl("lbl_APR_SHC");
-                Label lbl_MAY_SHC = (Label)item.FindControl("lbl_MAY_SHC");
-                Label lbl_JUN_SHC = (Label)item.FindControl("lbl_JUN_SHC");
-                Label lbl_JUL_SHC = (Label)item.FindControl("lbl_JUL_SHC");
-                Label lbl_AUG_SHC = (Label)item.FindControl("lbl_AUG_SHC");
-                Label lbl_SEP_SHC = (Label)item.FindControl("lbl_SEP_SHC");
-                Label lbl_OCT_SHC = (Label)item.FindControl("lbl_OCT_SHC");
-                Label lbl_NOV_SHC = (Label)item.FindControl("lbl_NOV_SHC");
-                Label lbl_DEC_SHC = (Label)item.FindControl("lbl_DEC_SHC");
-                #endregion
-
-                #region Param
-                param = new SqlParameter[47];
-                param[0] = new SqlParameter("@EmployerTaxId", EmployerTaxId);
-                param[1] = new SqlParameter("@ssn", ssn);
-                param[2] = new SqlParameter("@filingYear", hdn_filingyear.Value);
-                param[3] = new SqlParameter("@hourlyAmount", TextManipulation.toDBNULLfromEmpty(txt_hourly.Text));
-                param[4] = new SqlParameter("@salaryAmount", TextManipulation.toDBNULLfromEmpty(txt_salary.Text));
-                param[5] = new SqlParameter("@ALLM_COC", lbl_ALLM_COC.Text);
-                param[6] = new SqlParameter("@JAN_COC", lbl_JAN_COC.Text);
-                param[7] = new SqlParameter("@FEB_COC", lbl_FEB_COC.Text);
-                param[8] = new SqlParameter("@MAR_COC", lbl_MAR_COC.Text);
-                param[9] = new SqlParameter("@APR_COC", lbl_APR_COC.Text);
-                param[10] = new SqlParameter("@MAY_COC", lbl_MAY_COC.Text);
-                param[11] = new SqlParameter("@JUN_COC", lbl_JUN_COC.Text);
-                param[12] = new SqlParameter("@JUL_COC", lbl_JUL_COC.Text);
-                param[13] = new SqlParameter("@AUG_COC", lbl_AUG_COC.Text);
-                param[14] = new SqlParameter("@SEP_COC", lbl_SEP_COC.Text);
-                param[15] = new SqlParameter("@OCT_COC", lbl_OCT_COC.Text);
-                param[16] = new SqlParameter("@NOV_COC", lbl_NOV_COC.Text);
-                param[17] = new SqlParameter("@DEC_COC", lbl_DEC_COC.Text);
-                param[18] = new SqlParameter("@ALLM_LCMP", lbl_ALLM_LCMP.Text);
-                param[19] = new SqlParameter("@JAN_LCMP", lbl_JAN_LCMP.Text);
-                param[20] = new SqlParameter("@FEB_LCMP", lbl_FEB_LCMP.Text);
-                param[21] = new SqlParameter("@MAR_LCMP", lbl_MAR_LCMP.Text);
-                param[22] = new SqlParameter("@APR_LCMP", lbl_APR_LCMP.Text);
-                param[23] = new SqlParameter("@MAY_LCMP", lbl_MAY_LCMP.Text);
-                param[24] = new SqlParameter("@JUN_LCMP", lbl_JUN_LCMP.Text);
-                param[25] = new SqlParameter("@JUL_LCMP", lbl_JUL_LCMP.Text);
-                param[26] = new SqlParameter("@AUG_LCMP", lbl_AUG_LCMP.Text);
-                param[27] = new SqlParameter("@SEP_LCMP", lbl_SEP_LCMP.Text);
-                param[28] = new SqlParameter("@OCT_LCMP", lbl_OCT_LCMP.Text);
-                param[29] = new SqlParameter("@NOV_LCMP", lbl_NOV_LCMP.Text);
-                param[30] = new SqlParameter("@DEC_LCMP", lbl_DEC_LCMP.Text);
-                param[31] = new SqlParameter("@ALLM_SHC", lbl_ALLM_SHC.Text);
-                param[32] = new SqlParameter("@JAN_SHC", lbl_JAN_SHC.Text);
-                param[33] = new SqlParameter("@FEB_SHC", lbl_FEB_SHC.Text);
-                param[34] = new SqlParameter("@MAR_SHC", lbl_MAR_SHC.Text);
-                param[35] = new SqlParameter("@APR_SHC", lbl_APR_SHC.Text);
-                param[36] = new SqlParameter("@MAY_SHC", lbl_MAY_SHC.Text);
-                param[37] = new SqlParameter("@JUN_SHC", lbl_JUN_SHC.Text);
-                param[38] = new SqlParameter("@JUL_SHC", lbl_JUL_SHC.Text);
-                param[39] = new SqlParameter("@AUG_SHC", lbl_AUG_SHC.Text);
-                param[40] = new SqlParameter("@SEP_SHC", lbl_SEP_SHC.Text);
-                param[41] = new SqlParameter("@OCT_SHC", lbl_OCT_SHC.Text);
-                param[42] = new SqlParameter("@NOV_SHC", lbl_NOV_SHC.Text);
-                param[43] = new SqlParameter("@DEC_SHC", lbl_DEC_SHC.Text);
-                param[44] = new SqlParameter("@isDependent", hdn_dependent.Value);
-                param[45] = new SqlParameter("@flaggedEmployee", hdn_flagEmp.Value);
-                param[46] = new SqlParameter("@disableCoding", hdn_disable.Value);
-                #endregion
-
-                objMaster.insert_Update_EmployeeCode(hdn_id.Value, param);
-            }
+            objMaster.insert_Update_EmployeeCode(hdn_id.Value, param);
+            
         }
 
         #endregion
@@ -515,8 +564,55 @@ namespace ACA_WebApplication.Master
             rpt_IndividualData.DataSource = dtcoveredIndividula;
             rpt_IndividualData.DataBind();
 
-            rpt_code.DataSource = null;
-            rpt_code.DataBind();
+            #region EmployeCode 
+
+            drp_1All.Text = null;
+            drp_1Jan.Text = null;
+            drp_1Feb.Text = null;
+            drp_1Mar.Text = null;
+            drp_1Apr.Text = null;
+            drp_1May.Text = null;
+            drp_1Jun.Text = null;
+            drp_1Jul.Text = null;
+            drp_1Aug.Text = null;
+            drp_1Sep.Text = null;
+            drp_1Oct.Text = null;
+            drp_1Nov.Text = null;
+            drp_1Dec.Text = null;
+
+            lbl_ALLM_LCMP.Text = null;
+            lbl_JAN_LCMP.Text = null;
+            lbl_FEB_LCMP.Text = null;
+            lbl_MAR_LCMP.Text = null;
+            lbl_APR_LCMP.Text = null;
+            lbl_MAY_LCMP.Text = null;
+            lbl_JUN_LCMP.Text = null;
+            lbl_JUL_LCMP.Text = null;
+            lbl_AUG_LCMP.Text = null;
+            lbl_SEP_LCMP.Text = null;
+            lbl_OCT_LCMP.Text = null;
+            lbl_NOV_LCMP.Text = null;
+            lbl_DEC_LCMP.Text = null;
+
+            drp_2All.Text = null;
+            drp_2Jan.Text = null;
+            drp_2Feb.Text = null;
+            drp_2Mar.Text = null;
+            drp_2Apr.Text = null;
+            drp_2May.Text = null;
+            drp_2Jun.Text = null;
+            drp_2Jul.Text = null;
+            drp_2Aug.Text = null;
+            drp_2Sep.Text = null;
+            drp_2Oct.Text = null;
+            drp_2Nov.Text = null;
+            drp_2Dec.Text = null;
+
+            hdn_filingyear.Value = null;
+            hdn_dependent.Value = "0";
+            hdn_flagEmp.Value = "0";
+            hdn_disable.Value = "0";
+            #endregion
             txtsearch.Focus();
         }
         protected void btn_delete_Click(object sender, EventArgs e)
@@ -738,10 +834,9 @@ namespace ACA_WebApplication.Master
         public DataTable dtStatus()
         {
             DataTable dt_Status = new DataTable();
-            dt_Status.Columns.AddRange(new DataColumn[5] {
+            dt_Status.Columns.AddRange(new DataColumn[4] {
                             new DataColumn("Id", typeof(int)),
                             new DataColumn("Status", typeof(string)),
-                            new DataColumn("statusName", typeof(string)),
                             new DataColumn("startDate", typeof(string)),
                             new DataColumn("endDate",typeof(string))});
             return dt_Status;
@@ -875,9 +970,12 @@ namespace ACA_WebApplication.Master
         protected void btn_coverageplus_Click(object sender, EventArgs e)
         {
             DataTable dt_Coverage = dtCoverage();
-
+            DataTable dt_plan = (DataTable)HttpContext.Current.Session["dt_plan"];
             foreach (RepeaterItem item in rpt_coverage.Items)
             {
+                CheckBox chk_unionMember = (CheckBox)item.FindControl("chk_unionMember");
+                CheckBox chk_enrolled = (CheckBox)item.FindControl("chk_enrolled");
+                CheckBox chk_cobraEnrolled = (CheckBox)item.FindControl("chk_cobraEnrolled");
                 HiddenField hdn_coverageId = (HiddenField)item.FindControl("hdn_coverageId");
                 HiddenField hdn_unionMember = (HiddenField)item.FindControl("hdn_unionMember");
                 TextBox txt_contributionStartDate = (TextBox)item.FindControl("txt_contributionStartDate");
@@ -890,9 +988,21 @@ namespace ACA_WebApplication.Master
                 HiddenField hdn_cobraEnrolled = (HiddenField)item.FindControl("hdn_cobraEnrolled");
                 TextBox txt_cobraStartDate = (TextBox)item.FindControl("txt_cobraStartDate");
                 TextBox txt_cobraEndDate = (TextBox)item.FindControl("txt_cobraEndDate");
-                dt_Coverage.Rows.Add(hdn_coverageId.Value, hdn_unionMember.Value, txt_contributionStartDate.Text, txt_contributionEndDate.Text,
-                    txt_coverageOfferDate.Text, txt_plan.Text, hdn_enrolled.Value, txt_coverageStartDate.Text, txt_coverageEndDate.Text,
-                    hdn_cobraEnrolled.Value, txt_cobraStartDate.Text, txt_cobraEndDate.Text);
+                IEnumerable<DataRow> query1 = from all_data in dt_plan.AsEnumerable()
+                                              where all_data.Field<string>("name") == txt_plan.Text.Trim()
+                                              select all_data;
+                if (query1.Any())
+                {
+                    dt_Coverage.Rows.Add(hdn_coverageId.Value, (chk_unionMember.Checked == true ? "1" : "0"), txt_contributionStartDate.Text, txt_contributionEndDate.Text,
+                    txt_coverageOfferDate.Text, txt_plan.Text, (chk_enrolled.Checked == true ? "1" : "0"), txt_coverageStartDate.Text, txt_coverageEndDate.Text,
+                    (chk_cobraEnrolled.Checked == true ? "1" : "0"), txt_cobraStartDate.Text, txt_cobraEndDate.Text);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Invaild Plan Name : " + txt_plan.Text + "');", true);
+                    txt_plan.Text = "";
+                    return;
+                }
             }
             dt_Coverage.Rows.Add(0, 0, null, null, null, null, 0, null, null, 0, null, null);
             rpt_coverage.DataSource = dt_Coverage;
@@ -908,6 +1018,9 @@ namespace ACA_WebApplication.Master
 
             foreach (RepeaterItem item in rpt_coverage.Items)
             {
+                CheckBox chk_unionMember = (CheckBox)item.FindControl("chk_unionMember");
+                CheckBox chk_enrolled = (CheckBox)item.FindControl("chk_enrolled");
+                CheckBox chk_cobraEnrolled = (CheckBox)item.FindControl("chk_cobraEnrolled");
                 HiddenField hdn_coverageId = (HiddenField)item.FindControl("hdn_coverageId");
                 HiddenField hdn_unionMember = (HiddenField)item.FindControl("hdn_unionMember");
                 TextBox txt_contributionStartDate = (TextBox)item.FindControl("txt_contributionStartDate");
@@ -920,9 +1033,9 @@ namespace ACA_WebApplication.Master
                 HiddenField hdn_cobraEnrolled = (HiddenField)item.FindControl("hdn_cobraEnrolled");
                 TextBox txt_cobraStartDate = (TextBox)item.FindControl("txt_cobraStartDate");
                 TextBox txt_cobraEndDate = (TextBox)item.FindControl("txt_cobraEndDate");
-                dt_Coverage.Rows.Add(hdn_coverageId.Value, hdn_unionMember.Value, txt_contributionStartDate.Text, txt_contributionEndDate.Text,
-                    txt_coverageOfferDate.Text, txt_plan.Text, hdn_enrolled.Value, txt_coverageStartDate.Text, txt_coverageEndDate.Text,
-                    hdn_cobraEnrolled.Value, txt_cobraStartDate.Text, txt_cobraEndDate.Text);
+                dt_Coverage.Rows.Add(hdn_coverageId.Value, (chk_unionMember.Checked == true ? "1" : "0"), txt_contributionStartDate.Text, txt_contributionEndDate.Text,
+                    txt_coverageOfferDate.Text, txt_plan.Text, (chk_enrolled.Checked == true ? "1" : "0"), txt_coverageStartDate.Text, txt_coverageEndDate.Text,
+                    (chk_cobraEnrolled.Checked == true ? "1" : "0"), txt_cobraStartDate.Text, txt_cobraEndDate.Text);
             }
             //dt_Coverage.Rows.Add(0, 0, null, null, null, null, 0, null, null, 0, null, null);
             dt_Coverage.Rows[index].Delete();
@@ -1052,6 +1165,104 @@ namespace ACA_WebApplication.Master
             rpt_IndividualData.DataSource = dtcoveredIndividula;
             rpt_IndividualData.DataBind();
         }
+        #endregion
+
+        #region Add Code
+
+        //protected void rpt_code_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        //{
+        //    #region Hidden Fields
+        //    HiddenField lbl_ALLM_COC = (HiddenField)e.Item.FindControl("lbl_ALLM_COC");
+        //    HiddenField lbl_JAN_COC = (HiddenField)e.Item.FindControl("lbl_JAN_COC");
+        //    HiddenField lbl_FEB_COC = (HiddenField)e.Item.FindControl("lbl_FEB_COC");
+        //    HiddenField lbl_MAR_COC = (HiddenField)e.Item.FindControl("lbl_MAR_COC");
+        //    HiddenField lbl_APR_COC = (HiddenField)e.Item.FindControl("lbl_APR_COC");
+        //    HiddenField lbl_MAY_COC = (HiddenField)e.Item.FindControl("lbl_MAY_COC");
+        //    HiddenField lbl_JUN_COC = (HiddenField)e.Item.FindControl("lbl_JUN_COC");
+        //    HiddenField lbl_JUL_COC = (HiddenField)e.Item.FindControl("lbl_JUL_COC");
+        //    HiddenField lbl_AUG_COC = (HiddenField)e.Item.FindControl("lbl_AUG_COC");
+        //    HiddenField lbl_SEP_COC = (HiddenField)e.Item.FindControl("lbl_SEP_COC");
+        //    HiddenField lbl_OCT_COC = (HiddenField)e.Item.FindControl("lbl_OCT_COC");
+        //    HiddenField lbl_NOV_COC = (HiddenField)e.Item.FindControl("lbl_NOV_COC");
+        //    HiddenField lbl_DEC_COC = (HiddenField)e.Item.FindControl("lbl_DEC_COC");
+
+        //    HiddenField lbl_ALLM_SHC = (HiddenField)e.Item.FindControl("lbl_ALLM_SHC");
+        //    HiddenField lbl_JAN_SHC = (HiddenField)e.Item.FindControl("lbl_JAN_SHC");
+        //    HiddenField lbl_FEB_SHC = (HiddenField)e.Item.FindControl("lbl_FEB_SHC");
+        //    HiddenField lbl_MAR_SHC = (HiddenField)e.Item.FindControl("lbl_MAR_SHC");
+        //    HiddenField lbl_APR_SHC = (HiddenField)e.Item.FindControl("lbl_APR_SHC");
+        //    HiddenField lbl_MAY_SHC = (HiddenField)e.Item.FindControl("lbl_MAY_SHC");
+        //    HiddenField lbl_JUN_SHC = (HiddenField)e.Item.FindControl("lbl_JUN_SHC");
+        //    HiddenField lbl_JUL_SHC = (HiddenField)e.Item.FindControl("lbl_JUL_SHC");
+        //    HiddenField lbl_AUG_SHC = (HiddenField)e.Item.FindControl("lbl_AUG_SHC");
+        //    HiddenField lbl_SEP_SHC = (HiddenField)e.Item.FindControl("lbl_SEP_SHC");
+        //    HiddenField lbl_OCT_SHC = (HiddenField)e.Item.FindControl("lbl_OCT_SHC");
+        //    HiddenField lbl_NOV_SHC = (HiddenField)e.Item.FindControl("lbl_NOV_SHC");
+        //    HiddenField lbl_DEC_SHC = (HiddenField)e.Item.FindControl("lbl_DEC_SHC");
+        //    #endregion
+
+        //    #region Dropdown
+        //    DropDownList drp_1All = (DropDownList)e.Item.FindControl("drp_1All");
+        //    DropDownList drp_1Jan = (DropDownList)e.Item.FindControl("drp_1Jan");
+        //    DropDownList drp_1Feb = (DropDownList)e.Item.FindControl("drp_1Feb");
+        //    DropDownList drp_1Mar = (DropDownList)e.Item.FindControl("drp_1Mar");
+        //    DropDownList drp_1Apr = (DropDownList)e.Item.FindControl("drp_1Apr");
+        //    DropDownList drp_1May = (DropDownList)e.Item.FindControl("drp_1May");
+        //    DropDownList drp_1Jun = (DropDownList)e.Item.FindControl("drp_1Jun");
+        //    DropDownList drp_1Jul = (DropDownList)e.Item.FindControl("drp_1Jul");
+        //    DropDownList drp_1Aug = (DropDownList)e.Item.FindControl("drp_1Aug");
+        //    DropDownList drp_1Sep = (DropDownList)e.Item.FindControl("drp_1Sep");
+        //    DropDownList drp_1Oct = (DropDownList)e.Item.FindControl("drp_1Oct");
+        //    DropDownList drp_1Nov = (DropDownList)e.Item.FindControl("drp_1Nov");
+        //    DropDownList drp_1Dec = (DropDownList)e.Item.FindControl("drp_1Dec");
+
+        //    DropDownList drp_2All = (DropDownList)e.Item.FindControl("drp_2All");
+        //    DropDownList drp_2Jan = (DropDownList)e.Item.FindControl("drp_2Jan");
+        //    DropDownList drp_2Feb = (DropDownList)e.Item.FindControl("drp_2Feb");
+        //    DropDownList drp_2Mar = (DropDownList)e.Item.FindControl("drp_2Mar");
+        //    DropDownList drp_2Apr = (DropDownList)e.Item.FindControl("drp_2Apr");
+        //    DropDownList drp_2May = (DropDownList)e.Item.FindControl("drp_2May");
+        //    DropDownList drp_2Jun = (DropDownList)e.Item.FindControl("drp_2Jun");
+        //    DropDownList drp_2Jul = (DropDownList)e.Item.FindControl("drp_2Jul");
+        //    DropDownList drp_2Aug = (DropDownList)e.Item.FindControl("drp_2Aug");
+        //    DropDownList drp_2Sep = (DropDownList)e.Item.FindControl("drp_2Sep");
+        //    DropDownList drp_2Oct = (DropDownList)e.Item.FindControl("drp_2Oct");
+        //    DropDownList drp_2Nov = (DropDownList)e.Item.FindControl("drp_2Nov");
+        //    DropDownList drp_2Dec = (DropDownList)e.Item.FindControl("drp_2Dec");
+
+        //    #endregion
+
+        //    #region assign drp value
+        //    drp_1All.Items.FindByValue(lbl_ALLM_COC.Value).Selected = true;
+        //    drp_1Jan.Items.FindByValue(lbl_JAN_COC.Value).Selected = true;
+        //    drp_1Feb.Items.FindByValue(lbl_FEB_COC.Value).Selected = true;
+        //    drp_1Mar.Items.FindByValue(lbl_MAR_COC.Value).Selected = true;
+        //    drp_1Apr.Items.FindByValue(lbl_APR_COC.Value).Selected = true;
+        //    drp_1May.Items.FindByValue(lbl_MAY_COC.Value).Selected = true;
+        //    drp_1Jun.Items.FindByValue(lbl_JUN_COC.Value).Selected = true;
+        //    drp_1Jul.Items.FindByValue(lbl_JUL_COC.Value).Selected = true;
+        //    drp_1Aug.Items.FindByValue(lbl_AUG_COC.Value).Selected = true;
+        //    drp_1Sep.Items.FindByValue(lbl_SEP_COC.Value).Selected = true;
+        //    drp_1Oct.Items.FindByValue(lbl_OCT_COC.Value).Selected = true;
+        //    drp_1Nov.Items.FindByValue(lbl_NOV_COC.Value).Selected = true;
+        //    drp_1Dec.Items.FindByValue(lbl_DEC_COC.Value).Selected = true;
+
+        //    drp_2All.Items.FindByValue(lbl_ALLM_SHC.Value).Selected = true;
+        //    drp_2Jan.Items.FindByValue(lbl_JAN_SHC.Value).Selected = true;
+        //    drp_2Feb.Items.FindByValue(lbl_FEB_SHC.Value).Selected = true;
+        //    drp_2Mar.Items.FindByValue(lbl_MAR_SHC.Value).Selected = true;
+        //    drp_2Apr.Items.FindByValue(lbl_APR_SHC.Value).Selected = true;
+        //    drp_2May.Items.FindByValue(lbl_MAY_SHC.Value).Selected = true;
+        //    drp_2Jun.Items.FindByValue(lbl_JUN_SHC.Value).Selected = true;
+        //    drp_2Jul.Items.FindByValue(lbl_JUL_SHC.Value).Selected = true;
+        //    drp_2Aug.Items.FindByValue(lbl_AUG_SHC.Value).Selected = true;
+        //    drp_2Sep.Items.FindByValue(lbl_SEP_SHC.Value).Selected = true;
+        //    drp_2Oct.Items.FindByValue(lbl_OCT_SHC.Value).Selected = true;
+        //    drp_2Nov.Items.FindByValue(lbl_NOV_SHC.Value).Selected = true;
+        //    drp_2Dec.Items.FindByValue(lbl_DEC_SHC.Value).Selected = true;
+        //    #endregion
+        //}
+
         #endregion
 
         #region load Dropdown

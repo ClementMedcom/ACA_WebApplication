@@ -69,7 +69,7 @@ namespace ACA_WebApplication.Master
                     {
                         End_record = total_rows;
                     }
-                    lbl_result.Text = "Showing Results " + start_record + "-" + End_record + " Out of " + total_rows + " Records";
+                    lbl_result.Text = "Showing " + start_record + "-" + End_record + " Out of " + total_rows + " Records";
                 }
                 else
                 {
@@ -77,7 +77,7 @@ namespace ACA_WebApplication.Master
                     rptPlan.DataBind();
                     hid_rowcount.Value = "0";
                     lbl_pagenum.Text = "1";
-                    lbl_result.Text = "Showing Results " + 0 + "-" + 0 + " Out of " + 0 + " Records";
+                    lbl_result.Text = "Showing " + 0 + "-" + 0 + " Out of " + 0 + " Records";
                 }
 
 
@@ -124,9 +124,9 @@ namespace ACA_WebApplication.Master
                 if (dt3.Rows[0]["fundingType"].ToString() == "1" || dt3.Rows[0]["fundingType"].ToString() == "Fully-Insured") drp_fundingtype.Text = "Fully-Insured";
                 else if (dt3.Rows[0]["fundingType"].ToString() == "0" || dt3.Rows[0]["fundingType"].ToString() == "Self-Funded") drp_fundingtype.Text = "Self-Funded";
                 else drp_fundingtype.Text = "";
-                txt_days.Text = dt3.Rows[0]["waitingDays"].ToString();
-                drp_waitingperiod.Text = TextManipulation.toWaitingPeriod(dt3.Rows[0]["eligibile1stOfMonth"].ToString());
-                drp_dependence.Text = TextManipulation.toYesNo(dt3.Rows[0]["offeredSpouse"].ToString());
+                txt_days.Text = dt3.Rows[0]["eligibile1stOfMonth"].ToString();
+                drp_waitingperiod.Text = TextManipulation.toWaitingPeriod(dt3.Rows[0]["waitingDays"].ToString());
+                drp_spouse.Text = TextManipulation.toYesNo(dt3.Rows[0]["offeredSpouse"].ToString());
                 drp_dependence.Text = TextManipulation.toYesNo(dt3.Rows[0]["offeredDependents"].ToString());
                 drp_termination.Text = TextManipulation.toYesNo(dt3.Rows[0]["planTermTermination"].ToString());
                 string planre = dt3.Rows[0]["planRenewal"].ToString();
@@ -540,6 +540,12 @@ namespace ACA_WebApplication.Master
                });
             dt.Rows.Add(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
             return dt;
+        }
+        protected void Refresh(object sender, EventArgs e)
+        {
+            list_Plan(hdn_companytax_id.Value, 1, "", 10);
+            txtsearch.Text = "";
+            txtsearch.Focus();
         }
     }
 }

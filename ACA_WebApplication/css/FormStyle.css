@@ -8,18 +8,18 @@
     z-index: 1001;
     -moz-opacity: 0.8;
     filter: alpha(opacity=60);
-    opacity: 0.6;
+    opacity: 0.8;
 }
 
 .white_content {
     position: absolute;
-        top: 200px;
+    top: 200px;
     left: 31%;
     width: 25%;
      height: 68px;
     padding: 16px;
     border: 1px solid white;
-    background-color: rgb(99, 127, 134);
+    background-color: rgb(4, 82, 129);
     z-index: 1002;
     border-radius: 10px;
 }
@@ -30,6 +30,17 @@
     padding: 0px 10px;
     border-radius: 4px;
     color: white;
+}
+.btn_popup{
+    float: right;
+    margin: 45px 13px;
+    background-color: #130E0E;
+    padding: 2%;
+    text-decoration: none;
+    border-radius: 5px;
+    color: #f1d800;
+    width: 50px;
+    text-align: center;
 }
 
 .center {
@@ -53,7 +64,7 @@
     background-color: #0294a5;
     border: 1px solid #2381e9;
     padding: 3px 8px;
-    color: white;
+    color: aliceblue;
     font-weight: bold;
     cursor: pointer;
 }
@@ -63,14 +74,17 @@
     border: 1px solid #89b3c1;
 }
 
-.Repeater tr:hover {
-    background-color:#add5f3;
-    cursor:pointer;
+.Repeater .thhover:hover {
+    background-color:#dad089;
+    /*cursor:pointer;*/
 }
-
-.employer_list:hover {
-    background-color: #add5f3;
-    border-radius: 7px;
+b{
+    transition:margin-left 0.4s;
+}
+.employer_list:hover b{
+    /*background-color: #add5f3;*/
+    margin-left:15px;
+    transition:margin-left 0.4s;
 }
 
 .page_heading {
@@ -146,7 +160,7 @@ font-weight:bold;
 
 {
 background: url(../img/green_bg_Tab.gif) repeat-x;
-margin-top:202px;
+/*margin-top:202px;*/
 cursor:pointer;
 
 }
@@ -171,7 +185,6 @@ background: url(../img/green_right_Tab.gif) no-repeat right top;
 
 {
 
-font-size: 13px;
 
 font-weight: bold;
 
@@ -222,17 +235,34 @@ color: #fff;
 
 {
 
-font-family: Arial;
-
-font-size: 10pt;
-
 border-top: 0;
 
-border:1px solid #999999;
+/*border:1px solid #999999;*/
 
 padding: 8px;
 
-background-color: #ffffff;
+background: rgba(255,255,255, 0.6)
 
 }
 /*Tab Control END*/
+/*Auto complete textbox Start*/
+.completionList {
+            margin: 0px;
+            padding: 2px;
+            height: 90px;
+            overflow-y: auto;
+            color: #0294a5;
+            background-color: white;
+        }
+
+        .listItem {
+            color: #0294a5;
+            border-bottom: 1px solid gray;
+        }
+
+        .itemHighlighted {
+            background-color: #0294a5;
+            color: white;
+            cursor: pointer;
+        }
+/*Auto complete textbox End*/

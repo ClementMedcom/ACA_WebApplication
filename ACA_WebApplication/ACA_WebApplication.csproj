@@ -112,9 +112,23 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="addUser.aspx" />
     <Content Include="ApplicationInsights.config" />
     <Content Include="assets\css\master\Main.min.css" />
     <Content Include="assets\fonts\font_awesome\fontawesome-webfont.svg" />
+    <Content Include="assets\images\bg\body-bg-01.jpg" />
+    <Content Include="assets\images\bg\body-bg-02-10.jpg" />
+    <Content Include="assets\images\bg\body-bg-02-15.jpg" />
+    <Content Include="assets\images\bg\body-bg-02-20.jpg" />
+    <Content Include="assets\images\bg\body-bg-02-25.jpg" />
+    <Content Include="assets\images\bg\body-bg-02-30.jpg" />
+    <Content Include="assets\images\bg\body-bg-02-55.jpg" />
+    <Content Include="assets\images\bg\body-bg-02-75.jpg" />
+    <Content Include="assets\images\bg\body-bg-02.jpg" />
+    <Content Include="assets\images\bg\body-bg-02a.jpg" />
+    <Content Include="assets\images\bg\body-bg-03.jpg" />
+    <Content Include="assets\images\bg\body-bg-04.png" />
+    <Content Include="assets\images\bg\body-bg.jpg" />
     <Content Include="assets\images\icons\Favicon.png" />
     <Content Include="assets\images\logo.jpg" />
     <Content Include="assets\images\logo.png" />
@@ -160,30 +174,38 @@
     <Content Include="icons\Employee.png" />
     <Content Include="icons\Employer.png" />
     <Content Include="icons\Plan.png" />
+    <Content Include="img\close-icon.png" />
+    <Content Include="img\down_arrow.png" />
     <Content Include="img\email.png" />
     <Content Include="img\green_bg_Tab.gif" />
     <Content Include="img\green_left_Tab.gif" />
     <Content Include="img\green_right_Tab.gif" />
     <Content Include="img\loader4.gif" />
-    <Content Include="img\logo.jpg" />
+    <Content Include="img\loginbg.jpg" />
+    <Content Include="img\logo.png" />
+    <Content Include="img\log_load.gif" />
     <Content Include="img\page_under_construction.jpg" />
     <Content Include="img\pwd.png" />
     <Content Include="img\red-flag.png" />
+    <Content Include="img\right arrow.png" />
+    <Content Include="img\right arrow2.png" />
     <Content Include="img\uname.png" />
+    <Content Include="img\up_arrow.png" />
     <Content Include="js\jquery.min.js.js" />
     <Content Include="Login.aspx" />
     <Content Include="Master\Company_List.aspx" />
     <Content Include="Master\Employee_Details.aspx" />
     <Content Include="Master\Employer_Details.aspx" />
     <Content Include="Master\Plan.aspx" />
+    <Content Include="offline.html" />
     <Content Include="packages.config" />
-    <Content Include="Layout.Master" />
     <Content Include="assets\fonts\font_awesome\fontawesome-webfont.woff" />
     <Content Include="assets\fonts\font_awesome\fontawesome-webfont_2d2816fe.eot" />
     <Content Include="assets\fonts\font_awesome\fontawesome-webfont_aea8981c.eot" />
     <Content Include="assets\fonts\font_awesome\fontawesome-webfont_aea8981c.ttf" />
     <Content Include="assets\fonts\font_awesome\fontawesome-webfont_aea8981c.woff" />
     <Content Include="bin\ACA_WebApplication.dll.config" />
+    <Content Include="Layout.Master" />
     <None Include="Properties\PublishProfiles\Test3.pubxml" />
     <Content Include="Profile.aspx" />
     <Content Include="Upload.aspx" />
@@ -201,6 +223,13 @@
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="addUser.aspx.cs">
+      <DependentUpon>addUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="addUser.aspx.designer.cs">
+      <DependentUpon>addUser.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

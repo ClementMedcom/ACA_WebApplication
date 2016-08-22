@@ -34,7 +34,7 @@ namespace ACA_WebApplication.Master
         {
             try
             {
-                DataSet ds = objMaster.list_Employer(companyTaxId);
+                DataSet ds = objMaster.list_Employer(companyTaxId, Session["UserName"].ToString());
                 DataTable dt = ds.Tables[0];
                 IEnumerable<DataRow> query1 = from all_data in dt.AsEnumerable()
                                               where all_data.Field<string>("EmployerTaxId").ToLower().StartsWith(search.ToLower()) || all_data.Field<string>("name").ToLower().StartsWith(search.ToLower())
@@ -69,7 +69,7 @@ namespace ACA_WebApplication.Master
                     {
                         End_record = total_rows;
                     }
-                    lbl_result.Text = "Showing Results " + start_record + "-" + End_record + " Out of " + total_rows + " Records";
+                    lbl_result.Text = "Showing " + start_record + "-" + End_record + " Out of " + total_rows + " Records";
                 }
                 else
                 {
@@ -77,7 +77,7 @@ namespace ACA_WebApplication.Master
                     rptEmployer.DataBind();
                     hid_rowcount.Value = "0";
                     lbl_pagenum.Text = "1";
-                    lbl_result.Text = "Showing Results " + 0 + "-" + 0 + " Out of " + 0 + " Records";
+                    lbl_result.Text = "Showing " + 0 + "-" + 0 + " Out of " + 0 + " Records";
                 }
 
 
@@ -155,7 +155,7 @@ namespace ACA_WebApplication.Master
                 }
                 rpt_montable.DataSource = part3Table;
                 rpt_montable.DataBind();
-                btn_delete.Visible = true;
+                //btn_delete.Visible = true;
                 btn_Save.Text = "Update";
             }
         }
@@ -169,7 +169,7 @@ namespace ACA_WebApplication.Master
             if (hdn_EmpTax_Id.Value == hdn_companytax)
             {
                 img_flag.ImageUrl = "~/img/red-flag.png";
-                div_mainemployer.Attributes.CssStyle["background-color"] = "#3E434A";
+                div_mainemployer.Attributes.CssStyle["background-color"] = "#e46051";
             }
         }
 
@@ -239,6 +239,7 @@ namespace ACA_WebApplication.Master
         {
             //this method sets the value of every textbox, combobox, and checkbox to null
             //in the employer tab
+            TabContainer1.ActiveTabIndex = 0;
             hdn_id.Value = "0";
             hdn_isCompany.Value = "0";
             txt_employerName.Text = null;
@@ -428,13 +429,13 @@ namespace ACA_WebApplication.Master
                 CheckBox chk_minimum = (CheckBox)item.FindControl("chk_minimum");
                 TextBox txt_full = (TextBox)item.FindControl("txt_full");
                 TextBox txt_total = (TextBox)item.FindControl("txt_total");
-                CheckBox chk_aggregate = (CheckBox)item.FindControl("chk_minimum");
+                CheckBox chk_aggregate = (CheckBox)item.FindControl("chk_aggregate");
                 TextBox txt_section = (TextBox)item.FindControl("txt_section");
                 int minimum = chk_minimum.Checked == true ? 1 : 0;
                 int aggregate = chk_aggregate.Checked == true ? 1 : 0;
-                int full = txt_full.Text == "" ? 0 : Convert.ToInt32(txt_full.Text);
-                int total = txt_full.Text == "" ? 0 : Convert.ToInt32(txt_total.Text);
-                dt_month.Rows.Add(lbl_month.Text, minimum, full, total, aggregate,txt_section.Text);
+                int full = txt_full.Text == "" ? 0 : Convert.ToInt32(txt_full.Text.Trim());
+                int total = txt_total.Text == "" ? 0 : Convert.ToInt32(txt_total.Text.Trim());
+                dt_month.Rows.Add(lbl_month.Text.Trim(), minimum, full, total, aggregate,txt_section.Text.Trim());
             }
             return dt_month;
         }
