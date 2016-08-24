@@ -26,6 +26,7 @@ namespace ACA_WebApplication.Master
                     list_Employer(hdn_companytax_id.Value, 1, "", 10);
                     load_dropdown();
                     clearEmployerForm();
+
                 }
                 txtsearch.Focus();
             }
@@ -169,7 +170,11 @@ namespace ACA_WebApplication.Master
             if (hdn_EmpTax_Id.Value == hdn_companytax)
             {
                 img_flag.ImageUrl = "~/img/red-flag.png";
+<<<<<<< HEAD
                 div_mainemployer.Attributes.CssStyle["background-color"] = "#e46051";
+=======
+                div_mainemployer.Attributes.CssStyle["background-color"] = "green";
+>>>>>>> origin/master
             }
         }
 

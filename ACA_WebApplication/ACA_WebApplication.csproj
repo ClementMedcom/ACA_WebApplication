@@ -113,6 +113,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="addUser.aspx" />
+<<<<<<< HEAD
+=======
+    <Content Include="ApplicationInsights.config" />
+>>>>>>> origin/master
     <Content Include="assets\css\master\Main.min.css" />
     <Content Include="assets\fonts\font_awesome\fontawesome-webfont.svg" />
     <Content Include="assets\images\bg\body-bg-01.jpg" />
@@ -184,7 +188,10 @@
     <Content Include="img\loginbg.jpg" />
     <Content Include="img\logo.png" />
     <Content Include="img\log_load.gif" />
+<<<<<<< HEAD
     <Content Include="img\log_load1.gif" />
+=======
+>>>>>>> origin/master
     <Content Include="img\page_under_construction.jpg" />
     <Content Include="img\pwd.png" />
     <Content Include="img\red-flag.png" />
@@ -205,6 +212,10 @@
     <Content Include="assets\fonts\font_awesome\fontawesome-webfont_aea8981c.eot" />
     <Content Include="assets\fonts\font_awesome\fontawesome-webfont_aea8981c.ttf" />
     <Content Include="assets\fonts\font_awesome\fontawesome-webfont_aea8981c.woff" />
+<<<<<<< HEAD
+=======
+    <Content Include="bin\ACA_WebApplication.dll.config" />
+>>>>>>> origin/master
     <Content Include="Layout.Master" />
     <None Include="Properties\PublishProfiles\Test3.pubxml" />
     <Content Include="Profile.aspx" />

@@ -6,8 +6,13 @@
     <script type="text/javascript">
         function page_load() {
             $('.grid_list').on('click', function () {
+<<<<<<< HEAD
                 $('.grid_list').css('background-position', 'left');
                 $(this).css({ 'background-position': 'right' });
+=======
+                $('.over').css( 'background', 'none');
+                $(this).css({ 'background-color': '#dedede' });
+>>>>>>> origin/master
             });
         }
     </script>
@@ -34,6 +39,7 @@
                     <asp:AsyncPostBackTrigger ControlID="drp_count" />
                     <asp:AsyncPostBackTrigger ControlID="txtsearch" />
                     <asp:AsyncPostBackTrigger ControlID="btn_refresh" />
+<<<<<<< HEAD
                     <asp:AsyncPostBackTrigger ControlID="btn_reset" />
                     <asp:AsyncPostBackTrigger ControlID="drp_emp" />
                 </Triggers>
@@ -56,11 +62,31 @@
                             </div>
                         <hr / style="margin-top: 0em;margin-bottom: 0em; ">
                         <div style="overflow-y: auto; min-height: 498px; max-height: 498px; width: 100%; overflow-x: hidden;background-color:rgba(255,255,255, 0.6);">
+=======
+                    
+                </Triggers>
+                <ContentTemplate>
+                    <div class="grid_container">
+                        <asp:TextBox ID="txtsearch" CssClass="srch" ClientIDMode="AutoID" AutoPostBack="true" runat="server" placeholder="Search Employee" OnTextChanged="txtsearch_TextChanged"></asp:TextBox>
+                        <a href="#" class="btn medium bg-green" title="Search" style="/*background-color:#0294A5;*/ border-radius:5px;padding:0px;margin-bottom:5px;" >
+             <span class="button-content">
+                <i class="glyph-icon icon-search font-white"></i>
+            </span>
+        </a>
+                            <asp:LinkButton class="btn medium bg-blue" ID="btn_refresh" ClientIDMode="AutoID" style="border-radius:5px;padding:0px;margin-bottom:5px;" runat="server" OnClick="Refresh"><span class="button-content">
+                <i class="glyph-icon icon-refresh font-white"></i>
+            </span></asp:LinkButton>
+                        <div style="overflow-y: auto; min-height: 498px; max-height: 498px; width: 100%; overflow-x: hidden;background-color:white;">
+>>>>>>> origin/master
                             <asp:Repeater ID="rptEmployee" OnItemCommand="rptEmployee_ItemCommand" runat="server">
                                 <ItemTemplate>
                                     <asp:LinkButton ID="lb_emp_list" ClientIDMode="AutoID" Style="text-decoration: none;" CommandName="Edit" runat="server">
                                         <div class="grid_list over">
+<<<<<<< HEAD
                                             <div class="serial">
+=======
+                                            <div class="serial bg-twitter opacity-60">
+>>>>>>> origin/master
                                                 <%# Eval("RowNumber") %>
                                             </div>
                                             <div class="detail">
@@ -71,14 +97,23 @@
                                                 <asp:HiddenField ID="hdn_Id" Value='<%# Eval("Id") %>' runat="server" />
                                             </div>
                                         </div>
+<<<<<<< HEAD
                                         <hr / style="margin-top: 0em;margin-bottom: 0em; ">
+=======
+                                        <%--<hr />--%>
+>>>>>>> origin/master
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:Repeater>
                         </div>
                         <table style="width: 100%;">
+<<<<<<< HEAD
                             <tr style=" background-color:rgba(255,255,255, 0.6); text-align:center;">
                                 <td colspan="2">
+=======
+                            <tr style="background-color: white;">
+                                <th colspan="2">
+>>>>>>> origin/master
                                     <asp:Label ID="lbl_result" runat="server" Text=""></asp:Label>
                                     <asp:HiddenField ID="hid_rowcount" runat="server" />
                                     <asp:HiddenField ID="hdn_companytax_id" runat="server" />
@@ -91,7 +126,31 @@
                                         <asp:ListItem Value="50">50</asp:ListItem>
                                         <asp:ListItem Value="100">100</asp:ListItem>
                                     </asp:DropDownList><br />
+<<<<<<< HEAD
                                 </td>
+=======
+                                </th>
+                            </tr>
+                            <tr>
+                                <th colspan='2'>
+                                    <div class="button-group" style="margin: 5px 0px 0px 15px;">
+                                        <asp:LinkButton ID="btn_first" ClientIDMode="AutoID" runat="server" CssClass="btn medium bg-twitter radius-top-left-10 radius-bottom-left-10" ForeColor="White" OnClick="btn_first_Click" Font-Bold="False">
+                                <span  class="button-content"><i class="glyph-icon icon-caret-left"></i><i class="glyph-icon icon-caret-left"></i>&nbsp;&nbsp;First</span>
+                                        </asp:LinkButton>
+                                        <asp:LinkButton ID="btn_previous" runat="server" ClientIDMode="AutoID" CssClass="btn medium bg-twitter" ForeColor="White" OnClick="btn_previous_Click" Font-Bold="False">
+                                <span class="button-content"><i class="glyph-icon icon-caret-left"></i>&nbsp;&nbsp;Prev</span>
+                                        </asp:LinkButton>
+                                        <a href="javascript:;" class="btn medium bg-twitter" style="cursor: default;"><span class="glyph-icon icon-separator">
+                                            <asp:Label ID="lbl_pagenum" Font-Size="12px" runat="server" Text="" ForeColor="White"></asp:Label></span></a>
+                                        <asp:LinkButton ID="btn_next" runat="server" ClientIDMode="AutoID" CssClass="btn medium medium bg-twitter" ForeColor="White" OnClick="btn_next_Click" Font-Bold="False">
+                                <span class="button-content">Next&nbsp;&nbsp;<i class="glyph-icon icon-caret-right"></i></span>
+                                        </asp:LinkButton>
+                                        <asp:LinkButton ID="btn_last" runat="server" ClientIDMode="AutoID" CssClass="btn medium bg-twitter radius-top-right-10 radius-bottom-right-10" ForeColor="White" OnClick="btn_last_Click" Font-Bold="False">
+                                <span class="button-content">Last&nbsp;&nbsp;<i class="glyph-icon icon-caret-right"></i><i class="glyph-icon icon-caret-right"></i></span>
+                                        </asp:LinkButton>
+                                    </div>
+                                </th>
+>>>>>>> origin/master
                             </tr>
                             <tr>
                                 <th colspan='2'>
@@ -137,7 +196,11 @@
                                          <tr>
                                              <td >Employer Name</td>
                                              <td colspan="3">
+<<<<<<< HEAD
                                                  <asp:DropDownList ID="drp_employer" CssClass="cmb" style="width:99%;" runat="server">
+=======
+                                                 <asp:DropDownList ID="drp_employer" CssClass="cmb" style="width:95%;" runat="server">
+>>>>>>> origin/master
                                                  </asp:DropDownList>
                                                  <asp:RequiredFieldValidator ControlToValidate="drp_employer" ID="RFV1" ForeColor="Red" ValidationGroup="save" runat="server" Display="None" ErrorMessage="A Employer is required."></asp:RequiredFieldValidator>
                                                  <ajaxToolkit:ValidatorCalloutExtender PopupPosition="BottomLeft" Width="200px" HighlightCssClass="validatorCalloutHighlight" ID="ValidatorCalloutExtender1" TargetControlID="RFV1" runat="server"></ajaxToolkit:ValidatorCalloutExtender>
@@ -157,7 +220,11 @@
 
                                          <tr>
                                               <td>Social Security Number</td><td>
+<<<<<<< HEAD
                                                 <asp:TextBox ID="txt_SSN" class="txt" style="width:95%;" runat="server"></asp:TextBox>
+=======
+                                                <asp:TextBox ID="txt_SSN" class="txt" runat="server"></asp:TextBox>
+>>>>>>> origin/master
                                                 <asp:RegularExpressionValidator ForeColor="Red" ValidationGroup="save" ValidationExpression="^\d{3}-\d{2}-\d{4}$" ID="Regxval1" Display="None" ControlToValidate="txt_SSN" runat="server" ErrorMessage="Invalid SSN."></asp:RegularExpressionValidator>
                                                 <asp:RequiredFieldValidator ControlToValidate="txt_SSN" ID="RFV2" Display="None" ForeColor="Red" ValidationGroup="save" runat="server" ErrorMessage="A SSN is required."></asp:RequiredFieldValidator>
                                                 <ajaxToolkit:ValidatorCalloutExtender Width="200px" PopupPosition="BottomLeft" HighlightCssClass="validatorCalloutHighlight" ID="ValidatorCalloutExtender2" TargetControlID="Regxval1" runat="server"></ajaxToolkit:ValidatorCalloutExtender>
@@ -165,7 +232,11 @@
                                              </td>
                                              <td>Date of Birth</td>
                                              <td>
+<<<<<<< HEAD
                                                  <asp:TextBox ID="txt_dob" class="txt" style="width:95%;" MaxLength="10" AutoComplete="off" placeholder="MM/dd/yyyy" runat="server"></asp:TextBox>
+=======
+                                                 <asp:TextBox ID="txt_dob" class="txt" MaxLength="10" AutoComplete="off" placeholder="MM/dd/yyyy" runat="server"></asp:TextBox>
+>>>>>>> origin/master
                                                  <ajaxToolkit:CalendarExtender ID="CalendarExtender1"  CssClass="black" Enabled="true" Format="MM/dd/yyyy" TargetControlID="txt_dob" runat="server"></ajaxToolkit:CalendarExtender>
                                                  <ajaxToolkit:FilteredTextBoxExtender ID="fte" runat="server" TargetControlID="txt_dob" ValidChars="./" FilterType="Custom,Numbers"></ajaxToolkit:FilteredTextBoxExtender>
                                              </td>
@@ -559,7 +630,11 @@
                                  </div>
 
                                  <div class="employee_info3">
+<<<<<<< HEAD
                                      <table style="width: 100%; height:100%; border:1px solid gray;background-color:rgba(255,255,255, 0.6);" border="1">
+=======
+                                     <table style="width: 100%; height:100%; border:1px solid gray;background-color:white;" border="1">
+>>>>>>> origin/master
                                          <tr style="background:#3A92C8; color:white;height:20px;">
                                             <td>Code Type</td>
                                             <td>All</td>
@@ -581,7 +656,11 @@
                                                  <tr style="height: 25px;border:1px solid gray; font-size: 9pt;">
                                                      <td>Offer of Coverage</td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_1All" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_1All" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>1A</asp:ListItem>
                                                              <asp:ListItem>1B</asp:ListItem>
@@ -595,7 +674,11 @@
                                                          <%--<asp:HiddenField ID="lbl_ALLM_COC" runat="server" Value='<%# Eval("ALLM_COC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_1Jan" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_1Jan" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>1A</asp:ListItem>
                                                              <asp:ListItem>1B</asp:ListItem>
@@ -609,7 +692,11 @@
                                                          <%--<asp:HiddenField ID="lbl_JAN_COC" runat="server" Value='<%# Eval("JAN_COC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_1Feb" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_1Feb" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>1A</asp:ListItem>
                                                              <asp:ListItem>1B</asp:ListItem>
@@ -623,7 +710,11 @@
                                                          <%--<asp:HiddenField ID="lbl_FEB_COC" runat="server" Value='<%# Eval("FEB_COC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_1Mar" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_1Mar" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>1A</asp:ListItem>
                                                              <asp:ListItem>1B</asp:ListItem>
@@ -637,7 +728,11 @@
                                                          <%--<asp:HiddenField ID="lbl_MAR_COC" runat="server" Value='<%# Eval("MAR_COC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_1Apr" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_1Apr" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>1A</asp:ListItem>
                                                              <asp:ListItem>1B</asp:ListItem>
@@ -651,7 +746,11 @@
                                                          <%--<asp:HiddenField ID="lbl_APR_COC" runat="server" Value='<%# Eval("APR_COC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_1May" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_1May" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>1A</asp:ListItem>
                                                              <asp:ListItem>1B</asp:ListItem>
@@ -665,7 +764,11 @@
                                                          <%--<asp:HiddenField ID="lbl_MAY_COC" runat="server" Value='<%# Eval("MAY_COC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_1Jun" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_1Jun" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>1A</asp:ListItem>
                                                              <asp:ListItem>1B</asp:ListItem>
@@ -679,7 +782,11 @@
                                                          <%--<asp:HiddenField ID="lbl_JUN_COC" runat="server" Value='<%# Eval("JUN_COC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_1Jul" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_1Jul" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>1A</asp:ListItem>
                                                              <asp:ListItem>1B</asp:ListItem>
@@ -693,7 +800,11 @@
                                                          <%--<asp:HiddenField ID="lbl_JUL_COC" runat="server" Value='<%# Eval("JUL_COC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_1Aug" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_1Aug" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>1A</asp:ListItem>
                                                              <asp:ListItem>1B</asp:ListItem>
@@ -707,7 +818,11 @@
                                                          <%--<asp:HiddenField ID="lbl_AUG_COC" runat="server" Value='<%# Eval("AUG_COC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_1Sep" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_1Sep" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>1A</asp:ListItem>
                                                              <asp:ListItem>1B</asp:ListItem>
@@ -721,7 +836,11 @@
                                                          <%--<asp:HiddenField ID="lbl_SEP_COC" runat="server" Value='<%# Eval("SEP_COC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_1Oct" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_1Oct" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>1A</asp:ListItem>
                                                              <asp:ListItem>1B</asp:ListItem>
@@ -735,7 +854,11 @@
                                                          <%--<asp:HiddenField ID="lbl_OCT_COC" runat="server" Value='<%# Eval("OCT_COC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_1Nov" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_1Nov" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>1A</asp:ListItem>
                                                              <asp:ListItem>1B</asp:ListItem>
@@ -749,7 +872,11 @@
                                                          <%--<asp:HiddenField ID="lbl_NOV_COC" runat="server" Value='<%# Eval("NOV_COC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_1Dec" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_1Dec" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>1A</asp:ListItem>
                                                              <asp:ListItem>1B</asp:ListItem>
@@ -764,6 +891,7 @@
                                                      </td>
                                                  </tr>
                                                  <tr style="height:25px; border:1px solid gray;font-size:9pt;">
+<<<<<<< HEAD
                                                      <td>Premium Amount</td>
                                                      <td>
                                                          <asp:TextBox ID="lbl_ALLM_LCMP" Width="40px" CssClass="txt" runat="server" Text=""></asp:TextBox>
@@ -815,13 +943,70 @@
                                                      </td>
                                                      <td>
                                                          <asp:TextBox ID="lbl_DEC_LCMP" Width="40px" CssClass="txt" runat="server" Text=""></asp:TextBox>
+=======
+                                                     <td>Premimum Amount</td>
+                                                     <td>
+                                                         <asp:TextBox ID="lbl_ALLM_LCMP" Width="40px" runat="server" Text=""></asp:TextBox>
+                                                         <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender3" runat="server" TargetControlID="lbl_ALLM_LCMP" ValidChars="." FilterType="Custom,Numbers"></ajaxToolkit:FilteredTextBoxExtender>
+                                                     </td>
+                                                     <td>
+                                                         <asp:TextBox ID="lbl_JAN_LCMP" Width="40px" runat="server" Text=""></asp:TextBox>
+                                                         <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender4" runat="server" TargetControlID="lbl_JAN_LCMP" ValidChars="." FilterType="Custom,Numbers"></ajaxToolkit:FilteredTextBoxExtender>
+                                                     </td>
+                                                     <td>
+                                                         <asp:TextBox ID="lbl_FEB_LCMP" Width="40px" runat="server" Text=""></asp:TextBox>
+                                                         <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender5" runat="server" TargetControlID="lbl_FEB_LCMP" ValidChars="." FilterType="Custom,Numbers"></ajaxToolkit:FilteredTextBoxExtender>
+                                                     </td>
+                                                     <td>
+                                                         <asp:TextBox ID="lbl_MAR_LCMP" Width="40px" runat="server" Text=""></asp:TextBox>
+                                                         <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender6" runat="server" TargetControlID="lbl_MAR_LCMP" ValidChars="." FilterType="Custom,Numbers"></ajaxToolkit:FilteredTextBoxExtender>
+                                                     </td>
+                                                     <td>
+                                                         <asp:TextBox ID="lbl_APR_LCMP" Width="40px" runat="server" Text=""></asp:TextBox>
+                                                         <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender7" runat="server" TargetControlID="lbl_APR_LCMP" ValidChars="." FilterType="Custom,Numbers"></ajaxToolkit:FilteredTextBoxExtender>
+                                                     </td>
+                                                     <td>
+                                                         <asp:TextBox ID="lbl_MAY_LCMP" Width="40px" runat="server" Text=""></asp:TextBox>
+                                                         <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender8" runat="server" TargetControlID="lbl_MAY_LCMP" ValidChars="." FilterType="Custom,Numbers"></ajaxToolkit:FilteredTextBoxExtender>
+                                                     </td>
+                                                     <td>
+                                                         <asp:TextBox ID="lbl_JUN_LCMP" Width="40px" runat="server" Text=""></asp:TextBox>
+                                                         <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender9" runat="server" TargetControlID="lbl_JUN_LCMP" ValidChars="." FilterType="Custom,Numbers"></ajaxToolkit:FilteredTextBoxExtender>
+                                                     </td>
+                                                     <td>
+                                                         <asp:TextBox ID="lbl_JUL_LCMP" Width="40px" runat="server" Text=""></asp:TextBox>
+                                                         <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender10" runat="server" TargetControlID="lbl_JUL_LCMP" ValidChars="." FilterType="Custom,Numbers"></ajaxToolkit:FilteredTextBoxExtender>
+                                                     </td>
+                                                     <td>
+                                                         <asp:TextBox ID="lbl_AUG_LCMP" Width="40px" runat="server" Text=""></asp:TextBox>
+                                                         <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender11" runat="server" TargetControlID="lbl_AUG_LCMP" ValidChars="." FilterType="Custom,Numbers"></ajaxToolkit:FilteredTextBoxExtender>
+                                                     </td>
+                                                     <td>
+                                                         <asp:TextBox ID="lbl_SEP_LCMP" Width="40px" runat="server" Text=""></asp:TextBox>
+                                                         <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender12" runat="server" TargetControlID="lbl_SEP_LCMP" ValidChars="." FilterType="Custom,Numbers"></ajaxToolkit:FilteredTextBoxExtender>
+                                                     </td>
+                                                     <td>
+                                                         <asp:TextBox ID="lbl_OCT_LCMP" Width="40px" runat="server" Text=""></asp:TextBox>
+                                                         <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender13" runat="server" TargetControlID="lbl_OCT_LCMP" ValidChars="." FilterType="Custom,Numbers"></ajaxToolkit:FilteredTextBoxExtender>
+                                                     </td>
+                                                     <td>
+                                                         <asp:TextBox ID="lbl_NOV_LCMP" Width="40px" runat="server" Text=""></asp:TextBox>
+                                                         <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender14" runat="server" TargetControlID="lbl_NOV_LCMP" ValidChars="." FilterType="Custom,Numbers"></ajaxToolkit:FilteredTextBoxExtender>
+                                                     </td>
+                                                     <td>
+                                                         <asp:TextBox ID="lbl_DEC_LCMP" Width="40px" runat="server" Text=""></asp:TextBox>
+>>>>>>> origin/master
                                                          <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender15" runat="server" TargetControlID="lbl_DEC_LCMP" ValidChars="." FilterType="Custom,Numbers"></ajaxToolkit:FilteredTextBoxExtender>
                                                      </td>
                                                  </tr>
                                                  <tr style="height:25px; border:1px solid gray;font-size:9pt;">
                                                      <td>Applicable Section 4980</td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_2All" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_2All" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>2A</asp:ListItem>
                                                              <asp:ListItem>2B</asp:ListItem>
@@ -835,7 +1020,11 @@
                                                          <%--<asp:HiddenField ID="lbl_ALLM_SHC" runat="server" Value='<%# Eval("ALLM_SHC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_2Jan" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_2Jan" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>2A</asp:ListItem>
                                                              <asp:ListItem>2B</asp:ListItem>
@@ -849,7 +1038,11 @@
                                                          <%--<asp:HiddenField ID="lbl_JAN_SHC" runat="server" Value='<%# Eval("JAN_SHC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_2Feb" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_2Feb" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>2A</asp:ListItem>
                                                              <asp:ListItem>2B</asp:ListItem>
@@ -863,7 +1056,11 @@
                                                          <%--<asp:HiddenField ID="lbl_FEB_SHC" runat="server" Value='<%# Eval("FEB_SHC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_2Mar" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_2Mar" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>2A</asp:ListItem>
                                                              <asp:ListItem>2B</asp:ListItem>
@@ -877,7 +1074,11 @@
                                                          <%--<asp:HiddenField ID="lbl_MAR_SHC" runat="server" Value='<%# Eval("MAR_SHC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_2Apr" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_2Apr" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>2A</asp:ListItem>
                                                              <asp:ListItem>2B</asp:ListItem>
@@ -891,7 +1092,11 @@
                                                          <%--<asp:HiddenField ID="lbl_APR_SHC" runat="server" Value='<%# Eval("APR_SHC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_2May" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_2May" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>2A</asp:ListItem>
                                                              <asp:ListItem>2B</asp:ListItem>
@@ -905,7 +1110,11 @@
                                                          <%--<asp:HiddenField ID="lbl_MAY_SHC" runat="server" Value='<%# Eval("MAY_SHC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_2Jun" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_2Jun" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>2A</asp:ListItem>
                                                              <asp:ListItem>2B</asp:ListItem>
@@ -919,7 +1128,11 @@
                                                          <%--<asp:HiddenField ID="lbl_JUN_SHC" runat="server" Value='<%# Eval("JUN_SHC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_2Jul" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_2Jul" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>2A</asp:ListItem>
                                                              <asp:ListItem>2B</asp:ListItem>
@@ -933,7 +1146,11 @@
                                                          <%--<asp:HiddenField ID="lbl_JUL_SHC" runat="server" Value='<%# Eval("JUL_SHC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_2Aug" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_2Aug" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>2A</asp:ListItem>
                                                              <asp:ListItem>2B</asp:ListItem>
@@ -947,7 +1164,11 @@
                                                          <%--<asp:HiddenField ID="lbl_AUG_SHC" runat="server" Value='<%# Eval("AUG_SHC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_2Sep" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_2Sep" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>2A</asp:ListItem>
                                                              <asp:ListItem>2B</asp:ListItem>
@@ -961,7 +1182,11 @@
                                                          <%--<asp:HiddenField ID="lbl_SEP_SHC" runat="server" Value='<%# Eval("SEP_SHC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_2Oct" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_2Oct" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>2A</asp:ListItem>
                                                              <asp:ListItem>2B</asp:ListItem>
@@ -975,7 +1200,11 @@
                                                          <%--<asp:HiddenField ID="lbl_OCT_SHC" runat="server" Value='<%# Eval("OCT_SHC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_2Nov" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_2Nov" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>2A</asp:ListItem>
                                                              <asp:ListItem>2B</asp:ListItem>
@@ -989,7 +1218,11 @@
                                                          <%--<asp:HiddenField ID="lbl_NOV_SHC" runat="server" Value='<%# Eval("NOV_SHC") %>'></asp:HiddenField>--%>
                                                      </td>
                                                      <td>
+<<<<<<< HEAD
                                                          <asp:DropDownList ID="drp_2Dec" runat="server" style="width:80%;height:100%;border:none;float:right;background:none;">
+=======
+                                                         <asp:DropDownList ID="drp_2Dec" runat="server" style="width:80%;height:100%;border:none;float:right;">
+>>>>>>> origin/master
                                                              <asp:ListItem Value="">--</asp:ListItem>
                                                              <asp:ListItem>2A</asp:ListItem>
                                                              <asp:ListItem>2B</asp:ListItem>

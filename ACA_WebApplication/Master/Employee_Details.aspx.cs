@@ -59,6 +59,7 @@ namespace ACA_WebApplication.Master
                 DataTable dt = ds.Tables[0];
                 
                 IEnumerable<DataRow> query1 = from all_data in dt.AsEnumerable()
+<<<<<<< HEAD
                                               where (employer!=""?
                                                     ((all_data.Field<string>("firstname").ToLower().StartsWith(search.ToLower()) 
                                                     || all_data.Field<string>("Lastname").ToLower().StartsWith(search.ToLower()) 
@@ -67,6 +68,9 @@ namespace ACA_WebApplication.Master
                                                     (all_data.Field<string>("firstname").ToLower().StartsWith(search.ToLower())
                                                     || all_data.Field<string>("Lastname").ToLower().StartsWith(search.ToLower())
                                                     || all_data.Field<string>("ssn").ToLower().StartsWith(search.ToLower())))
+=======
+                                              where all_data.Field<string>("name").ToLower().StartsWith(search.ToLower()) || all_data.Field<string>("firstname").ToLower().StartsWith(search.ToLower()) || all_data.Field<string>("Lastname").ToLower().StartsWith(search.ToLower()) || all_data.Field<string>("ssn").ToLower().StartsWith(search.ToLower())
+>>>>>>> origin/master
                                               orderby all_data.Field<string>("firstname")
                                               select all_data;
                 if (query1.Any())
@@ -81,6 +85,7 @@ namespace ACA_WebApplication.Master
                     }
 
                     DataTable dt_temp = (from all_data in dt1.AsEnumerable()
+<<<<<<< HEAD
                                          where (employer != "" ?
                                                    ((all_data.Field<string>("firstname").ToLower().StartsWith(search.ToLower())
                                                    || all_data.Field<string>("Lastname").ToLower().StartsWith(search.ToLower())
@@ -89,6 +94,9 @@ namespace ACA_WebApplication.Master
                                                    (all_data.Field<string>("firstname").ToLower().StartsWith(search.ToLower())
                                                    || all_data.Field<string>("Lastname").ToLower().StartsWith(search.ToLower())
                                                    || all_data.Field<string>("ssn").ToLower().StartsWith(search.ToLower())))
+=======
+                                         where all_data.Field<string>("name").ToLower().StartsWith(search.ToLower()) || all_data.Field<string>("firstname").ToLower().StartsWith(search.ToLower()) || all_data.Field<string>("Lastname").ToLower().StartsWith(search.ToLower()) || all_data.Field<string>("ssn").ToLower().StartsWith(search.ToLower())
+>>>>>>> origin/master
                                          orderby all_data.Field<string>("firstname")
                                          select all_data).Skip((pageIndex - 1) * Convert.ToInt32(drp_count.Text)).Take(PageSize).CopyToDataTable<DataRow>();
                     int total_rows = dt1.Rows.Count;
@@ -1022,10 +1030,17 @@ namespace ACA_WebApplication.Master
                                               where all_data.Field<string>("name") == txt_plan.Text.Trim()
                                               select all_data;
                 if (query1.Any())
+<<<<<<< HEAD
                 {
                     dt_Coverage.Rows.Add(hdn_coverageId.Value, (chk_unionMember.Checked == true ? "1" : "0"), txt_contributionStartDate.Text, txt_contributionEndDate.Text,
                     txt_coverageOfferDate.Text, txt_plan.Text, (chk_enrolled.Checked == true ? "1" : "0"), txt_coverageStartDate.Text, txt_coverageEndDate.Text,
                     (chk_cobraEnrolled.Checked == true ? "1" : "0"), txt_cobraStartDate.Text, txt_cobraEndDate.Text);
+=======
+                { 
+                    dt_Coverage.Rows.Add(hdn_coverageId.Value, hdn_unionMember.Value, txt_contributionStartDate.Text, txt_contributionEndDate.Text,
+                    txt_coverageOfferDate.Text, txt_plan.Text, hdn_enrolled.Value, txt_coverageStartDate.Text, txt_coverageEndDate.Text,
+                    hdn_cobraEnrolled.Value, txt_cobraStartDate.Text, txt_cobraEndDate.Text);
+>>>>>>> origin/master
                 }
                 else
                 {

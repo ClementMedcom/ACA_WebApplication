@@ -6,8 +6,13 @@
 .heading{
     margin:5px 0px 5px 0px;
     width:100%;
+<<<<<<< HEAD
     font-size:16px;
     padding:4px 0px 4px 0px;
+=======
+    font-size:15px;
+    padding:2px 0px 2px 0px;
+>>>>>>> origin/master
     color:white;
     text-align:center;
     background-color:#3A92C8;
@@ -18,12 +23,17 @@
     padding:5px;
     display:inline-block;
     width:27%;
+<<<<<<< HEAD
     min-width:305px;
+=======
+    min-width:250px;
+>>>>>>> origin/master
     height:590px;
     
 
 }
 .grid_list{
+<<<<<<< HEAD
     padding:3px;
     margin:3px;
     height:35px;
@@ -37,6 +47,21 @@
 
 .serial{
     background-color:#1a85ad;
+=======
+    border-bottom:1px solid #0294a5;
+    padding:5px;
+    margin:5px;
+    height:33px;
+    color:black; 
+    overflow:hidden;
+    cursor:pointer;
+    /*border-radius:4px;*/
+    /*background-color:white;*/
+}
+
+.serial{
+    /*background-color:#0294a5;*/
+>>>>>>> origin/master
     border-radius:5px;
     display:inline-block;
     float:left;
@@ -44,8 +69,13 @@
     min-width:20px;
     padding:6px 4px 6px 4px ;
     color:white;
+<<<<<<< HEAD
     margin:3px 8px 0px 3px ;
     /*border:1px solid white;*/
+=======
+    margin:2px 10px 0px 0px ;
+    border:1px solid white;
+>>>>>>> origin/master
 }
 .detail{
     padding:2px;
@@ -63,6 +93,7 @@ b{
     width:85%;
     height:30px;
     color:black;
+<<<<<<< HEAD
     display:inline-block;
     border-radius:5px;
     /*margin:5px;*/
@@ -75,6 +106,14 @@ b{
     background:none;
     border:none;
     margin-left:5px;
+=======
+    padding:5px;
+    /*margin:5px;*/
+    border:1px solid #89b3c1;
+}
+.srch:focus{
+    outline:0;
+>>>>>>> origin/master
 }
 
 .btn1{
@@ -84,12 +123,20 @@ b{
     border:none;
     font-size:13px;
     background-color:#3A92C8;
+<<<<<<< HEAD
     border-radius:5px;
+=======
+    border-bottom-left-radius:10px;
+    border-bottom-right-radius:10px;
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
+>>>>>>> origin/master
     color:white;
     -moz-box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
     -webkit-box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
 }
+<<<<<<< HEAD
 
 .btn1:active
 {
@@ -101,6 +148,23 @@ b{
 
 .grid_list:hover {
    box-shadow: 0px 3px 100px  #bac7ca inset;
+=======
+
+grid_list b{
+    transition:margin-left ease-in-out 0.2s;
+    -moz-transition:margin-left ease-in-out 0.2s;
+    -webkit-transition:margin-left ease-in-out 0.2s;
+    -o-transition:margin-left ease-in-out 0.2s;
+    -ms-transition:margin-left ease-in-out 0.2s;
+}
+.grid_list:hover b{
+    margin-left:20px;
+    transition:margin-left ease-in-out 0.2s;
+    -moz-transition:margin-left ease-in-out 0.2s;
+    -webkit-transition:margin-left ease-in-out 0.2s;
+    -o-transition:margin-left ease-in-out 0.2s;
+    -ms-transition:margin-left ease-in-out 0.2s;
+>>>>>>> origin/master
 }
 
 
@@ -139,6 +203,7 @@ div::-webkit-scrollbar-thumb {
 }
 .txt:focus{
     outline: 0;
+<<<<<<< HEAD
     border-bottom: 1px solid #0294a5;
     box-shadow: 0 1px 0 0 #0294a5;
 }
@@ -146,6 +211,13 @@ div::-webkit-scrollbar-thumb {
     outline: 0;
     border-bottom: 1px solid #0294a5;
     box-shadow: 0 1px 0 0 #0294a5;
+=======
+    border-color:#0294a5;
+}
+.txt_short:focus {
+    outline: 0;
+    border-color:#0294a5;
+>>>>>>> origin/master
 }
 .cmb{
     width:160px;
@@ -157,8 +229,13 @@ div::-webkit-scrollbar-thumb {
 }
 .cmb:focus{
     outline: 0;
+<<<<<<< HEAD
     border-bottom: 1px solid #0294a5;
     box-shadow: 0 1px 0 0 #0294a5;
+=======
+    
+    border-color:#0294a5;
+>>>>>>> origin/master
 }
 
 .cmb_short{
@@ -186,6 +263,7 @@ div::-webkit-scrollbar-thumb {
     width: 71%;
     height:610px;
     margin-left:5px;
+<<<<<<< HEAD
 }
 
 .gen_info {
@@ -229,6 +307,51 @@ div::-webkit-scrollbar-thumb {
    /*min-width:140px;*/
 }
 
+=======
+}
+
+.gen_info {
+    width:100%;
+    padding:5px;
+    float:left;
+    display:inline-block;
+    color:black;
+    margin:0 auto;
+}
+.c_details{
+    
+    width:100%;
+    float:left;
+    display:inline-block;
+    padding:5px;
+    color:black;
+    margin:0 auto;
+}
+
+.tbl_emp{
+    margin-left:30px;
+    float:inherit;
+}
+
+.mon_table td{
+    padding:1px 0px 1px 0px;
+    color:black;
+    text-align:center;
+    border:1px solid gray;
+}
+.mon_table thead td{
+    background-color:#3A92C8;
+    color:white;
+}
+.chk_move{
+    margin:0px 0px 0px 100px;
+}
+.gen_info td{
+   height:20px;
+   /*min-width:140px;*/
+}
+
+>>>>>>> origin/master
 /*Employer form end*/
 
 /*plan form styles*/
@@ -243,22 +366,38 @@ div::-webkit-scrollbar-thumb {
     width:100%;
     height:200px;
     padding:10px 0px 10px 0px;
+<<<<<<< HEAD
     background-color:rgba(255,255,255, 0.6);
+=======
+    background-color:white;
+>>>>>>> origin/master
 }
 .plan_detail{
     margin:10px 0px 0px 0px;
     width:100%;
     height:100px;
+<<<<<<< HEAD
     background-color:rgba(255,255,255, 0.6);
+=======
+    background-color:white;
+>>>>>>> origin/master
 }
 .plan_table{
      width:100%;
      padding-top:10px;
+<<<<<<< HEAD
      height:177px;
      margin:10px 0px 0px 0px;
      border:1px solid gray;
      overflow-y:auto;
      background-color:rgba(255,255,255, 0.6);
+=======
+     height:180px;
+     margin:10px 0px 0px 0px;
+     border:1px solid gray;
+     overflow-y:auto;
+     background-color:white;
+>>>>>>> origin/master
 }
 
 
@@ -302,7 +441,11 @@ div::-webkit-scrollbar-thumb {
     padding:1px 0px 10px 0px;
     display:inline-block;
     height:100px;
+<<<<<<< HEAD
     background-color:rgba(255,255,255, 0.6);
+=======
+    background-color:white;
+>>>>>>> origin/master
 }
 
 .employee_info2
@@ -317,7 +460,11 @@ div::-webkit-scrollbar-thumb {
     float:left;
     margin:10px 0px 0px 0px;
     display:inline-block;
+<<<<<<< HEAD
     height:168px;
+=======
+    height:170px;
+>>>>>>> origin/master
     text-align:center;
 }
 .employee_info4 {

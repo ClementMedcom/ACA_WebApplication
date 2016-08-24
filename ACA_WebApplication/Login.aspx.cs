@@ -34,12 +34,20 @@ namespace ACA_WebApplication
             string[] splitval = param.Split(',');
             string username = splitval[0].ToString();
             string password = splitval[1].ToString();
+<<<<<<< HEAD
             string Rememberchk= splitval[2].ToString();
             Login log = new Login();
             int loginChk = log.btn_login_Click(username, password, Rememberchk);
             return loginChk;
         }
         public int btn_login_Click(string username, string password, string Rememberchk)
+=======
+            Login log = new Login();
+            int loginChk = log.btn_login_Click(username, password);
+            return loginChk;
+        }
+        public int btn_login_Click(string username, string password)
+>>>>>>> origin/master
         {
             //lb_status.Text = string.Empty;
             DataTable dtUser = new DataTable();
@@ -54,6 +62,7 @@ namespace ACA_WebApplication
                         HttpContext.Current.Session["UserID"] = dtUser.Rows[0]["id"].ToString();
                         HttpContext.Current.Session["UserName"] = dtUser.Rows[0]["username"].ToString();
                         HttpContext.Current.Session["name"] = dtUser.Rows[0]["name"].ToString();
+<<<<<<< HEAD
                         if (Rememberchk == "true")
                         {
                             HttpContext.Current.Response.Cookies["UserName"].Value = username;
@@ -72,6 +81,10 @@ namespace ACA_WebApplication
                         
                         //Response.Redirect("~/Master/Company_List.aspx");
                         ack = 1;
+=======
+                        //Response.Redirect("~/Master/Company_List.aspx");
+                        ack= 1;
+>>>>>>> origin/master
                     }
                     else
                     {

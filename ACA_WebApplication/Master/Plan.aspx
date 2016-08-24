@@ -4,8 +4,13 @@
     <script type="text/javascript">
          function page_load() {
              $('.grid_list').on('click', function () {
+<<<<<<< HEAD
                  $('.grid_list').css('background-position', 'left');
                  $(this).css({ 'background-position': 'right' });
+=======
+                 $('.over').css('background-color', 'white');
+                 $(this).css({ 'background-color': '#dedede'});
+>>>>>>> origin/master
              });
          }
     </script>
@@ -35,6 +40,7 @@
           </Triggers>
           <ContentTemplate>
               <div class="grid_container">
+<<<<<<< HEAD
                  <div class="srch">
                         <asp:TextBox ID="txtsearch" cssclass="srchbox" Width="81%" ClientIDMode="AutoID" AutoPostBack="true" runat="server" placeholder="Search Employee" OnTextChanged="txtsearch_TextChanged"></asp:TextBox>
                         <a href="#" class="btn medium bg-green" title="Search" style="float:right;height:100%;">
@@ -48,16 +54,37 @@
             </span></asp:LinkButton>
                   <hr / style="margin-top: 0em;margin-bottom: 0em; ">
                   <div style="overflow-y: auto; min-height: 498px; max-height: 498px; width: 100%; overflow-x: hidden;background-color:rgba(255,255,255, 0.6);">
+=======
+                   <asp:TextBox ID="txtsearch" CssClass="srch" AutoPostBack="true" ClientIDMode="AutoID" runat="server" placeholder="Search Plan" OnTextChanged="txtsearch_TextChanged"></asp:TextBox>
+                   <a href="#" class="btn medium bg-green" title="Search" style="/*background-color:#0294A5;*/ border-radius:5px;padding:0px;margin-bottom:5px;" >
+             <span class="button-content">
+                <i class="glyph-icon icon-search font-white"></i>
+            </span>
+        </a>
+                            <asp:LinkButton class="btn medium bg-blue" ID="btn_refresh" ClientIDMode="AutoID" style="border-radius:5px;padding:0px;margin-bottom:5px;" runat="server" OnClick="Refresh"><span class="button-content">
+                <i class="glyph-icon icon-refresh font-white"></i>
+            </span></asp:LinkButton>
+
+                  <div style="overflow-y: auto; min-height: 498px; max-height: 498px; width: 100%; overflow-x: hidden;background-color:white;">
+>>>>>>> origin/master
                      
                       <asp:Repeater ID="rptPlan" OnItemCommand="rptPlan_ItemCommand" runat="server">
                           <ItemTemplate>
                               <asp:LinkButton ID="lb_plan_list" ClientIDMode="AutoID" Style="text-decoration: none;" CommandName="select" runat="server">
                                   <div class="grid_list over">
+<<<<<<< HEAD
                                       <div class="serial">
                                           <%# Eval("RowNumber") %>
                                       </div>
                                       <div class="detail" style="margin-top:8px;">
                                           <b><%# Eval("name") %> 
+=======
+                                      <div class="serial bg-twitter opacity-60">
+                                          <%# Eval("RowNumber") %>
+                                      </div>
+                                      <div class="detail">
+                                          <b><%# Eval("name") %> <br />
+>>>>>>> origin/master
                                           </b>
 
                                       </div>
@@ -65,14 +92,24 @@
                                       <asp:HiddenField ID="hdn_Plan_Id" Value='<%# Eval("id") %>' runat="server" />
                                       <asp:HiddenField ID="hdn_CompanyTax_Id" Value='<%# Eval("employerId") %>' runat="server" />
                                   </div>
+<<<<<<< HEAD
                                   <hr / style="margin-top: 0em;margin-bottom: 0em; ">
+=======
+                                  <%--<hr />--%>
+>>>>>>> origin/master
                               </asp:LinkButton>
                           </ItemTemplate>
                       </asp:Repeater>
                   </div>
+<<<<<<< HEAD
                   <table style="width: 100%;text-align:center;">
                             <tr style="background-color: rgba(255,255,255, 0.6);">
                                 <td colspan="2">
+=======
+                  <table style="width: 100%;">
+                            <tr style="background-color: white;">
+                                <th colspan="2">
+>>>>>>> origin/master
                                     <asp:Label ID="lbl_result" runat="server" Text=""></asp:Label>
                                     <asp:HiddenField ID="hid_rowcount" runat="server" />
                                     <asp:HiddenField ID="hdn_companytax_id" runat="server" />
@@ -85,11 +122,19 @@
                                         <asp:ListItem Value="50">50</asp:ListItem>
                                         <asp:ListItem Value="100">100</asp:ListItem>
                                     </asp:DropDownList><br />
+<<<<<<< HEAD
                                 </td>
                             </tr>
                             <tr>
                                 <th colspan='2'>
                                     <div class="button-group" style="margin: 5px 0px 0px 0px;">
+=======
+                                </th>
+                            </tr>
+                            <tr>
+                                <th colspan='2'>
+                                    <div class="button-group" style="margin: 5px 0px 0px 15px;">
+>>>>>>> origin/master
                                         <asp:LinkButton ID="btn_first" ClientIDMode="AutoID" runat="server" CssClass="btn medium bg-twitter radius-top-left-10 radius-bottom-left-10" ForeColor="White" OnClick="btn_first_Click" Font-Bold="False">
                                 <span  class="button-content"><i class="glyph-icon icon-caret-left"></i><i class="glyph-icon icon-caret-left"></i>&nbsp;&nbsp;First</span>
                                         </asp:LinkButton>

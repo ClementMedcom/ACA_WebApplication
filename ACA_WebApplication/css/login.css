@@ -8,8 +8,12 @@ body {
   margin: 0;
   font-family: 'Work Sans', Arial, Helvetica, sans-serif;
   min-height: 100%;
+<<<<<<< HEAD
   /*background:url(../img/loginbg.jpg) no-repeat;*/
   background-color: #00bcd4 !important;
+=======
+  background:url(../img/loginbg.jpg) no-repeat;
+>>>>>>> origin/master
   background-size:100%;
 }
 
@@ -19,14 +23,23 @@ body {
     z-index:1;
   position: absolute;
   padding:8px;
+<<<<<<< HEAD
   width: 450px;
   height:350px;
+=======
+  width: 24em;
+  height:300px;
+>>>>>>> origin/master
   left: 50%;
   top: 50%;
   border:1px solid gray;
   display:block;
+<<<<<<< HEAD
   background:#fff;
   /*background: rgba(0, 0, 0, 0.6);*/
+=======
+  background: rgba(0, 0, 0, 0.6);
+>>>>>>> origin/master
   text-align:center;
   transform: translate(-50%,-50%);
   -moz-transform: translate(-50%,-50%);
@@ -54,7 +67,11 @@ body {
 .txtcontainer{
     width:100%;
     display:inline-block;
+<<<<<<< HEAD
     /*background: rgba(0, 0, 0, 0.6);*/
+=======
+    background: rgba(0, 0, 0, 0.6);
+>>>>>>> origin/master
 }
 
 /*input box*/
@@ -62,21 +79,34 @@ body {
     width:80%;
     height:30px;
     border:none;
+<<<<<<< HEAD
     /*color:white;*/
     padding:5px;
     margin-top:15px;
     background:none;
     border-bottom:1px solid gray; 
     font-weight:bold;  
+=======
+    color:white;
+    padding:5px;
+    margin-top:15px;
+    background:none;
+    border-bottom:1px solid gray;   
+>>>>>>> origin/master
   }
 
 .txt:focus {
   outline: 0;
+<<<<<<< HEAD
   /*border-color: #0294A5;
   enable-background:initial;*/
   color:rgba(255, 0, 0, 0.6);
   border-bottom: 1px solid #0294a5;
     box-shadow: 0 1px 0 0 #0294a5;
+=======
+  border-color: #0294A5;
+  enable-background:initial;
+>>>>>>> origin/master
 }
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px white inset;
@@ -87,8 +117,13 @@ input:-webkit-autofill {
   border: 0;
   padding: 10px;
   color: white;
+<<<<<<< HEAD
   width:300px;
   background: rgba(255, 0, 0, 0.6);
+=======
+  width:120px;
+  background: rgba(0, 0, 0, 0.6);
+>>>>>>> origin/master
   border-radius: .25rem;
   letter-spacing: .2em;
   border-top-left-radius:5px;
@@ -109,7 +144,11 @@ input:-webkit-autofill {
     cursor:pointer;
 }
 .loginfrm{
+<<<<<<< HEAD
      /*z-index:1;
+=======
+     z-index:1;
+>>>>>>> origin/master
     height:12em;
     position: absolute;
     padding:8px;
@@ -120,11 +159,15 @@ input:-webkit-autofill {
     background:none;
     text-align:center;
     color:#0294A5;
+<<<<<<< HEAD
     border-radius: .25rem;*/
      position: absolute;
      color:#0294A5;
      width:100%;
      font-size:12px;
+=======
+    border-radius: .25rem;
+>>>>>>> origin/master
 }
 .forget_form{
     z-index:1;
@@ -151,6 +194,7 @@ input:-webkit-autofill {
 
 /*compatibility codes*/
 ::-webkit-input-placeholder {
+<<<<<<< HEAD
    color: 	#c3c0c0;
 }
 
@@ -164,7 +208,27 @@ input:-webkit-autofill {
 
 :-ms-input-placeholder {  
    color: 	#c3c0c0;  
+=======
+   color: 	#757575;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: 	#757575;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: 	#757575;  
+}
+
+:-ms-input-placeholder {  
+   color: 	#757575;  
+>>>>>>> origin/master
 }
 
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> origin/master

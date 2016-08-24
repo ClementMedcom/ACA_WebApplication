@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <title>Medcom Login</title>
     <link rel="stylesheet" href="css/login.css">
+<<<<<<< HEAD
 
 
     <!-- Medcom Admin CSS Core -->
@@ -17,6 +18,12 @@
     <script type="text/javascript">
         function chk_login() {
             var param = $('#txt_uname').val() + ',' + $('#txt_pwd').val() + ',' + $("#chkRememberMe").is(':checked');
+=======
+    <script type="text/javascript" src="js/jquery.min.js.js"></script>
+    <script type="text/javascript">
+        function chk_login() {
+            var param = $('#txt_uname').val() + ',' + $('#txt_pwd').val();
+>>>>>>> origin/master
             $('#lb_status').hide();
             $('#btn_login').hide();
             $('#log_load').show();
@@ -27,14 +34,22 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: OnSuccess,
+<<<<<<< HEAD
                 failure: function (response) {
+=======
+                failure: function(response) {
+>>>>>>> origin/master
                     alert(response.d);
                 }
             });
             return false;
         }
         function OnSuccess(response) {
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> origin/master
             if (response.d == "1") {
                 window.location = "../Master/Company_List.aspx";
             } else {
@@ -44,6 +59,7 @@
                 $('#log_load').hide();
                 $("#lb_status").text("Invalid Username and Password");
             }
+<<<<<<< HEAD
 
         }
     </script>
@@ -112,11 +128,55 @@
                 <br />
                 <input type="button" onclick="" class="btn" value="Submit" name="btn_submit" />
                 <input type="button" id="btn_close" class="btn" value="Close" name="btn_submit" />
+=======
+            
+        }
+    </script>
+</head>
+<body>    
+    
+        <div class="container">
+            <div class="logo">
+                <img src="assets/images/logo.png" width="250" height="80" />
+            </div>
+            <form id="login" runat="server">
+                
+            <div class="loginfrm" id="loginfrm">
+                
+                
+                    <span class="bar"></span>
+                
+            
+                <asp:TextBox ID="txt_uname" ValidationGroup="login" AutoComplete="off" class="txt" placeholder="User Name"  runat="server"></asp:TextBox>
+                <asp:TextBox ID="txt_pwd" TextMode="Password" ValidationGroup="login" class="txt" placeholder="Password" runat="server"></asp:TextBox>
+                <br />
+                <asp:Label ID="lb_status" CssClass="status" style="margin: 0px 30px;font-size: 10pt;" runat="server" ForeColor="Red"></asp:Label>
+                <br />
+               <%-- <asp:Button ID="btn_login" CssClass="btn" ValidationGroup="login" runat="server" Text="Login" OnClick="btn_login_Click" />--%>
+                 
+                <img src="img/log_load.gif" style="display:none;" id="log_load" />
+                <%--<input type="button" onclick="return chk_login()" class="btn" value="Login" id="btn_login" name="btn_login" />--%>
+                <asp:Button ID="btn_login" CssClass="btn"  runat="server" Text="Login" OnClientClick="return chk_login()" />
+                <br />
+                <div class="forget" id="fget">Forget Password</div> 
+               
+            </div>
+          </form>
+        
+    <div class="forget_form" id="forget_form">
+        <form> 
+        Need your email to recover password<br />
+        <input type="text" class="txt" placeholder="Email id" name="txt_mailid" /><br /><br />
+        <input type="button" onclick="" class="btn" value="Submit" name="btn_submit" />
+        <input type="button" id="btn_close" class="btn" value="Close" name="btn_submit" />
+>>>>>>> origin/master
             </form>
         </div>--%>
     </div>
+            </div>
 </body>
 </html>
+<<<<<<< HEAD
 <script>
     $("#fget").click(function () {
         $("#forget_form").css("left", "100%");
@@ -132,4 +192,21 @@
         $("#forget_form").css("transition", "left .6s");
         $("#loginfrm").css("transition", "left .6s");
     });
+=======
+ <script>
+        $("#fget").click(function () {
+            $("#forget_form").css("left", "100%");
+            $("#loginfrm").css("left", "100%");
+
+            $("#forget_form").css("transition", "left .6s");
+            $("#loginfrm").css("transition", "left .6s");
+        });
+
+        $("#btn_close").click(function () {
+            $("#forget_form").css("left", "-100%");
+            $("#loginfrm").css("left", "0%");
+            $("#forget_form").css("transition", "left .6s");
+            $("#loginfrm").css("transition", "left .6s");
+        });
+>>>>>>> origin/master
 </script>
