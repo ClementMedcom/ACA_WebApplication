@@ -40,16 +40,18 @@
                 <ContentTemplate>
                     <div class="grid_container">
 
-                        <asp:TextBox ID="txtsearch" CssClass="srch" AutoPostBack="true" ClientIDMode="AutoID" runat="server" placeholder="Search Employer" OnTextChanged="txtsearch_TextChanged"></asp:TextBox>
-                        <a href="#" class="btn medium bg-green" title="Search" style="/*background-color: #0294A5; */ border-radius: 5px; padding: 0px; margin-bottom: 5px;">
+                        <div class="srch">
+                        <asp:TextBox ID="txtsearch" cssclass="srchbox" Width="81%" ClientIDMode="AutoID" AutoPostBack="true" runat="server" placeholder="Search Employee" OnTextChanged="txtsearch_TextChanged"></asp:TextBox>
+                        <a href="#" class="btn medium bg-green" title="Search" style="float:right;height:100%;">
                             <span class="button-content">
                                 <i class="glyph-icon icon-search font-white"></i>
                             </span>
                         </a>
-                        <asp:LinkButton class="btn medium bg-blue" ID="btn_refresh" ClientIDMode="AutoID" Style="border-radius: 5px; padding: 0px; margin-bottom: 5px;" runat="server" OnClick="Refresh"><span class="button-content">
+                        </div>
+                        <asp:LinkButton class="btn medium bg-blue" ID="btn_refresh" ClientIDMode="AutoID" Style="border-radius: 5px;  height:32px; padding: 0px; margin-bottom: 3px;" runat="server" OnClick="Refresh"><span class="button-content">
                 <i class="glyph-icon icon-refresh font-white"></i>
             </span></asp:LinkButton>
-
+                        <hr / style="margin-top: 0em;margin-bottom: 0em; ">
                         <div style="overflow-y: auto; min-height: 498px; max-height: 498px; width: 100%; overflow-x: hidden; background-color: rgba(255,255,255, 0.6);">
 
                             <asp:Repeater ID="rptEmployer" OnItemCommand="rptEmployer_ItemCommand" OnItemDataBound="rptEmployer_OnItemDataBound" runat="server">
@@ -72,7 +74,7 @@
                             </asp:Repeater>
                         </div>
                         <table style="width: 100%;text-align:center;">
-                            <tr style="background-color: white;">
+                            <tr style="background-color: rgba(255,255,255, 0.6);">
                                 <td colspan="2">
                                     <asp:Label ID="lbl_result" runat="server" Text=""></asp:Label>
                                     <asp:HiddenField ID="hid_rowcount" runat="server" />
@@ -126,8 +128,8 @@
                         <div class="heading">Employer Details</div>
                         <ajaxToolkit:TabContainer CssClass="fancy fancy-green" ID="TabContainer1" runat="server">
                             <ajaxToolkit:TabPanel ID="generalinfotab" TabIndex="0" runat="server" Style="height:467px;">
-                                <HeaderTemplate>
-                                    General Information
+                                <HeaderTemplate >
+                                   General Information
                                 </HeaderTemplate>
                                 <ContentTemplate>
                                     <asp:Panel ID="generalinfopanel" runat="server">
@@ -233,23 +235,24 @@
                                 <ContentTemplate>
                                     <asp:Panel ID="cdetailspanel" runat="server">
                                         <div class="c_details">
-                                            <table style="width:90%;height:100%;margin:0 auto;"> 
-                                                 <tr>
-                                                    <td>Form Type</td>
+                                            <table style="width:90% ;margin:0 auto;"> 
+                                                 <tr >
+                                                    <td style="width:80px;">Form Type</td>
                                                     <td>
-                                                        <asp:DropDownList ID="drp_formtype" CssClass="cmb" Style="width:90%;" runat="server">
+                                                        <asp:DropDownList ID="drp_formtype" CssClass="cmb" Style="width:95%;" runat="server">
                                                             <asp:ListItem>--Select--</asp:ListItem>
                                                         </asp:DropDownList>
                                                     </td>
-                                                    <td>Origin Code</td>
+                                                    <td style="width:80px;">Origin Code</td>
                                                     <td>
-                                                        <asp:DropDownList ID="drp_origincode" CssClass="cmb" Style="width:90%;" runat="server">
+                                                        <asp:DropDownList ID="drp_origincode" CssClass="cmb" Style="width:99%;" runat="server">
                                                             <asp:ListItem>--Select--</asp:ListItem>
                                                         </asp:DropDownList>
                                                     </td>
                                                 
-                                                    
-                                                    
+                                                </tr>
+                                                <tr style="height:10px;">
+                                                    <td colspan="4"></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="4">Certification of Eligibility</td>
@@ -266,6 +269,10 @@
                                                         <asp:CheckBox CssClass="chk_move" ID="Section4980H" Text="  C.Section 4980H Transition Relief" runat="server" /></td>
                                                     <td colspan="2">
                                                         <asp:CheckBox CssClass="chk_move" ID="OfferMethod98" Text="  D.98% Offer Method" runat="server" /></td>
+                                                </tr>
+                                                
+                                                <tr style="height:10px;">
+                                                    <td colspan="4"></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="4">ALE Information</td>
@@ -323,6 +330,9 @@
                                                         </table>
                                                         </td>
                                                         </tr>
+                                                <tr style="height:10px;">
+                                                    <td colspan="4"></td>
+                                                </tr>
                                                 <tr>
                                                         <td colspan="4">
                                                                     <asp:CheckBox ID="chk_disable"  Text=" Disable Automatic Changes" runat="server" />

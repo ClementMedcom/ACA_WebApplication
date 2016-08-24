@@ -31,6 +31,15 @@ namespace ACA_WebApplication.Master {
         protected global::System.Web.UI.UpdatePanel UpdatePanel2;
         
         /// <summary>
+        /// drp_emp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList drp_emp;
+        
+        /// <summary>
         /// txtsearch control.
         /// </summary>
         /// <remarks>

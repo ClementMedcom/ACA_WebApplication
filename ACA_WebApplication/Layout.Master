@@ -49,7 +49,18 @@
             }
         }
     </script>
-       
+       <script>
+        // Show website in fullscreen
+        function launchFullScreen(element) {
+            if (element.requestFullScreen) {
+                element.requestFullScreen();
+            } else if (element.mozRequestFullScreen) {
+                element.mozRequestFullScreen();
+            } else if (element.webkitRequestFullScreen) {
+                element.webkitRequestFullScreen();
+            }
+        }
+</script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
@@ -118,7 +129,12 @@
                         </li>
                     </ul>
                 </div>
-
+                <div class="dropdown dash-menu">
+                    <a href="javascript:;" onclick="launchFullScreen(document.documentElement);" data-toggle="dropdown" data-placement="left" class="medium btn float-right popover-button-header hidden-mobile tooltip-button" title="" data-original-title="Full Screen">
+                        <%--<i class="glyph-icon icon-fullscreen font-white"></i>--%>
+                         <img src="../icons/Fullscreen.png" alt="" style="height:20px;width:22px;vertical-align:middle;" />
+                    </a>
+                </div>
                 <%--<div class="dropdown dash-menu">
                     <div class="top-icon-bar">
                         <div class="dropdown">

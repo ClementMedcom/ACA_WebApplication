@@ -27,7 +27,7 @@ namespace ACA_WebApplication.Master
                 if (Session["Tax_Id"] != null)
                 {
                     hdn_companytax_id.Value = Session["Tax_Id"].ToString();
-                    list_Employee(hdn_companytax_id.Value, 1, "", 10);
+                    list_Employee(hdn_companytax_id.Value, 1, "", 10,"");
                     ClearEmployeeForm();
                     load_Employer();
                     load_dropdown();
@@ -44,8 +44,14 @@ namespace ACA_WebApplication.Master
             drp_employer.DataBind();
             drp_employer.Items.Insert(0, new ListItem("--Select--", ""));
 
+            drp_emp.DataSource = dt;
+            drp_emp.DataValueField = "name";
+            drp_emp.DataTextField = "name";
+            drp_emp.DataBind();
+            drp_emp.Items.Insert(0, new ListItem("ALL", ""));
+
         }
-        public void list_Employee(string companyTaxId, int pageIndex, string search, int PageSize)
+        public void list_Employee(string companyTaxId, int pageIndex, string search, int PageSize,string employer)
         {
             try
             {
@@ -53,7 +59,14 @@ namespace ACA_WebApplication.Master
                 DataTable dt = ds.Tables[0];
                 
                 IEnumerable<DataRow> query1 = from all_data in dt.AsEnumerable()
-                                              where all_data.Field<string>("name").ToLower().StartsWith(search.ToLower()) || all_data.Field<string>("firstname").ToLower().StartsWith(search.ToLower()) || all_data.Field<string>("Lastname").ToLower().StartsWith(search.ToLower()) || all_data.Field<string>("ssn").ToLower().StartsWith(search.ToLower())
+                                              where (employer!=""?
+                                                    ((all_data.Field<string>("firstname").ToLower().StartsWith(search.ToLower()) 
+                                                    || all_data.Field<string>("Lastname").ToLower().StartsWith(search.ToLower()) 
+                                                    || all_data.Field<string>("ssn").ToLower().StartsWith(search.ToLower()))
+                                                    && all_data.Field<string>("name") == employer) :
+                                                    (all_data.Field<string>("firstname").ToLower().StartsWith(search.ToLower())
+                                                    || all_data.Field<string>("Lastname").ToLower().StartsWith(search.ToLower())
+                                                    || all_data.Field<string>("ssn").ToLower().StartsWith(search.ToLower())))
                                               orderby all_data.Field<string>("firstname")
                                               select all_data;
                 if (query1.Any())
@@ -68,7 +81,14 @@ namespace ACA_WebApplication.Master
                     }
 
                     DataTable dt_temp = (from all_data in dt1.AsEnumerable()
-                                         where all_data.Field<string>("name").ToLower().StartsWith(search.ToLower()) || all_data.Field<string>("firstname").ToLower().StartsWith(search.ToLower()) || all_data.Field<string>("Lastname").ToLower().StartsWith(search.ToLower()) || all_data.Field<string>("ssn").ToLower().StartsWith(search.ToLower())
+                                         where (employer != "" ?
+                                                   ((all_data.Field<string>("firstname").ToLower().StartsWith(search.ToLower())
+                                                   || all_data.Field<string>("Lastname").ToLower().StartsWith(search.ToLower())
+                                                   || all_data.Field<string>("ssn").ToLower().StartsWith(search.ToLower()))
+                                                   && all_data.Field<string>("name") == employer) :
+                                                   (all_data.Field<string>("firstname").ToLower().StartsWith(search.ToLower())
+                                                   || all_data.Field<string>("Lastname").ToLower().StartsWith(search.ToLower())
+                                                   || all_data.Field<string>("ssn").ToLower().StartsWith(search.ToLower())))
                                          orderby all_data.Field<string>("firstname")
                                          select all_data).Skip((pageIndex - 1) * Convert.ToInt32(drp_count.Text)).Take(PageSize).CopyToDataTable<DataRow>();
                     int total_rows = dt1.Rows.Count;
@@ -332,7 +352,7 @@ namespace ACA_WebApplication.Master
                     lbl_msg.Text = "Employee Updated Successfully";
                 lightDiv.Visible = true;
                 fadeDiv.Visible = true;
-                list_Employee(hdn_companytax_id.Value, 1, "", 10);
+                list_Employee(hdn_companytax_id.Value, 1, "", 10,"");
                 ClearEmployeeForm();
             }
         }
@@ -618,15 +638,25 @@ namespace ACA_WebApplication.Master
         protected void btn_delete_Click(object sender, EventArgs e)
         {
         }
+
+        #region Search
+
+        protected void drp_emp_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            list_Employee(hdn_companytax_id.Value, 1, txtsearch.Text, Convert.ToInt32(drp_count.Text),drp_emp.Text);
+        }
+
         protected void txtsearch_TextChanged(object sender, EventArgs e)
         {
-            list_Employee(hdn_companytax_id.Value, Convert.ToInt32(lbl_pagenum.Text), txtsearch.Text, Convert.ToInt32(drp_count.Text));
+            list_Employee(hdn_companytax_id.Value,1, txtsearch.Text, Convert.ToInt32(drp_count.Text), drp_emp.Text);
         }
+
+        #endregion
 
         #region Navigation
         protected void drp_count_SelectedIndexChanged(object sender, EventArgs e)
         {
-            list_Employee(hdn_companytax_id.Value, 1, txtsearch.Text, Convert.ToInt32(drp_count.Text));
+            list_Employee(hdn_companytax_id.Value, 1, txtsearch.Text, Convert.ToInt32(drp_count.Text), drp_emp.Text);
         }
 
         protected void btn_next_Click(object sender, EventArgs e)
@@ -635,25 +665,25 @@ namespace ACA_WebApplication.Master
             int pageCount = (int)Math.Ceiling(dblPageCount);
             int next_page = Convert.ToInt32(lbl_pagenum.Text) + 1;
             if (pageCount >= next_page)
-                list_Employee(hdn_companytax_id.Value, Convert.ToInt32(lbl_pagenum.Text) + 1, txtsearch.Text, Convert.ToInt32(drp_count.Text));
+                list_Employee(hdn_companytax_id.Value, Convert.ToInt32(lbl_pagenum.Text) + 1, txtsearch.Text, Convert.ToInt32(drp_count.Text), drp_emp.Text);
         }
 
         protected void btn_previous_Click(object sender, EventArgs e)
         {
             int prev_page = Convert.ToInt32(lbl_pagenum.Text) - 1;
             if (prev_page != 0)
-                list_Employee(hdn_companytax_id.Value, Convert.ToInt32(lbl_pagenum.Text) - 1, txtsearch.Text, Convert.ToInt32(drp_count.Text));
+                list_Employee(hdn_companytax_id.Value, Convert.ToInt32(lbl_pagenum.Text) - 1, txtsearch.Text, Convert.ToInt32(drp_count.Text), drp_emp.Text);
         }
         protected void btn_first_Click(object sender, EventArgs e)
         {
-            list_Employee(hdn_companytax_id.Value, 1, txtsearch.Text, Convert.ToInt32(drp_count.Text));
+            list_Employee(hdn_companytax_id.Value, 1, txtsearch.Text, Convert.ToInt32(drp_count.Text), drp_emp.Text);
         }
 
         protected void btn_last_Click(object sender, EventArgs e)
         {
             double dblPageCount = (double)((decimal)Convert.ToInt32(hid_rowcount.Value) / Convert.ToDecimal(drp_count.Text));
             int pageCount = (int)Math.Ceiling(dblPageCount);
-            list_Employee(hdn_companytax_id.Value, pageCount, txtsearch.Text, Convert.ToInt32(drp_count.Text));
+            list_Employee(hdn_companytax_id.Value, pageCount, txtsearch.Text, Convert.ToInt32(drp_count.Text), drp_emp.Text);
         }
         #endregion
 
@@ -1301,8 +1331,9 @@ namespace ACA_WebApplication.Master
 
         protected void Refresh(object sender, EventArgs e)
         {
-            list_Employee(hdn_companytax_id.Value, 1, "", 10);
+            list_Employee(hdn_companytax_id.Value, 1, "", 10,"");
             txtsearch.Text = "";
+            drp_emp.Text = "";
             txtsearch.Focus();
         }
         protected void lbl_close_Click(object sender, EventArgs e)
@@ -1311,5 +1342,6 @@ namespace ACA_WebApplication.Master
             fadeDiv.Visible = false;
         }
 
+        
     }
 }

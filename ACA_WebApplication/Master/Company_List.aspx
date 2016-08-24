@@ -31,13 +31,15 @@
                <table style="width:99%;">
                     <tr>
                         <td style="width:50%;float:left;">
-                            <asp:TextBox ID="txtsearch" CssClass="srch"  ClientIDMode="AutoID" AutoPostBack="true" runat="server" placeholder="Search"  OnTextChanged="txtsearch_TextChanged" Width="50%" Height="100%"></asp:TextBox>
-                           <a href="#" class="btn medium bg-green" title="Search" style="/*background-color:#0294A5;*/ border-radius:5px;padding:0px;margin-bottom:1px;" >
-             <span class="button-content">
-                <i class="glyph-icon icon-search font-white"></i>
-            </span>
-        </a>
-                            <asp:LinkButton class="btn medium bg-blue" ID="btn_refresh" ClientIDMode="AutoID" style="border-radius:5px;padding:0px;margin-bottom:1px;" runat="server" OnClick="Refresh"><span class="button-content">
+                       <div class="srch" style="margin-top:5px;">
+                        <asp:TextBox ID="txtsearch" cssclass="srchbox" Width="90%" ClientIDMode="AutoID" AutoPostBack="true" runat="server" placeholder="Search Employee" OnTextChanged="txtsearch_TextChanged"></asp:TextBox>
+                        <a href="#" class="btn medium bg-green" title="Search" style="float:right;height:100%;">
+                            <span class="button-content">
+                                <i class="glyph-icon icon-search font-white"></i>
+                            </span>
+                        </a>
+                        </div>
+                            <asp:LinkButton class="btn medium bg-blue" ID="btn_refresh" ClientIDMode="AutoID" style="border-radius:5px; height:32px; padding: 0px; margin-bottom: 3px;" runat="server" OnClick="Refresh"><span class="button-content">
                 <i class="glyph-icon icon-refresh font-white"></i>
             </span></asp:LinkButton>
                            <%-- <a href="#" class="btn medium" title="Search" style="background-color:#0294A5; border-radius:5px;padding:0px;margin-bottom:1px;" runat="server" onclick="ExportToExcel" >

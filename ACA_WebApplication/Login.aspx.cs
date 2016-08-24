@@ -20,6 +20,12 @@ namespace ACA_WebApplication
             {
                 Session.Clear();
                 Session.Abandon();
+                if (Request.Cookies["UserName"] != null && Request.Cookies["Password"] != null)
+                {
+                    txt_uname.Text = Request.Cookies["UserName"].Value;
+                    txt_pwd.Attributes["value"] = Request.Cookies["Password"].Value;
+                    chkRememberMe.Checked = true;
+                }
             }
         }
         [System.Web.Services.WebMethod]
@@ -28,11 +34,12 @@ namespace ACA_WebApplication
             string[] splitval = param.Split(',');
             string username = splitval[0].ToString();
             string password = splitval[1].ToString();
+            string Rememberchk= splitval[2].ToString();
             Login log = new Login();
-            int loginChk = log.btn_login_Click(username, password);
+            int loginChk = log.btn_login_Click(username, password, Rememberchk);
             return loginChk;
         }
-        public int btn_login_Click(string username, string password)
+        public int btn_login_Click(string username, string password, string Rememberchk)
         {
             //lb_status.Text = string.Empty;
             DataTable dtUser = new DataTable();
@@ -47,8 +54,24 @@ namespace ACA_WebApplication
                         HttpContext.Current.Session["UserID"] = dtUser.Rows[0]["id"].ToString();
                         HttpContext.Current.Session["UserName"] = dtUser.Rows[0]["username"].ToString();
                         HttpContext.Current.Session["name"] = dtUser.Rows[0]["name"].ToString();
+                        if (Rememberchk == "true")
+                        {
+                            HttpContext.Current.Response.Cookies["UserName"].Value = username;
+                            HttpContext.Current.Response.Cookies["Password"].Value = password;
+                            HttpContext.Current.Request.Cookies["UserName"].Expires = DateTime.Now.AddDays(30);
+                            HttpContext.Current.Request.Cookies["Password"].Expires = DateTime.Now.AddDays(30);
+                        }
+                        else
+                        {
+                            HttpContext.Current.Response.Cookies["UserName"].Value = null;
+                            HttpContext.Current.Response.Cookies["Password"].Value = null; ;
+                            HttpContext.Current.Request.Cookies["UserName"].Expires = DateTime.Now.AddDays(-1);
+                            HttpContext.Current.Request.Cookies["Password"].Expires = DateTime.Now.AddDays(-1);
+
+                        }
+                        
                         //Response.Redirect("~/Master/Company_List.aspx");
-                        ack= 1;
+                        ack = 1;
                     }
                     else
                     {

@@ -707,7 +707,7 @@ body .button-pane-top {
     }
 
 .form-row {
-    padding: 0 0 20px;
+    /*padding: 0 0 20px;*/
 }
 
 form .form-row + .divider {
@@ -8273,7 +8273,7 @@ html {
 }
 
 .row, .form-row {
-    margin-right: -10px;
+    /*margin-right: -10px;*/
     margin-left: -10px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;

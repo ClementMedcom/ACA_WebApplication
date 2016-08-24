@@ -35,16 +35,18 @@
           </Triggers>
           <ContentTemplate>
               <div class="grid_container">
-                   <asp:TextBox ID="txtsearch" CssClass="srch" AutoPostBack="true" ClientIDMode="AutoID" runat="server" placeholder="Search Plan" OnTextChanged="txtsearch_TextChanged"></asp:TextBox>
-                   <a href="#" class="btn medium bg-green" title="Search" style="/*background-color:#0294A5;*/ border-radius:5px;padding:0px;margin-bottom:5px;" >
-             <span class="button-content">
-                <i class="glyph-icon icon-search font-white"></i>
-            </span>
-        </a>
-                            <asp:LinkButton class="btn medium bg-blue" ID="btn_refresh" ClientIDMode="AutoID" style="border-radius:5px;padding:0px;margin-bottom:5px;" runat="server" OnClick="Refresh"><span class="button-content">
+                 <div class="srch">
+                        <asp:TextBox ID="txtsearch" cssclass="srchbox" Width="81%" ClientIDMode="AutoID" AutoPostBack="true" runat="server" placeholder="Search Employee" OnTextChanged="txtsearch_TextChanged"></asp:TextBox>
+                        <a href="#" class="btn medium bg-green" title="Search" style="float:right;height:100%;">
+                            <span class="button-content">
+                                <i class="glyph-icon icon-search font-white"></i>
+                            </span>
+                        </a>
+                        </div>
+                            <asp:LinkButton class="btn medium bg-blue" ID="btn_refresh" ClientIDMode="AutoID" style="border-radius:5px; height:32px; padding: 0px; margin-bottom: 3px;" runat="server" OnClick="Refresh"><span class="button-content">
                 <i class="glyph-icon icon-refresh font-white"></i>
             </span></asp:LinkButton>
-
+                  <hr / style="margin-top: 0em;margin-bottom: 0em; ">
                   <div style="overflow-y: auto; min-height: 498px; max-height: 498px; width: 100%; overflow-x: hidden;background-color:rgba(255,255,255, 0.6);">
                      
                       <asp:Repeater ID="rptPlan" OnItemCommand="rptPlan_ItemCommand" runat="server">
@@ -69,7 +71,7 @@
                       </asp:Repeater>
                   </div>
                   <table style="width: 100%;text-align:center;">
-                            <tr style="background-color: white;">
+                            <tr style="background-color: rgba(255,255,255, 0.6);">
                                 <td colspan="2">
                                     <asp:Label ID="lbl_result" runat="server" Text=""></asp:Label>
                                     <asp:HiddenField ID="hid_rowcount" runat="server" />
